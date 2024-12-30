@@ -8,6 +8,8 @@
     "allowJs": true, // Allows JS files in the project
     "checkJs": false, // Disable type checking for JS files (optional)
     "esModuleInterop": true,
+    "outDir": "./build", // Explicitly define output directory for compiled files
+    "rootDir": "./src", // Define the root directory for source files
     "strict": true, // Optional: enables strict type-checking
     "skipLibCheck": true
   },

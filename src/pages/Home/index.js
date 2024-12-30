@@ -22,19 +22,12 @@ import { TextareaAutosize } from "@mui/material";
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
 
-// Material Kit 2 React examples
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import DefaultFooter from "examples/Footers/DefaultFooter";
-
-// Routes
-import routes from "routes";
-import footerRoutes from "footer.routes";
-
 // Custom components
 import FormatterAction from "./components/FormatterActions";
 
 //Other components
 import { ToastContainer, toast } from "react-toastify";
+import FormatterPagination from "./components/Pagination";
 
 const containerStyle = {
   maxHeight: "70vh",
@@ -42,6 +35,7 @@ const containerStyle = {
   minWidth: "50vw",
   maxWidth: "65vw",
   display: "flex",
+  flexDirection: "column",
 };
 
 const textAreaStyle = {
@@ -52,7 +46,11 @@ const textAreaStyle = {
 
 function Presentation() {
 
-  const [text, setText] = React.useState("");
+  //pagination logic
+  const [textArray, setTextArray] = React.useState(["", "", "", "", ""]); //won't ever reset
+  const [text, setText] = React.useState(textArray[0]); //this will reset when changing pages
+  const [currentPage, setCurrentPage] = React.useState(1);
+  //validation logic
   const [isValid, setIsValid] = React.useState(undefined);
   const [genericError, setGenericError] = React.useState("");
 
@@ -72,9 +70,21 @@ function Presentation() {
     }
   }, [genericError]);
 
+  React.useEffect(() => {
+    setText(textArray[currentPage - 1]);
+  }, [currentPage]);
+
+  React.useEffect(() => {
+    setTextArray((prevArray) => {
+      const newArray = [...prevArray];
+      newArray[currentPage - 1] = text;
+      return newArray;
+    });
+  },[text]);
+
   return (
     <>
-      <DefaultNavbar
+      {/* <DefaultNavbar
         routes={routes}
         action={{
           type: "external",
@@ -83,7 +93,7 @@ function Presentation() {
           color: "info",
         }}
         sticky
-      />
+      /> */}
       <MKBox
         minHeight="75vh"
         width="100%"
@@ -95,7 +105,11 @@ function Presentation() {
         }}
       >
         <Container style={containerStyle}>
-          <Grid2 container xs={12} lg={7} justifyContent="center" mx="auto" style={{ flex: 1 }}>
+          <FormatterPagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+          <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
             <Grid2 item xs={12} style={{ flex: 1 }}>
               <TextareaAutosize
                 placeholder="Paste your JSON here"
@@ -140,9 +154,9 @@ function Presentation() {
         pauseOnHover
         theme="light"
       />
-      <MKBox pt={6} px={1} mt={6}>
+      {/* <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
-      </MKBox>
+      </MKBox> */}
     </>
   );
 }

@@ -23,7 +23,7 @@
     "@typescript-eslint" // Add TypeScript ESLint plugin
   ],
   "rules": {
-    "no-unused-vars": "warn",
+    // "no-unused-vars": "warn",
     "no-mixed-spaces-and-tabs": "warn",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [
@@ -37,7 +37,7 @@
     ],
     "default-param-last": "off",
     "react/display-name": "off",
-    "@typescript-eslint/no-unused-vars": "warn", // Enable TypeScript-specific linting
+    // "@typescript-eslint/no-unused-vars": "warn", // Enable TypeScript-specific linting
     "@typescript-eslint/explicit-module-boundary-types": "off" // Optionally turn off explicit return types rule
   },
   "settings": {
