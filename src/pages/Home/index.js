@@ -34,7 +34,7 @@ import footerRoutes from "footer.routes";
 import FormatterAction from "./components/FormatterActions";
 
 //Other components
-import { ToastContainer, cssTransition, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const containerStyle = {
   maxHeight: "70vh",
@@ -47,6 +47,7 @@ const containerStyle = {
 const textAreaStyle = {
   width: "100%",
   height: "100%",
+  overflow: "auto",
 };
 
 function Presentation() {
@@ -98,10 +99,20 @@ function Presentation() {
             <Grid2 item xs={12} style={{ flex: 1 }}>
               <TextareaAutosize
                 placeholder="Paste your JSON here"
+                // autoSave="on" //todo: to implement
                 minRows={10}
                 maxRows={20}
                 style={textAreaStyle}
                 value={text}
+                //when pressing tab, it should insert a tab instead of changing focus
+                onKeyDown={(e) => {
+                  if (e.key === "Tab") {
+                    e.preventDefault();
+                    const start = e.target.selectionStart;
+                    const end = e.target.selectionEnd;
+                    setText (text.substring(0, start) + "\t" + text.substring(end));
+                  }
+                }}
                 onChange={(textObject) => {
                   setText(textObject.target.value);
                   setIsValid(undefined);

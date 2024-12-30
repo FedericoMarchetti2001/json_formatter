@@ -1,4 +1,5 @@
 // @mui material components
+import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
 
@@ -74,19 +75,25 @@ export default function FormatterAction(props : IFormatterActionsProps) : React.
   }
 
   return (
-        <Grid2 xs={1} lg={1} rowSpacing={2}>
-            <Grid2>
-              <button onClick={()=> format(props.textToManage) }>Format</button>
-            </Grid2>
-            <Grid2>
-              <button onClick={()=> copy(props.textToManage) }>Copy</button>
-            </Grid2>
-            <Grid2 >
-              <button onClick={()=> clear() }>Clear</button>
-            </Grid2>
-            <Grid2>
-              <input type="file" accept=".json,.txt" onChange={(e) => upload(e.target.files?.item(0) as File)} />
-            </Grid2>
-        </Grid2>
+    <Grid2 container direction="column" justifyContent="space-between" alignItems="stretch" style={{ padding: "10px" }}>
+      <Grid2>
+        <Button variant="contained" color="primary" onClick={() => format(props.textToManage)}>
+          Format
+        </Button>
+      </Grid2>
+      <Grid2 >
+        <Button variant="contained" color="primary" onClick={() => copy(props.textToManage)}>
+          Copy
+        </Button>
+      </Grid2>
+      <Grid2 >
+        <Button variant="contained" color="primary" onClick={() => clear()}>
+          Clear
+        </Button>
+      </Grid2>
+      <Grid2 >
+        <input type="file" accept=".json,.txt" onChange={(e) => upload(e.target.files?.item(0) as File)} />
+      </Grid2>
+    </Grid2>
   );
 }
