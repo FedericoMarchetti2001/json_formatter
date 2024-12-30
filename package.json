@@ -33,6 +33,8 @@
     "react-router-dom": "6.10.0",
     "react-scripts": "5.0.1",
     "react-syntax-highlighter": "15.5.0",
+    "react-toastify": "^11.0.2",
+    "toastify": "^2.0.1",
     "typescript": "^5.7.2",
     "web-vitals": "3.3.1"
   },

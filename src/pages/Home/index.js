@@ -33,6 +33,9 @@ import footerRoutes from "footer.routes";
 // Custom components
 import FormatterAction from "./components/FormatterActions";
 
+//Other components
+import { ToastContainer, cssTransition, toast } from "react-toastify";
+
 const containerStyle = {
   maxHeight: "70vh",
   minHeight: "50vh",
@@ -42,18 +45,31 @@ const containerStyle = {
 };
 
 const textAreaStyle = {
-  // marginTop: "50px",
   width: "100%",
   height: "100%",
-  // maxHeight: "70vh",
-  // maxWidth: "65vw",
-  // minHeight: "50vh",
-  // minWidth: "50vw",
 };
 
 function Presentation() {
 
   const [text, setText] = React.useState("");
+  const [isValid, setIsValid] = React.useState(undefined);
+  const [genericError, setGenericError] = React.useState("");
+
+  React.useEffect(() => {
+    if (isValid === true) {
+      toast.success("JSON is valid");
+    }
+    else if(isValid === false){
+      toast.error("JSON is not valid");
+    }
+    //isValid === undefined should do nothing
+  }, [isValid]);
+
+  React.useEffect(() => {
+    if (genericError !== "") {
+      toast.error(genericError);
+    }
+  }, [genericError]);
 
   return (
     <>
@@ -86,15 +102,33 @@ function Presentation() {
                 maxRows={20}
                 style={textAreaStyle}
                 value={text}
-                onChange={(text) => {
-                  setText(text);
+                onChange={(textObject) => {
+                  setText(textObject.target.value);
+                  setIsValid(undefined);
                 }}
               ></TextareaAutosize>
             </Grid2>
-            <FormatterAction textToManage={text} setTextToManage={setText} />
+            <FormatterAction
+              textToManage={text}
+              setTextToManage={setText}
+              isValid={isValid}
+              setIsValid={setIsValid}
+              setGenericError={setGenericError}
+            />
           </Grid2>
         </Container>
       </MKBox>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
       </MKBox>
