@@ -108,8 +108,8 @@ CenteredFooter.defaultProps = {
   company: { href: "https://www.creative-tim.com/", name: "Creative Tim" },
   links: [
     { href: "https://www.creative-tim.com/", name: "Company" },
-    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/presentation", name: "Team" },
+    { href: "https://www.creative-tim.com/home", name: "About Us" },
+    { href: "https://www.creative-tim.com/home", name: "Team" },
     { href: "https://www.creative-tim.com/templates/react", name: "Products" },
     { href: "https://www.creative-tim.com/blog", name: "Blog" },
     { href: "https://www.creative-tim.com/license", name: "License" },

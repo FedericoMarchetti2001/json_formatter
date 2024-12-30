@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "target": "es6",
+    "module": "esnext",
+    "allowJs": true, // Allows JS files in the project
+    "checkJs": false, // Disable type checking for JS files (optional)
+    "esModuleInterop": true,
+    "strict": true, // Optional: enables strict type-checking
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*"
+  ], // Include all files in the src folder
+  "exclude": [
+    "node_modules"
+  ]
+}

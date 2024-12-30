@@ -3,7 +3,13 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser", // Use the TypeScript parser
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -11,25 +17,36 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "prettier"],
+  "plugins": [
+    "react",
+    "prettier",
+    "@typescript-eslint" // Add TypeScript ESLint plugin
+  ],
   "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ],
+    "no-unused-vars": "warn",
+    "no-mixed-spaces-and-tabs": "warn",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [
+      0
+    ],
     "react/jsx-props-no-spreading": [
       1,
       {
         "custom": "ignore"
       }
     ],
-    "react/jsx-curly-spacing": [2, "never"],
     "default-param-last": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "@typescript-eslint/no-unused-vars": "warn", // Enable TypeScript-specific linting
+    "@typescript-eslint/explicit-module-boundary-types": "off" // Optionally turn off explicit return types rule
   },
-  "settings": { "import/resolver": { "node": { "paths": ["src"] } } }
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "src"
+        ]
+      }
+    }
+  }
 }

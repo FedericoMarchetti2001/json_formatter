@@ -123,7 +123,7 @@ function Download() {
                   >
                     <MKBox
                       component="img"
-                      src="https://s3.amazonaws.com/creativetim_bucket/tim_static_images/presentation-page/vue.jpg"
+                      src="https://s3.amazonaws.com/creativetim_bucket/tim_static_images/home-page/vue.jpg"
                       width="100%"
                     />
                   </MKBox>
@@ -140,7 +140,7 @@ function Download() {
                   >
                     <MKBox
                       component="img"
-                      src="https://s3.amazonaws.com/creativetim_bucket/tim_static_images/presentation-page/angular.jpg"
+                      src="https://s3.amazonaws.com/creativetim_bucket/tim_static_images/home-page/angular.jpg"
                       width="100%"
                     />
                   </MKBox>
@@ -155,7 +155,7 @@ function Download() {
                   >
                     <MKBox
                       component="img"
-                      src="https://s3.amazonaws.com/creativetim_bucket/tim_static_images/presentation-page/react.jpg"
+                      src="https://s3.amazonaws.com/creativetim_bucket/tim_static_images/home-page/react.jpg"
                       width="100%"
                     />
                   </MKBox>
@@ -172,7 +172,7 @@ function Download() {
                   >
                     <MKBox
                       component="img"
-                      src="https://s3.amazonaws.com/creativetim_bucket/tim_static_images/presentation-page/sketch.jpg"
+                      src="https://s3.amazonaws.com/creativetim_bucket/tim_static_images/home-page/sketch.jpg"
                       width="100%"
                     />
                   </MKBox>

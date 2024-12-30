@@ -26,10 +26,10 @@ import MKBadge from "components/MKBadge";
 import MKTypography from "components/MKTypography";
 
 // Presentation page components
-import ExampleCard from "pages/Presentation/components/ExampleCard";
+import ExampleCard from "pages/home/components/ExampleCard";
 
 // Data
-import data from "pages/Presentation/sections/data/designBlocksData";
+import data from "pages/home/sections/data/designBlocksData";
 
 function DesignBlocks() {
   const renderData = data.map(({ title, description, items }) => (

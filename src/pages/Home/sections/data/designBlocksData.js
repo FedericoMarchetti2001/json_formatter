@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 const imagesPrefix =
-  "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/sections";
+  "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/home/sections";
 
 export default [
   {

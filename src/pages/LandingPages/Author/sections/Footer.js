@@ -68,7 +68,7 @@ function Footer() {
                   fontWeight="regular"
                   opacity={0.8}
                   component={Link}
-                  href="https://www.creative-tim.com/presentation"
+                  href="https://www.creative-tim.com/home"
                   target="_blank"
                   rel="noreferrer"
                 >

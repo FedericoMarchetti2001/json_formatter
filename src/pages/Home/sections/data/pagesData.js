@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 const imagesPrefix =
-  "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/pages";
+  "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/home/pages";
 
 export default [
   {
@@ -29,7 +29,7 @@ export default [
   },
   {
     image:
-      "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/account/signin-basic.jpg",
+      "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/home/account/signin-basic.jpg",
     name: "Sign In Page",
     route: "/pages/authentication/sign-in",
   },

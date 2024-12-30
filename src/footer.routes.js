@@ -40,7 +40,7 @@ export default {
     {
       name: "company",
       items: [
-        { name: "about us", href: "https://www.creative-tim.com/presentation" },
+        { name: "about us", href: "https://www.creative-tim.com/home" },
         { name: "freebies", href: "https://www.creative-tim.com/templates/free" },
         { name: "premium tools", href: "https://www.creative-tim.com/templates/premium" },
         { name: "blog", href: "https://www.creative-tim.com/blog" },
