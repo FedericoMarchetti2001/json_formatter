@@ -50,6 +50,9 @@ function Presentation() {
   const [textArray, setTextArray] = React.useState(["", "", "", "", ""]); //won't ever reset
   const [text, setText] = React.useState(textArray[0]); //this will reset when changing pages
   const [currentPage, setCurrentPage] = React.useState(1);
+  //formatted text 
+  const [formattedTextArray, setFormattedTextArray] = React.useState(["", "", "", "", ""]);
+  const [formattedText, setFormattedText] = React.useState(formattedTextArray[0]);
   //validation logic
   const [isValid, setIsValid] = React.useState(undefined);
   const [genericError, setGenericError] = React.useState("");
@@ -72,6 +75,7 @@ function Presentation() {
 
   React.useEffect(() => {
     setText(textArray[currentPage - 1]);
+    setFormattedText(formattedTextArray[currentPage - 1]);
   }, [currentPage]);
 
   React.useEffect(() => {
@@ -105,12 +109,9 @@ function Presentation() {
         }}
       >
         <Container style={containerStyle}>
-          <FormatterPagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
           <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
             <Grid2 item xs={12} style={{ flex: 1 }}>
+              <FormatterPagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
               <TextareaAutosize
                 placeholder="Paste your JSON here"
                 // autoSave="on" //todo: to implement
@@ -124,13 +125,21 @@ function Presentation() {
                     e.preventDefault();
                     const start = e.target.selectionStart;
                     const end = e.target.selectionEnd;
-                    setText (text.substring(0, start) + "\t" + text.substring(end));
+                    setText(text.substring(0, start) + "\t" + text.substring(end));
                   }
                 }}
                 onChange={(textObject) => {
                   setText(textObject.target.value);
                   setIsValid(undefined);
                 }}
+              ></TextareaAutosize>
+              <TextareaAutosize
+                placeholder="Formatted JSON"
+                minRows={10}
+                maxRows={20}
+                style={textAreaStyle}
+                value={formattedText}
+                readOnly
               ></TextareaAutosize>
             </Grid2>
             <FormatterAction
@@ -139,6 +148,8 @@ function Presentation() {
               isValid={isValid}
               setIsValid={setIsValid}
               setGenericError={setGenericError}
+              processedText={formattedText}
+              setProcessedText={setFormattedText}
             />
           </Grid2>
         </Container>
@@ -154,9 +165,6 @@ function Presentation() {
         pauseOnHover
         theme="light"
       />
-      {/* <MKBox pt={6} px={1} mt={6}>
-        <DefaultFooter content={footerRoutes} />
-      </MKBox> */}
     </>
   );
 }
