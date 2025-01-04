@@ -1,5 +1,4 @@
 // @mui material components
-import { Label } from "@mui/icons-material";
 import { InputLabel, MenuItem, Select } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -17,6 +16,9 @@ export interface IFormatterActionsProps {
   //processed text
   processedText : string;
   setProcessedText : (text : string) => void;
+  //Dark mode toggler
+  isDark : boolean;
+  setIsDark : (isDark : boolean) => void;
 }
 
 //This is a row/column component, possibly a small flexbox, which will contain actions like "Format", "Copy", "Clear", etc.
@@ -126,6 +128,7 @@ export default function FormatterAction(props : IFormatterActionsProps) : React.
         </Button>
       </Grid2>
       <Grid2 >
+        <InputLabel>Upload JSON</InputLabel>
         <input type="file" accept=".json,.txt" onChange={(e) => upload(e.target.files?.item(0) as File)} />
       </Grid2>
     </Grid2>

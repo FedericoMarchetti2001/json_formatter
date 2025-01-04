@@ -28,6 +28,8 @@ import FormatterAction from "./components/FormatterActions";
 //Other components
 import { ToastContainer, toast } from "react-toastify";
 import FormatterPagination from "./components/Pagination";
+import "../../components/DarkModeToggle/index.css";
+import { DarkModeToggle } from "components/DarkModeToggle";
 
 const containerStyle = {
   maxHeight: "70vh",
@@ -56,6 +58,8 @@ function Presentation() {
   //validation logic
   const [isValid, setIsValid] = React.useState(undefined);
   const [genericError, setGenericError] = React.useState("");
+  //Dark mode logic
+  const [isDark, setIsDark] = React.useState(false);
 
   React.useEffect(() => {
     if (isValid === true) {
@@ -87,17 +91,8 @@ function Presentation() {
   },[text]);
 
   return (
-    <>
-      {/* <DefaultNavbar
-        routes={routes}
-        action={{
-          type: "external",
-          route: "https://www.creative-tim.com/product/material-kit-react",
-          label: "free download",
-          color: "info",
-        }}
-        sticky
-      /> */}
+    <div className="home-container">
+      <DarkModeToggle isDark={isDark} setIsDark={setIsDark} />
       <MKBox
         minHeight="75vh"
         width="100%"
@@ -148,8 +143,11 @@ function Presentation() {
               isValid={isValid}
               setIsValid={setIsValid}
               setGenericError={setGenericError}
+              //todo: change to formattedText
               processedText={formattedText}
               setProcessedText={setFormattedText}
+              isDark={isDark}
+              setIsDark={setIsDark}
             />
           </Grid2>
         </Container>
@@ -165,7 +163,7 @@ function Presentation() {
         pauseOnHover
         theme="light"
       />
-    </>
+    </div>
   );
 }
 
