@@ -91,7 +91,7 @@ export default function FormatterAction(props : IFormatterActionsProps) : React.
   return (
     <Grid2 xs={2} xl={2} container direction="column" justifyContent="space-between" alignItems="stretch" style={{ padding: "10px" }}>
       <Grid2 container direction="column" sx={{ display: 'flex', width: buttonWidth, padding: '0px' }}>
-          <InputLabel id="tab-spaces--autowidth-label">Tab spaces</InputLabel>
+          <InputLabel id="tab-spaces--autowidth-label" className="goth-input-label">Tab spaces</InputLabel>
           <Select
             className={"menu-select"}
             labelId="tab-spaces--autowidth-label"

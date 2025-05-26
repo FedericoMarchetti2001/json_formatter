@@ -214,6 +214,7 @@ input:focus, textarea:focus {
   animation: goth-slide-in 1.2s cubic-bezier(0.77, 0, 0.175, 1) !important;
   max-width: 420px !important;
   max-height: 720px !important;
+  left: 0px !important;
   border: 3px solid #a020f0 !important;
   border-radius: 16px !important;
   box-shadow: 0 8px 32px #000c !important;
@@ -264,4 +265,12 @@ input:focus, textarea:focus {
   background: linear-gradient(90deg, #a020f0 0%, #6b1e6b 100%) !important;
   height: 4px !important;
   border-radius: 2px !important;
+}
+
+/* Goth Aesthetic for Input Labels */
+.goth-input-label {
+  color: var(--text-color) !important;
+  font-family: var(--font-family) !important;
+  font-size: 1rem !important;
+  margin-bottom: 8px !important;
 }
