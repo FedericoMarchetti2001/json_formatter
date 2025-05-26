@@ -1,5 +1,4 @@
 import React from "react";
-import Toggle from "react-toggle";
 import "./index.css";
 import { FormControlLabel, styled, Switch } from "@mui/material";
 

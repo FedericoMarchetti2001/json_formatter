@@ -174,7 +174,6 @@ const speakSentence = (sentence) => {
 
   return (
     <div className="home-container">
-      <DarkModeToggle isDark={isDark} setIsDark={setIsDark} />
       <MKBox
         minHeight="75vh"
         width="100%"
