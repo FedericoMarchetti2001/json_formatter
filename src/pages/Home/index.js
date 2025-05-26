@@ -12,12 +12,13 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React from "react";
+import React, { useRef, useState } from "react";
 
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { TextareaAutosize } from "@mui/material";
+import { gothSentences } from "./sentences";
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
@@ -47,15 +48,98 @@ const textAreaStyle = {
 function Presentation() {
 
   //pagination logic
-  const [textArray, setTextArray] = React.useState(["", "", "", "", ""]); //won't ever reset
-  const [text, setText] = React.useState(textArray[0]); //this will reset when changing pages
-  const [currentPage, setCurrentPage] = React.useState(1);
-  //formatted text 
-  const [formattedTextArray, setFormattedTextArray] = React.useState(["", "", "", "", ""]);
-  const [formattedText, setFormattedText] = React.useState(formattedTextArray[0]);
+  const [textArray, setTextArray] = useState(["", "", "", "", ""]); //won't ever reset
+  const [text, setText] = useState(textArray[0]); //this will reset when changing pages
+  const [currentPage, setCurrentPage] = useState(1);
+  //formatted text
+  const [formattedTextArray, setFormattedTextArray] = useState(["", "", "", "", ""]);
+  const [formattedText, setFormattedText] = useState(formattedTextArray[0]);
   //validation logic
-  const [isValid, setIsValid] = React.useState(undefined);
-  const [genericError, setGenericError] = React.useState("");
+  const [isValid, setIsValid] = useState(undefined);
+  const [genericError, setGenericError] = useState("");
+
+  // GOTH THEME: Sentences, image, and music
+  const gothImages = [
+    "/goth-girls/goth1.jpg",
+    "/goth-girls/goth2.jpeg",
+    "/goth-girls/goth3.jpeg",
+    "/goth-girls/goth4.jpg"
+    // Add more as you add images to public/goth-girls/
+  ];
+  const successSound = "/sounds/success.mp3";
+  const failSound = "/sounds/fail.mp3";
+
+  const [gothSentence, setGothSentence] = useState("");
+  const [showGothGirl, setShowGothGirl] = useState(false);
+  const [gothGirlImg, setGothGirlImg] = useState("");
+  const gothGirlTimeout = useRef(null);
+
+  // New: State for toggling sound and AI voice
+  const [enablePlaySound, setEnablePlaySound] = useState(true);
+  const [enableAIVoice, setEnableAIVoice] = useState(true);
+
+  // Play sound utility
+  const playSound = (src) => {
+    const audio = new window.Audio(src);
+    audio.volume = 0.5;
+    audio.play();
+  };
+
+  // AI Voice utility using Web Speech API
+ // ...existing code...
+const speakSentence = (sentence) => {
+  if (!window.speechSynthesis) return;
+  const synth = window.speechSynthesis;
+  let voices = synth.getVoices();
+
+  // Try to pick a "goth and sweet" voice: prefer female, English, lower pitch
+  let gothVoice =
+    voices.find(v => /female/i.test(v.name) && /en/i.test(v.lang)) ||
+    voices.find(v => /en/i.test(v.lang)) ||
+    voices[0];
+
+  // If voices are not loaded yet (Chrome bug), try again after a short delay
+  if (!gothVoice && typeof window !== "undefined") {
+    setTimeout(() => speakSentence(sentence), 200);
+    return;
+  }
+
+  // Estimate rate so the sentence is read in 3 seconds
+  const avgCharsPerSecondAtRate1 = 13; // empirical value, can be tuned
+  const estimatedDurationAtRate1 = sentence.length / avgCharsPerSecondAtRate1;
+  let rate = estimatedDurationAtRate1 / 3;
+  rate = Math.max(0.5, Math.min(3, rate)); // Clamp to Web Speech API limits
+
+  const utter = new window.SpeechSynthesisUtterance(sentence);
+  utter.voice = gothVoice;
+  utter.pitch = 0.7; // lower pitch for goth
+  utter.rate = rate;
+  utter.volume = 1.0;
+  utter.lang = gothVoice ? gothVoice.lang : "en-US";
+  window.speechSynthesis.speak(utter);
+};
+// ...existing code...
+
+  // Handler for after conversion
+  const handleConvert = ({ success }) => {
+    // Set random sentence
+    const sentence = gothSentences[Math.floor(Math.random() * gothSentences.length)];
+    setGothSentence(sentence);
+    // Set random image and trigger animation
+    setGothGirlImg(gothImages[Math.floor(Math.random() * gothImages.length)]);
+    setShowGothGirl(true); // trigger re-render for animation
+    // Play sound if enabled
+    if (enablePlaySound) {
+      playSound(success ? successSound : failSound);
+    }
+    // Speak sentence if enabled
+    if (enableAIVoice) {
+      speakSentence(sentence);
+    }
+    // Remove image after animation
+    if (gothGirlTimeout.current) clearTimeout(gothGirlTimeout.current);
+    gothGirlTimeout.current = setTimeout(() => setShowGothGirl(false), 3000);
+  };
 
   React.useEffect(() => {
     if (isValid === true) {
@@ -111,6 +195,25 @@ function Presentation() {
         <Container style={containerStyle}>
           <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
             <Grid2 item xs={12} style={{ flex: 1 }}>
+              {/* Controls for sound and AI voice */}
+              <div style={{ display: "flex", alignItems: "center", gap: "1.5em", marginBottom: "0.5em" }}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={enablePlaySound}
+                    onChange={() => setEnablePlaySound((v) => !v)}
+                  />
+                  Play Sound
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={enableAIVoice}
+                    onChange={() => setEnableAIVoice((v) => !v)}
+                  />
+                  AI Voice (Goth & Sweet)
+                </label>
+              </div>
               <FormatterPagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
               <TextareaAutosize
                 placeholder="Paste your JSON here"
@@ -133,6 +236,10 @@ function Presentation() {
                   setIsValid(undefined);
                 }}
               ></TextareaAutosize>
+              {/* GOTH SENTENCE */}
+              <div className="goth-sentence" style={{ minHeight: "2.5em" }}>
+                {gothSentence}
+              </div>
               <TextareaAutosize
                 placeholder="Formatted JSON"
                 minRows={10}
@@ -142,6 +249,16 @@ function Presentation() {
                 readOnly
               ></TextareaAutosize>
             </Grid2>
+            {/* GOTH GIRL IMAGE ANIMATION */}
+            {showGothGirl && gothGirlImg && (
+              <img
+                src={gothGirlImg}
+                alt="Goth Girl"
+                className="goth-girl-slide"
+                style={{ zIndex: 1000, position: "fixed" }}
+                draggable={false}
+              />
+            )}
             <FormatterAction
               textToManage={text}
               setTextToManage={setText}
@@ -150,6 +267,7 @@ function Presentation() {
               setGenericError={setGenericError}
               processedText={formattedText}
               setProcessedText={setFormattedText}
+              onConvert={handleConvert}
             />
           </Grid2>
         </Container>

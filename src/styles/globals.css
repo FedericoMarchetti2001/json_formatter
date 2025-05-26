@@ -1,0 +1,267 @@
+/* 
+//This is a global CSS file that can be used to define styles that apply to the entire application.
+//It'll contain CSS variables, resets, and any global styles that are not specific to a component.
+//This application is a JSON Formatter, but the theme is inspired by Goth girls, so it will have a dark theme with some goth elements, like hotties. 
+
+IMPORTANT - Every CSS rule in this file should be marked with !important to ensure it overrides any other styles that may be applied by the Theme used to built the application
+Theoretically this shouldn't be done, but it's a fast way to ensure that the styles are applied correctly without reworking the entire Theme CSS.
+//This is a temporary solution until the application is fully styled and the Theme is updated to support the new styles. 
+//This is supposed to be a small application, so not too much styling is needed, but it should look good and be functional.
+*/
+
+/* Import gothic font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=IM+Fell+English+SC&display=swap');
+
+:root {
+    /* BACKGROUND COLORS */
+    --background-color: #18141a ; /* Deeper goth background */
+    --primary-bg-color: #a8326e ; /* Deep magenta for primary buttons */
+    --secondary-bg-color: #222 ; /* Blackish bg for secondary buttons*/
+
+    /* TEXT COLORS */
+    --text-color: #f0e6f6 ; /* Pale lavender text */
+    --primary-text-color: #fff ; /* White for headings */
+    --secondary-text-color: #b0b0b0 ; /* Lighter text for secondary elements */
+    --accent-color: #ff69b4 ; /* Hot pink accent */
+
+    /* BORDER COLORS */
+    --border-color: #3a2233; /* Dark border */
+
+    /* FONT FAMILIES */
+    --font-family: 'IM Fell English SC', 'UnifrakturCook', 'Courier New', Courier, monospace;
+    --gothic-heading: 'UnifrakturCook', cursive;
+}
+
+body {
+  background-image: 
+    linear-gradient(rgba(24,20,26,0.95), rgba(24,20,26,0.95)),
+    url("../../public/grunge-emo-seamless-pattern-wallpaper.webp") !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-color: var(--background-color) !important;
+  color: var(--text-color)  !important;
+  font-family: var(--font-family) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100vh !important;
+  position: relative !important;
+  overflow-x: hidden !important;
+}
+
+/* Vignette effect for goth mood */
+body::after {
+  content: "" !important;
+  pointer-events: none !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1 !important;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%) !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--gothic-heading) !important;
+  color: var(--primary-text-color) !important;
+  letter-spacing: 2px !important;
+  text-shadow: 0 2px 8px #a8326e99 !important;
+}
+
+/* Formatter container */
+.formatter-container {
+  background: rgba(34, 22, 38, 0.85) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 32px #000a !important;
+  padding: 32px !important;
+  margin: 32px auto !important;
+  max-width: 700px !important;
+  z-index: 2 !important;
+  position: relative !important;
+}
+
+/* Buttons */
+.primary-button {
+  background-color: var(--primary-bg-color) !important;
+  color: var(--text-color) !important;
+  border: 2px solid var(--accent-color) !important;
+  border-radius: 8px !important;
+  padding: 12px 28px !important;
+  cursor: pointer !important;
+  font-family: var(--gothic-heading) !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 1px !important;
+  box-shadow: 0 2px 12px #a8326e55 !important;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s !important;
+}
+.primary-button:hover {
+  background-color: var(--accent-color) !important;
+  color: #18141a !important;
+  box-shadow: 0 4px 24px #ff69b488 !important;
+}
+
+.menu-select{
+  background-color: var(--primary-bg-color)!important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+  font-family: var(--font-family) !important;
+}
+
+/* Inputs */
+input, textarea {
+  background: rgba(34, 22, 38, 0.85) !important;
+  color: var(--text-color) !important;
+  border: 1.5px solid var(--accent-color) !important;
+  border-radius: 6px !important;
+  padding: 10px !important;
+  font-family: var(--font-family) !important;
+  font-size: 1rem !important;
+  margin-bottom: 12px !important;
+  transition: border 0.2s !important;
+  outline: none !important;
+}
+input:focus, textarea:focus {
+  border: 2.5px solid var(--primary-bg-color) !important;
+  box-shadow: 0 0 8px var(--accent-color) !important;
+}
+
+/* Menu Items */
+.menu-item{
+  border-radius: 0px !important;
+  border: 2px solid var(--border-color) !important;
+}
+.menu-item:hover {
+  opacity: 0.8 !important;
+}
+.menu-item:nth-child(odd) {
+  background-color: var(--primary-bg-color) !important ;
+  color: var(--text-color) !important ;
+  padding: 10px !important;
+  text-decoration: none !important;
+}
+.menu-item:nth-child(even) {
+  background-color: var(--secondary-bg-color) !important;
+  color: var(--text-color) !important;
+  padding: 10px !important;
+  text-decoration: none !important;
+}
+
+/* Goth sentence area */
+.goth-sentence {
+  font-family: var(--gothic-heading) !important;
+  color: var(--accent-color) !important;
+  font-size: 1.3rem !important;
+  text-align: center !important;
+  margin: 24px 0 8px 0 !important;
+  min-height: 2.5em !important;
+  letter-spacing: 1.5px !important;
+  z-index: 3 !important;
+  text-shadow: 0 2px 8px #a8326e99 !important;
+  transition: opacity 0.4s !important;
+}
+
+/* Goth girl slide animation */
+/* Removed conflicting .goth-girl-slide rule and animation to fix image visibility */
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px !important;
+  background: #2a1a2a !important;
+}
+::-webkit-scrollbar-thumb {
+  background: #a8326e !important;
+  border-radius: 6px !important;
+}
+
+/* Utility: overlay for fog (optional, JS can toggle this) */
+.goth-fog {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  background: url('../../public//images/fog.jpeg') repeat !important;
+  opacity: 0.12 !important;
+  animation: fog-move 30s linear infinite !important;
+}
+@keyframes fog-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 100vw 0; }
+}
+/* Goth Aesthetic for Menu Items */
+.menu-item {
+  background: linear-gradient(90deg, #1a1a1a 0%, #2d0036 100%) !important;
+  color: #e0d6eb !important;
+  font-family: 'UnifrakturCook', 'Cinzel Decorative', 'Cormorant Garamond', serif !important;
+  border: 1.5px solid #6b1e6b !important;
+  border-radius: 8px !important;
+  margin: 4px 0 !important;
+  box-shadow: 0 2px 8px #0006 !important;
+  letter-spacing: 0.04em !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+.menu-item:hover, .menu-item:focus {
+  background: linear-gradient(90deg, #2d0036 0%, #1a1a1a 100%) !important;
+  color: #fff !important;
+  border-color: #a020f0 !important;
+}
+
+/* Goth Girl Slide Animation */
+.goth-girl-slide {
+  animation: goth-slide-in 1.2s cubic-bezier(0.77, 0, 0.175, 1) !important;
+  max-width: 420px !important;
+  max-height: 720px !important;
+  border: 3px solid #a020f0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px #000c !important;
+  background: #18111b !important;
+  opacity: 0.97 !important;
+}
+@keyframes goth-slide-in {
+  0% {
+    transform: translateY(-80px) scale(0.7) rotate(-8deg);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(10px) scale(1.05) rotate(2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 0.97;
+  }
+}
+/* Goth Aesthetic for MUI Tabs Pagination */
+.MuiTabs-root {
+  background: #18111b !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 24px #000a !important;
+  padding: 12px 0 !important;
+  border: 2px solid #3a003a !important;
+}
+.MuiTab-root {
+  background: #2d0036 !important;
+  color: #e0d6eb !important;
+  font-family: 'UnifrakturCook', 'Cinzel Decorative', 'Cormorant Garamond', serif !important;
+  border: 1.5px solid #6b1e6b !important;
+  border-radius: 6px !important;
+  margin: 0 6px !important;
+  box-shadow: 0 1px 4px #0006 !important;
+  transition: background 0.2s, color 0.2s !important;
+  min-width: 100px !important;
+}
+.MuiTab-root.Mui-selected,
+.MuiTab-root:focus,
+.MuiTab-root:hover {
+  background: #3a003a !important;
+  color: #fff !important;
+  border-color: #a020f0 !important;
+}
+.MuiTabs-indicator {
+  background: linear-gradient(90deg, #a020f0 0%, #6b1e6b 100%) !important;
+  height: 4px !important;
+  border-radius: 2px !important;
+}

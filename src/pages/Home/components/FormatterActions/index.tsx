@@ -17,6 +17,8 @@ export interface IFormatterActionsProps {
   //processed text
   processedText : string;
   setProcessedText : (text : string) => void;
+  // goth: callback after conversion
+  onConvert?: (result: { success: boolean }) => void;
 }
 
 //This is a row/column component, possibly a small flexbox, which will contain actions like "Format", "Copy", "Clear", etc.
@@ -89,10 +91,10 @@ export default function FormatterAction(props : IFormatterActionsProps) : React.
 
   return (
     <Grid2 xs={2} xl={2} container direction="column" justifyContent="space-between" alignItems="stretch" style={{ padding: "10px" }}>
-      <Grid2 container direction="column">
-        <Grid2 container direction={"column"} sx={{ display: 'flex', width: buttonWidth }}>
+      <Grid2 container direction="column" sx={{ display: 'flex', width: buttonWidth, padding: '0px' }}>
           <InputLabel id="tab-spaces--autowidth-label">Tab spaces</InputLabel>
           <Select
+            className={"menu-select"}
             labelId="tab-spaces--autowidth-label"
             id="tab-spaces-select-autowidth"
             value={tabSpaces}
@@ -100,28 +102,30 @@ export default function FormatterAction(props : IFormatterActionsProps) : React.
             autoWidth
             label="Tab spaces"
           >
-            <MenuItem value={2}>Two</MenuItem>
-            <MenuItem value={4}>Four</MenuItem>
-            <MenuItem value={6}>Six</MenuItem>
-            <MenuItem value={8}>Eigth</MenuItem>
+            <MenuItem className={"menu-item"} value={2}>Two</MenuItem>
+            <MenuItem className={"menu-item"} value={4}>Four</MenuItem>
+            <MenuItem className={"menu-item"} value={6}>Six</MenuItem>
+            <MenuItem className={"menu-item"} value={8}>Eigth</MenuItem>
           </Select>
-        </Grid2>
-        <Grid2 sx={{ display: 'flex'}}>
-          <Button sx={{width: buttonWidth}} variant="contained" color="primary" onClick={() =>{
-              const formattedText = format(props.textToManage , tabSpaces);
-              props.setProcessedText(formattedText);
-            }}>
-            <b style={{ color: "white" }}>Format</b>
-          </Button>
-        </Grid2>
+      </Grid2>
+      <Grid2 sx={{ display: 'flex'}}>
+        <Button className="primary-button"  sx={{width: buttonWidth}} variant="contained" color="primary" onClick={() =>{
+            const formattedText = format(props.textToManage , tabSpaces);
+            props.setProcessedText(formattedText);
+            if (props.onConvert) {
+              props.onConvert({ success: formattedText !== "" });
+            }
+          }}>
+          <b style={{ color: "white" }}>Format</b>
+        </Button>
       </Grid2>
       <Grid2 >
-        <Button sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => copy(props.textToManage)}>
+        <Button className="primary-button" sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => copy(props.textToManage)}>
           <b style={{ color: "white" }}>Copy</b>
         </Button>
       </Grid2>
       <Grid2 >
-        <Button sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => clear()}>
+        <Button className="primary-button" sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => clear()}>
           <b style={{ color: "white" }}>Clear</b>
         </Button>
       </Grid2>
