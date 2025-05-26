@@ -1,0 +1,84 @@
+/* //This is a global CSS file that can be used to define styles that apply to the entire application.
+//It'll contain CSS variables, resets, and any global styles that are not specific to a component.
+//This application is a JSON Formatter, but the theme is inspired by Goth girls, so it will have a dark theme with some goth elements, like hotties. 
+
+
+IMPORTANT - Every CSS rule in this file should be marked with !important to ensure it overrides any other styles that may be applied by the Theme used to built the application
+Theoretically this shouldn't be done, but it's a fast way to ensure that the styles are applied correctly without reworking the entire Theme CSS.
+//This is a temporary solution until the application is fully styled and the Theme is updated to support the new styles. 
+//This is supposed to be a small application, so not too much styling is needed, but it should look good and be functional.
+*/
+
+
+
+:root {
+    /* BACKGROUND COLORS */
+    --background-color: #1a1a1a ; /* Dark background for the application */
+    --primary-bg-color: #ff69b4 ; /* Hot pink bg  for primary buttons*/
+    --secondary-bg-color: #000 ; /* Black bg for secondary buttons*/
+
+    /* TEXT COLORS */
+    --text-color: #f0f0f0 ; /* Light text */
+    --primary-text-color: #000 ; /* Primary text color */
+    --secondary-text-color: #b0b0b0 ; /* Lighter text for secondary elements */
+
+    /* BORDER COLORS */
+    --border-color: #333; /* Dark border */
+
+    /* FONT FAMILIES */
+    --font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
+}
+
+/* The body will have a background with a typical goth style + another image / style forming stripes going over the first image. Onyl the stripes though. */
+body {
+  background-image: url("../../public/grunge-emo-seamless-pattern-wallpaper.webp") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-color: var(--background-color) !important;
+  color: var(--text-color)  !important;
+  font-family: var(--font-family) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.primary-button {
+  background-color: var(--primary-bg-color) !important;
+  color: var(--text-color) !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  cursor: pointer !important;
+}
+
+.menu-select{
+  background-color: var(--primary-bg-color)!important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+  font-family: var(--font-family) !important;
+}
+
+
+/*-------------- START MENU ITEM -------- */
+.menu-item{
+  border-radius: 0px !important;
+  border: 2px solid var(--border-color) !important;
+}
+
+.menu-item:hover {
+  opacity: 0.8 !important;
+}
+
+.menu-item:nth-child(odd) {
+  background-color: var(--primary-bg-color) !important ;
+  color: var(--text-color) !important ;
+  padding: 10px !important;
+  text-decoration: none !important;
+}
+
+.menu-item:nth-child(even) {
+  background-color: var(--secondary-bg-color) !important;
+  color: var(--text-color) !important;
+  padding: 10px !important;
+  text-decoration: none !important;
+}
+
+/*-------------- END MENU ITEM -------- */
