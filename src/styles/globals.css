@@ -1,7 +1,7 @@
-/* //This is a global CSS file that can be used to define styles that apply to the entire application.
+/* 
+//This is a global CSS file that can be used to define styles that apply to the entire application.
 //It'll contain CSS variables, resets, and any global styles that are not specific to a component.
 //This application is a JSON Formatter, but the theme is inspired by Goth girls, so it will have a dark theme with some goth elements, like hotties. 
-
 
 IMPORTANT - Every CSS rule in this file should be marked with !important to ensure it overrides any other styles that may be applied by the Theme used to built the application
 Theoretically this shouldn't be done, but it's a fast way to ensure that the styles are applied correctly without reworking the entire Theme CSS.
@@ -9,44 +9,96 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
 //This is supposed to be a small application, so not too much styling is needed, but it should look good and be functional.
 */
 
-
+/* Import gothic font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=IM+Fell+English+SC&display=swap');
 
 :root {
     /* BACKGROUND COLORS */
-    --background-color: #1a1a1a ; /* Dark background for the application */
-    --primary-bg-color: #ff69b4 ; /* Hot pink bg  for primary buttons*/
-    --secondary-bg-color: #000 ; /* Black bg for secondary buttons*/
+    --background-color: #18141a ; /* Deeper goth background */
+    --primary-bg-color: #a8326e ; /* Deep magenta for primary buttons */
+    --secondary-bg-color: #222 ; /* Blackish bg for secondary buttons*/
 
     /* TEXT COLORS */
-    --text-color: #f0f0f0 ; /* Light text */
-    --primary-text-color: #000 ; /* Primary text color */
+    --text-color: #f0e6f6 ; /* Pale lavender text */
+    --primary-text-color: #fff ; /* White for headings */
     --secondary-text-color: #b0b0b0 ; /* Lighter text for secondary elements */
+    --accent-color: #ff69b4 ; /* Hot pink accent */
 
     /* BORDER COLORS */
-    --border-color: #333; /* Dark border */
+    --border-color: #3a2233; /* Dark border */
 
     /* FONT FAMILIES */
-    --font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
+    --font-family: 'IM Fell English SC', 'UnifrakturCook', 'Courier New', Courier, monospace;
+    --gothic-heading: 'UnifrakturCook', cursive;
 }
 
-/* The body will have a background with a typical goth style + another image / style forming stripes going over the first image. Onyl the stripes though. */
 body {
-  background-image: url("../../public/grunge-emo-seamless-pattern-wallpaper.webp") !important;
+  background-image: 
+    linear-gradient(rgba(24,20,26,0.95), rgba(24,20,26,0.95)),
+    url("../../public/grunge-emo-seamless-pattern-wallpaper.webp") !important;
   background-repeat: no-repeat !important;
-  background-size: cover !important;
+  background-size: contain !important;
   background-color: var(--background-color) !important;
   color: var(--text-color)  !important;
   font-family: var(--font-family) !important;
   margin: 0 !important;
   padding: 0 !important;
+  min-height: 100vh !important;
+  position: relative !important;
+  overflow-x: hidden !important;
 }
 
+/* Vignette effect for goth mood */
+body::after {
+  content: "" !important;
+  pointer-events: none !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1 !important;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%) !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--gothic-heading) !important;
+  color: var(--primary-text-color) !important;
+  letter-spacing: 2px !important;
+  text-shadow: 0 2px 8px #a8326e99 !important;
+}
+
+/* Formatter container */
+.formatter-container {
+  background: rgba(34, 22, 38, 0.85) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 32px #000a !important;
+  padding: 32px !important;
+  margin: 32px auto !important;
+  max-width: 700px !important;
+  z-index: 2 !important;
+  position: relative !important;
+}
+
+/* Buttons */
 .primary-button {
   background-color: var(--primary-bg-color) !important;
   color: var(--text-color) !important;
-  border: none !important;
-  padding: 10px 20px !important;
+  border: 2px solid var(--accent-color) !important;
+  border-radius: 8px !important;
+  padding: 12px 28px !important;
   cursor: pointer !important;
+  font-family: var(--gothic-heading) !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 1px !important;
+  box-shadow: 0 2px 12px #a8326e55 !important;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s !important;
+}
+.primary-button:hover {
+  background-color: var(--accent-color) !important;
+  color: #18141a !important;
+  box-shadow: 0 4px 24px #ff69b488 !important;
 }
 
 .menu-select{
@@ -56,24 +108,38 @@ body {
   font-family: var(--font-family) !important;
 }
 
+/* Inputs */
+input, textarea {
+  background: rgba(34, 22, 38, 0.85) !important;
+  color: var(--text-color) !important;
+  border: 1.5px solid var(--accent-color) !important;
+  border-radius: 6px !important;
+  padding: 10px !important;
+  font-family: var(--font-family) !important;
+  font-size: 1rem !important;
+  margin-bottom: 12px !important;
+  transition: border 0.2s !important;
+  outline: none !important;
+}
+input:focus, textarea:focus {
+  border: 2.5px solid var(--primary-bg-color) !important;
+  box-shadow: 0 0 8px var(--accent-color) !important;
+}
 
-/*-------------- START MENU ITEM -------- */
+/* Menu Items */
 .menu-item{
   border-radius: 0px !important;
   border: 2px solid var(--border-color) !important;
 }
-
 .menu-item:hover {
   opacity: 0.8 !important;
 }
-
 .menu-item:nth-child(odd) {
   background-color: var(--primary-bg-color) !important ;
   color: var(--text-color) !important ;
   padding: 10px !important;
   text-decoration: none !important;
 }
-
 .menu-item:nth-child(even) {
   background-color: var(--secondary-bg-color) !important;
   color: var(--text-color) !important;
@@ -81,4 +147,64 @@ body {
   text-decoration: none !important;
 }
 
-/*-------------- END MENU ITEM -------- */
+/* Goth sentence area */
+.goth-sentence {
+  font-family: var(--gothic-heading) !important;
+  color: var(--accent-color) !important;
+  font-size: 1.3rem !important;
+  text-align: center !important;
+  margin: 24px 0 8px 0 !important;
+  min-height: 2.5em !important;
+  letter-spacing: 1.5px !important;
+  z-index: 3 !important;
+  text-shadow: 0 2px 8px #a8326e99 !important;
+  transition: opacity 0.4s !important;
+}
+
+/* Goth girl slide animation */
+.goth-girl-slide {
+  position: fixed !important;
+  top: 30vh !important;
+  left: -300px !important;
+  width: 220px !important;
+  height: auto !important;
+  z-index: 1000 !important;
+  pointer-events: none !important;
+  opacity: 0.95 !important;
+  filter: drop-shadow(0 8px 32px #a8326e88) grayscale(0.2) contrast(1.1) !important;
+  animation: goth-girl-slide-across 1.2s cubic-bezier(0.7,0,0.3,1) forwards !important;
+}
+@keyframes goth-girl-slide-across {
+  0% { left: -300px; opacity: 0.95; }
+  10% { opacity: 1; }
+  80% { left: 70vw; opacity: 1; }
+  100% { left: 110vw; opacity: 0; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px !important;
+  background: #2a1a2a !important;
+}
+::-webkit-scrollbar-thumb {
+  background: #a8326e !important;
+  border-radius: 6px !important;
+}
+
+/* Utility: overlay for fog (optional, JS can toggle this) */
+.goth-fog {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  background: url('../../public//images/fog.jpeg') repeat !important;
+  opacity: 0.12 !important;
+  animation: fog-move 30s linear infinite !important;
+}
+@keyframes fog-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 100vw 0; }
+}

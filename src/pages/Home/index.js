@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React from "react";
+import React, { useRef, useState } from "react";
 
 // @mui material components
 import Container from "@mui/material/Container";
@@ -47,15 +47,65 @@ const textAreaStyle = {
 function Presentation() {
 
   //pagination logic
-  const [textArray, setTextArray] = React.useState(["", "", "", "", ""]); //won't ever reset
-  const [text, setText] = React.useState(textArray[0]); //this will reset when changing pages
-  const [currentPage, setCurrentPage] = React.useState(1);
-  //formatted text 
-  const [formattedTextArray, setFormattedTextArray] = React.useState(["", "", "", "", ""]);
-  const [formattedText, setFormattedText] = React.useState(formattedTextArray[0]);
+  const [textArray, setTextArray] = useState(["", "", "", "", ""]); //won't ever reset
+  const [text, setText] = useState(textArray[0]); //this will reset when changing pages
+  const [currentPage, setCurrentPage] = useState(1);
+  //formatted text
+  const [formattedTextArray, setFormattedTextArray] = useState(["", "", "", "", ""]);
+  const [formattedText, setFormattedText] = useState(formattedTextArray[0]);
   //validation logic
-  const [isValid, setIsValid] = React.useState(undefined);
-  const [genericError, setGenericError] = React.useState("");
+  const [isValid, setIsValid] = useState(undefined);
+  const [genericError, setGenericError] = useState("");
+
+  // GOTH THEME: Sentences, image, and music
+  const gothSentences = [
+    "We are all broken, that's how the light gets in.",
+    "In the darkness, I find my true self.",
+    "JSON, like my soul, is best formatted in black.",
+    "Embrace the error, for it is part of the void.",
+    "Even the prettiest code has a shadow.",
+    "Let the night guide your indentation.",
+    "Goth girls do it with style... and valid JSON.",
+    "Every bracket closed is a secret kept.",
+    "Beauty in the dark, order in the chaos.",
+    "My heart beats in hexadecimal."
+  ];
+  const gothImages = [
+    "/goth-girls/goth1.jpg",
+    "/goth-girls/goth2.jpg",
+    "/goth-girls/goth3.jpg",
+    "/goth-girls/goth4.jpg"
+    // Add more as you add images to public/goth-girls/
+  ];
+  const successSound = "/sounds/success.mp3";
+  const failSound = "/sounds/fail.mp3";
+
+  const [gothSentence, setGothSentence] = useState("");
+  const [showGothGirl, setShowGothGirl] = useState(false);
+  const [gothGirlImg, setGothGirlImg] = useState("");
+  const gothGirlTimeout = useRef(null);
+
+  // Play sound utility
+  const playSound = (src) => {
+    const audio = new window.Audio(src);
+    audio.volume = 0.5;
+    audio.play();
+  };
+
+  // Handler for after conversion
+  const handleConvert = ({ success }) => {
+    // Set random sentence
+    setGothSentence(gothSentences[Math.floor(Math.random() * gothSentences.length)]);
+    // Set random image and trigger animation
+    setGothGirlImg(gothImages[Math.floor(Math.random() * gothImages.length)]);
+    setShowGothGirl(false); // reset
+    setTimeout(() => setShowGothGirl(true), 50); // trigger re-render for animation
+    // Play sound
+    playSound(success ? successSound : failSound);
+    // Remove image after animation
+    if (gothGirlTimeout.current) clearTimeout(gothGirlTimeout.current);
+    gothGirlTimeout.current = setTimeout(() => setShowGothGirl(false), 1300);
+  };
 
   React.useEffect(() => {
     if (isValid === true) {
@@ -142,6 +192,20 @@ function Presentation() {
                 readOnly
               ></TextareaAutosize>
             </Grid2>
+            {/* GOTH SENTENCE */}
+            <div className="goth-sentence" style={{ minHeight: "2.5em" }}>
+              {gothSentence}
+            </div>
+            {/* GOTH GIRL IMAGE ANIMATION */}
+            {showGothGirl && gothGirlImg && (
+              <img
+                src={gothGirlImg}
+                alt="Goth Girl"
+                className="goth-girl-slide"
+                style={{ zIndex: 1000, position: "fixed" }}
+                draggable={false}
+              />
+            )}
             <FormatterAction
               textToManage={text}
               setTextToManage={setText}
@@ -150,6 +214,7 @@ function Presentation() {
               setGenericError={setGenericError}
               processedText={formattedText}
               setProcessedText={setFormattedText}
+              onConvert={handleConvert}
             />
           </Grid2>
         </Container>

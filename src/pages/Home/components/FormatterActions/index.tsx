@@ -17,6 +17,8 @@ export interface IFormatterActionsProps {
   //processed text
   processedText : string;
   setProcessedText : (text : string) => void;
+  // goth: callback after conversion
+  onConvert?: (result: { success: boolean }) => void;
 }
 
 //This is a row/column component, possibly a small flexbox, which will contain actions like "Format", "Copy", "Clear", etc.
@@ -110,6 +112,9 @@ export default function FormatterAction(props : IFormatterActionsProps) : React.
         <Button sx={{width: buttonWidth}} variant="contained" color="primary" onClick={() =>{
             const formattedText = format(props.textToManage , tabSpaces);
             props.setProcessedText(formattedText);
+            if (props.onConvert) {
+              props.onConvert({ success: formattedText !== "" });
+            }
           }}>
           <b style={{ color: "white" }}>Format</b>
         </Button>
