@@ -109,7 +109,7 @@ export default function FormatterAction(props : IFormatterActionsProps) : React.
           </Select>
       </Grid2>
       <Grid2 sx={{ display: 'flex'}}>
-        <Button sx={{width: buttonWidth}} variant="contained" color="primary" onClick={() =>{
+        <Button className="primary-button"  sx={{width: buttonWidth}} variant="contained" color="primary" onClick={() =>{
             const formattedText = format(props.textToManage , tabSpaces);
             props.setProcessedText(formattedText);
             if (props.onConvert) {
@@ -120,12 +120,12 @@ export default function FormatterAction(props : IFormatterActionsProps) : React.
         </Button>
       </Grid2>
       <Grid2 >
-        <Button sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => copy(props.textToManage)}>
+        <Button className="primary-button" sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => copy(props.textToManage)}>
           <b style={{ color: "white" }}>Copy</b>
         </Button>
       </Grid2>
       <Grid2 >
-        <Button sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => clear()}>
+        <Button className="primary-button" sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => clear()}>
           <b style={{ color: "white" }}>Clear</b>
         </Button>
       </Grid2>
