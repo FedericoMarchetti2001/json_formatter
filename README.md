@@ -103,7 +103,7 @@ Within the download you'll find the following directories and files:
 material-kit-2-react
     ├── public
     │   ├── apple-icon.png
-    │   ├── favicon.png
+    │   ├── goth-icon.jpg
     │   ├── index.html
     │   ├── manifest.json
     │   └── robots.txt
