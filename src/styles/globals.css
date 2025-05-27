@@ -285,6 +285,7 @@ input:focus, textarea:focus {
   overflow: hidden !important;
   /* Create the triangular shape */
   clip-path: polygon( 35% 19%, 65% 19% , 100% 38%, 81% 70%, 19% 70%, 0 38%) !important;
+cursor: pointer !important;
 }
 
 .goth-drawer .MuiBox-root {
