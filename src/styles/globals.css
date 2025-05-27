@@ -276,27 +276,34 @@ input:focus, textarea:focus {
 }
 /* Goth Drawer Styling */
 .goth-drawer .MuiDrawer-paper {
-  width: 250px !important;
+  width: 300px !important; /* Set a fixed width for the triangle */
   box-sizing: border-box !important;
-  background: linear-gradient(135deg, #18111b 60%, #2d0036 100%) !important;
+  background: linear-gradient(135deg, #18111b 60%, #2d0036 100%) !important; /* Restore background */
   color: #f0e6f6 !important;
-  border-right: 3px solid #a8326e !important;
-  box-shadow: 0 0 32px #a8326e55, 0 0 0 4px #3a003a inset !important;
-  border-top-right-radius: 24px !important;
-  border-bottom-right-radius: 24px !important;
+  border: 3px solid #a8326e !important; /* Restore border */
+  box-shadow: 0 0 32px #a8326e55, 0 0 0 4px #3a003a inset !important; /* Restore box shadow */
+  border-radius: 0px !important; /* Keep border radius 0 for triangle */
   position: relative !important;
   overflow: hidden !important;
+  /* Create the triangular shape */
+  clip-path: polygon(0% 0%, 75% 25%, 100% 50%,75% 75%,0% 100%) !important;
 }
 
 .goth-drawer .MuiBox-root {
-  padding: 24px 12px !important;
+  padding: 0 !important; /* Remove padding */
   background: transparent !important;
+  height: 100% !important; /* Ensure Box takes full height for vertical centering */
+  display: flex !important; /* Use flexbox for centering */
+  align-items: center !important; /* Center items vertically */
+  justify-content: center !important; /* Center items horizontally */
 }
 
 .goth-drawer img {
   display: block;
-  margin: 24px auto 12px auto !important;
-  max-width: 90% !important;
+  width: 100% !important; /* Image takes full width of container */
+  height: 100% !important; /* Image takes full height of container */
+  object-fit: contain !important; /* Ensure image fits within the triangle */
+  margin: 0 !important; /* Remove margin */
   border-radius: 16px !important;
   box-shadow: 0 4px 24px #a8326e88, 0 0 0 4px #fff2 inset !important;
   border: 2px solid #a8326e !important;

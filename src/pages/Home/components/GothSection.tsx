@@ -1,8 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
-import { gothSentences } from "../sentences";
+import { gothSuccessSentences, gothFailureSentences } from "../sentences";
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button'; // Import Button
+import IconButton from '@mui/material/IconButton'; // Import IconButton
+import CloseIcon from '@mui/icons-material/Close'; // Import CloseIcon
 
 // Define TypeScript types for props
 interface GothSectionProps {
@@ -17,26 +20,30 @@ interface GothSectionProps {
 
 function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEnableAIVoice, onConvert, gothSentence, setGothSentence }: GothSectionProps) {
   // GOTH THEME: Sentences, image, and music
-  const gothImages: string[] = [
+  const gothSuccessImages: string[] = [
     "/goth-girls/goth1.jpg",
     "/goth-girls/goth2.jpeg",
     "/goth-girls/goth3.jpeg",
     "/goth-girls/goth4.jpg",
-    "/goth-girls/goth5.jpg",
     "/goth-girls/goth6.jpg",
-    "/goth-girls/goth7.jpg",
     "/goth-girls/goth8.jpg",
+    // Add more success images
+  ];
+
+  const gothFailureImages: string[] = [
+    "/goth-girls/goth7.jpg",
     "/goth-girls/goth10.jpg",
     "/goth-girls/goth11.jpg",
-    "/goth-girls/goth12.jpg"
-    // Add more as you add images to public/goth-girls/
+    "/goth-girls/goth12.jpg",
+    // Add more failure images
   ];
+
   const successSound= "/sounds/success.mp3";
   const failSound= "/sounds/fail.mp3";
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [gothGirlImg, setGothGirlImg] = useState("");
-  const gothGirlTimeout = useRef<number | null>(null);
+  const [showOpenButton, setShowOpenButton] = useState(false); // State for the open button visibility
 
   // Play sound utility
   const playSound = (src: string) => {
@@ -81,12 +88,17 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
   // Handler for after conversion - This will be called from the parent
   useEffect(() => {
     if (onConvert) {
+      const sentences = onConvert.success ? gothSuccessSentences : gothFailureSentences;
+      const images = onConvert.success ? gothSuccessImages : gothFailureImages;
+
       // Set random sentence
-      const sentence = gothSentences[Math.floor(Math.random() * gothSentences.length)];
+      const sentence = sentences[Math.floor(Math.random() * sentences.length)];
       setGothSentence(sentence);
       // Set random image and trigger animation
-      setGothGirlImg(gothImages[Math.floor(Math.random() * gothImages.length)]);
+      const imageUrl = images[Math.floor(Math.random() * images.length)];
+      setGothGirlImg(imageUrl);
       setIsDrawerOpen(true); // Open the drawer
+      setShowOpenButton(true); // Show the open button after conversion
       // Play sound if enabled
       if (enablePlaySound) {
         playSound(onConvert.success ? successSound : failSound);
@@ -95,11 +107,17 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
       if (enableAIVoice) {
         speakSentence(sentence);
       }
-      // Close drawer after animation duration
-      if (gothGirlTimeout.current) clearTimeout(gothGirlTimeout.current);
-      gothGirlTimeout.current = setTimeout(() => setIsDrawerOpen(false), 3000); // Close after 3 seconds
+      // Removed the timeout to close the drawer automatically
     }
-  }, [onConvert]); // Depend on onConvert prop
+  }, [onConvert, enablePlaySound, enableAIVoice, setGothSentence]); // Depend on onConvert, enablePlaySound, enableAIVoice, and setGothSentence
+
+  const handleDrawerOpen = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setIsDrawerOpen(false);
+  };
 
   return (
     <>
@@ -127,21 +145,13 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
       <Drawer
         anchor="left"
         open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)} // Allow closing by clicking outside
+        onClose={handleDrawerClose} // Use the close handler
         className="goth-drawer" // Add class name for styling
       >
         <Box
           sx={{ width: 250 }} // Adjust width as needed
           role="presentation"
-          // onClick={() => setIsDrawerOpen(false)} // Close on click inside if desired
-          // onKeyDown={() => setIsDrawerOpen(false)} // Close on keydown if desired
         >
-          <Typography variant="h6" sx={{ p: 2 }}>
-            Goth Girl Says:
-          </Typography>
-          <Typography variant="body1" sx={{ px: 2, pb: 2 }}>
-            {gothSentence}
-          </Typography>
           {gothGirlImg && (
             <img
               src={gothGirlImg}
@@ -152,6 +162,37 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
           )}
         </Box>
       </Drawer>
+
+      {/* Button to open the drawer */}
+      {showOpenButton && !isDrawerOpen && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleDrawerOpen}
+          sx={{
+            position: 'fixed', // Position fixed to stay on the left middle
+            left: 0,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 1200, // Ensure it's above other content but below the open drawer
+            writingMode: 'vertical-rl', // Rotate text vertically
+            textOrientation: 'mixed',
+            borderTopLeftRadius: 0, // Style to look goth/triangular
+            borderBottomLeftRadius: 0,
+            border: '2px solid var(--accent-color)', // Use CSS variable for border
+            backgroundColor: 'var(--primary-bg-color)', // Use CSS variable for background
+            color: 'var(--text-color)', // Use CSS variable for text color
+            fontFamily: 'var(--gothic-heading)', // Use CSS variable for font
+            '&:hover': {
+              backgroundColor: 'var(--accent-color)', // Hover styles
+              color: '#18141a',
+            },
+          }}
+          className="goth-open-drawer-button" // Add class for potential further styling
+        >
+          Show Goth Girl
+        </Button>
+      )}
     </>
   );
 }
