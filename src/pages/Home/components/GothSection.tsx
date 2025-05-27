@@ -1,21 +1,23 @@
 import React, { useRef, useState, useEffect } from "react";
 import { gothSentences } from "../sentences";
+import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-import PropTypes from "prop-types";
+// Define TypeScript types for props
+interface GothSectionProps {
+  enablePlaySound: boolean;
+  setEnableAIVoice: (value: boolean) => void;
+  setEnablePlaySound: (value: boolean) => void;
+  enableAIVoice: boolean;
+  onConvert: { success: boolean } | null; // Assuming onConvert can be null initially
+  gothSentence: string;
+  setGothSentence: (sentence: string) => void;
+}
 
-GothSection.propTypes = {
-  enablePlaySound: PropTypes.bool.isRequired,
-  setEnableAIVoice: PropTypes.func.isRequired,
-  setEnablePlaySound: PropTypes.func.isRequired,
-  enableAIVoice: PropTypes.bool.isRequired,
- onConvert: PropTypes.func.isRequired,
-    gothSentence: PropTypes.string,
-    setGothSentence: PropTypes.func.isRequired
-};
-
-function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEnableAIVoice, onConvert, gothSentence, setGothSentence }) {
+function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEnableAIVoice, onConvert, gothSentence, setGothSentence }: GothSectionProps) {
   // GOTH THEME: Sentences, image, and music
-  const gothImages = [
+  const gothImages: string[] = [
     "/goth-girls/goth1.jpg",
     "/goth-girls/goth2.jpeg",
     "/goth-girls/goth3.jpeg",
@@ -29,28 +31,28 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
     "/goth-girls/goth12.jpg"
     // Add more as you add images to public/goth-girls/
   ];
-  const successSound = "/sounds/success.mp3";
-  const failSound = "/sounds/fail.mp3";
+  const successSound= "/sounds/success.mp3";
+  const failSound= "/sounds/fail.mp3";
 
-  const [showGothGirl, setShowGothGirl] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [gothGirlImg, setGothGirlImg] = useState("");
-  const gothGirlTimeout = useRef(null);
+  const gothGirlTimeout = useRef<number | null>(null);
 
   // Play sound utility
-  const playSound = (src) => {
+  const playSound = (src: string) => {
     const audio = new window.Audio(src);
     audio.volume = 0.5;
     audio.play();
   };
 
   // AI Voice utility using Web Speech API
-  const speakSentence = (sentence) => {
+  const speakSentence = (sentence: string) => {
     if (!window.speechSynthesis) return;
     const synth = window.speechSynthesis;
-    let voices = synth.getVoices();
+    const voices = synth.getVoices();
 
     // Try to pick a "goth and sweet" voice: prefer female, English, lower pitch
-    let gothVoice =
+    const gothVoice: SpeechSynthesisVoice | undefined =
       voices.find(v => /female/i.test(v.name) && /en/i.test(v.lang)) ||
       voices.find(v => /en/i.test(v.lang)) ||
       voices[0];
@@ -84,7 +86,7 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
       setGothSentence(sentence);
       // Set random image and trigger animation
       setGothGirlImg(gothImages[Math.floor(Math.random() * gothImages.length)]);
-      setShowGothGirl(true); // trigger re-render for animation
+      setIsDrawerOpen(true); // Open the drawer
       // Play sound if enabled
       if (enablePlaySound) {
         playSound(onConvert.success ? successSound : failSound);
@@ -93,9 +95,9 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
       if (enableAIVoice) {
         speakSentence(sentence);
       }
-      // Remove image after animation
+      // Close drawer after animation duration
       if (gothGirlTimeout.current) clearTimeout(gothGirlTimeout.current);
-      gothGirlTimeout.current = setTimeout(() => setShowGothGirl(false), 3000);
+      gothGirlTimeout.current = setTimeout(() => setIsDrawerOpen(false), 3000); // Close after 3 seconds
     }
   }, [onConvert]); // Depend on onConvert prop
 
@@ -107,7 +109,7 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
           <input
             type="checkbox"
             checked={enablePlaySound}
-            onChange={() => setEnablePlaySound((v) => !v)}
+            onChange={(e) => setEnablePlaySound(e.target.checked)}
           />
           Play Sound
         </label>
@@ -115,22 +117,41 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
           <input
             type="checkbox"
             checked={enableAIVoice}
-            onChange={() => setEnableAIVoice((v) => !v)}
+            onChange={(e) => setEnableAIVoice(e.target.checked)}
           />
           AI Voice (Goth & Sweet)
         </label>
       </div>
 
-      {/* GOTH GIRL IMAGE ANIMATION */}
-      {showGothGirl && gothGirlImg && (
-        <img
-          src={gothGirlImg}
-          alt="Goth Girl"
-          className="goth-girl-slide"
-          style={{ zIndex: 1000, position: "fixed" }}
-          draggable={false}
-        />
-      )}
+      {/* GOTH GIRL DRAWER */}
+      <Drawer
+        anchor="left"
+        open={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)} // Allow closing by clicking outside
+        className="goth-drawer" // Add class name for styling
+      >
+        <Box
+          sx={{ width: 250 }} // Adjust width as needed
+          role="presentation"
+          // onClick={() => setIsDrawerOpen(false)} // Close on click inside if desired
+          // onKeyDown={() => setIsDrawerOpen(false)} // Close on keydown if desired
+        >
+          <Typography variant="h6" sx={{ p: 2 }}>
+            Goth Girl Says:
+          </Typography>
+          <Typography variant="body1" sx={{ px: 2, pb: 2 }}>
+            {gothSentence}
+          </Typography>
+          {gothGirlImg && (
+            <img
+              src={gothGirlImg}
+              alt="Goth Girl"
+              style={{ width: '100%', height: 'auto', display: 'block' }} // Basic image styling
+              draggable={false}
+            />
+          )}
+        </Box>
+      </Drawer>
     </>
   );
 }

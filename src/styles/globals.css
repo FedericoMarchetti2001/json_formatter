@@ -274,3 +274,63 @@ input:focus, textarea:focus {
   font-size: 1rem !important;
   margin-bottom: 8px !important;
 }
+/* Goth Drawer Styling */
+.goth-drawer .MuiDrawer-paper {
+  width: 250px !important;
+  box-sizing: border-box !important;
+  background: linear-gradient(135deg, #18111b 60%, #2d0036 100%) !important;
+  color: #f0e6f6 !important;
+  border-right: 3px solid #a8326e !important;
+  box-shadow: 0 0 32px #a8326e55, 0 0 0 4px #3a003a inset !important;
+  border-top-right-radius: 24px !important;
+  border-bottom-right-radius: 24px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.goth-drawer .MuiBox-root {
+  padding: 24px 12px !important;
+  background: transparent !important;
+}
+
+.goth-drawer img {
+  display: block;
+  margin: 24px auto 12px auto !important;
+  max-width: 90% !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 24px #a8326e88, 0 0 0 4px #fff2 inset !important;
+  border: 2px solid #a8326e !important;
+}
+
+.goth-drawer .MuiTypography-root,
+.goth-drawer .MuiListItemText-primary {
+  font-family: 'UnifrakturCook', 'Cinzel Decorative', 'Cormorant Garamond', serif !important;
+  color: #ff69b4 !important;
+  text-shadow: 0 2px 8px #a8326e99, 0 0 4px #fff3 !important;
+  letter-spacing: 1.5px !important;
+}
+
+.goth-drawer .MuiListItem-root {
+  border-radius: 8px !important;
+  margin: 6px 0 !important;
+  background: linear-gradient(90deg, #2d0036 0%, #18111b 100%) !important;
+  box-shadow: 0 2px 8px #a8326e33 !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+.goth-drawer .MuiListItem-root:hover,
+.goth-drawer .MuiListItem-root:focus {
+  background: linear-gradient(90deg, #a8326e 0%, #3a003a 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px #ff69b488 !important;
+}
+
+.goth-drawer .MuiDivider-root {
+  border-color: #a8326e !important;
+  opacity: 0.5 !important;
+}
+
+.goth-drawer .MuiSvgIcon-root {
+  color: #ff69b4 !important;
+  filter: drop-shadow(0 0 6px #a8326e99) !important;
+}
