@@ -11,23 +11,23 @@ const textAreaStyle = {
 
 InputOutputSection.propTypes = {
   text: PropTypes.string.isRequired,
-  setText: PropTypes.func.isRequired,
+  handleTextChange: PropTypes.func.isRequired,
   formattedText: PropTypes.string.isRequired,
   gothSentence: PropTypes.string,
 };
 
-function InputOutputSection({ text, setText, formattedText, gothSentence }) {
+function InputOutputSection({ text, handleTextChange, formattedText, gothSentence }) {
   const handleTextareaKeyDown = (e) => {
     if (e.key === "Tab") {
       e.preventDefault();
       const start = e.target.selectionStart;
       const end = e.target.selectionEnd;
-      setText(text.substring(0, start) + "\t" + text.substring(end));
+      handleTextChange(text.substring(0, start) + "\t" + text.substring(end));
     }
   };
 
   const handleTextareaChange = (textObject) => {
-    setText(textObject.target.value);
+    handleTextChange(textObject.target.value);
     // setIsValid(undefined); // This state update will be handled in the parent or a different component
   };
 

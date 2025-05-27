@@ -41,11 +41,9 @@ const containerStyle = {
 function Presentation() {
   //pagination logic
   const [textArray, setTextArray] = useState(["", "", "", "", ""]); //won't ever reset
-  const [text, setText] = useState(textArray[0]); //this will reset when changing pages
   const [currentPage, setCurrentPage] = useState(1);
   //formatted text
   const [formattedTextArray, setFormattedTextArray] = useState(["", "", "", "", ""]);
-  const [formattedText, setFormattedText] = useState(formattedTextArray[0]);
   //validation logic
   const [isValid, setIsValid] = useState(undefined);
   const [genericError, setGenericError] = useState("");
@@ -57,29 +55,24 @@ function Presentation() {
   const [gothConvertResult, setGothConvertResult] = useState(null); // State to trigger GothSection effects
 
   // Update textArray when text changes
-  useEffect(() => {
+  // Update textArray when input changes
+  const handleTextChange = (newText) => {
     setTextArray((prevArray) => {
       const newArray = [...prevArray];
-      newArray[currentPage - 1] = text;
+      newArray[currentPage - 1] = newText;
       return newArray;
     });
     setIsValid(undefined); // Reset validation status when text changes
-  }, [text, currentPage]);
+  };
 
-  // Update formattedTextArray when formattedText changes
-  useEffect(() => {
+  // Update formattedTextArray when formatted text changes
+  const handleFormattedTextChange = (newFormattedText) => {
     setFormattedTextArray((prevArray) => {
       const newArray = [...prevArray];
-      newArray[currentPage - 1] = formattedText;
+      newArray[currentPage - 1] = newFormattedText;
       return newArray;
     });
-  }, [formattedText, currentPage]);
-
-  // Update text and formattedText when currentPage changes
-  useEffect(() => {
-    setText(textArray[currentPage - 1]);
-    setFormattedText(formattedTextArray[currentPage - 1]);
-  }, [currentPage, textArray, formattedTextArray]);
+  };
 
   // Handler for after conversion to trigger GothSection effects
   const handleConvert = ({ success }) => {
@@ -112,21 +105,21 @@ function Presentation() {
               />
               <FormatterPagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
               <InputOutputSection
-                text={text}
-                setText={setText}
-                formattedText={formattedText}
+                text={textArray[currentPage - 1]} // Pass current page's text
+                setText={handleTextChange} // Pass handler to update textArray
+                formattedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
                 gothSentence={gothSentence} // gothSentence is now managed within GothSection
               />
             </Grid2>
             <Grid2 xs={2} container direction="column" alignItems="stretch" style={{ padding: "10px" }}>
               <FormatterAction
-                textToManage={text}
-                setTextToManage={setText}
+                textToManage={textArray[currentPage - 1]} // Pass current page's text
+                setTextToManage={handleTextChange} // Pass handler to update textArray
                 isValid={isValid}
                 setIsValid={setIsValid}
                 setGenericError={setGenericError}
-                processedText={formattedText}
-                setProcessedText={setFormattedText}
+                processedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
+                setProcessedText={handleFormattedTextChange} // Pass handler to update formattedTextArray
                 onConvert={handleConvert} // Pass the handler to FormatterAction
               />
             </Grid2>
