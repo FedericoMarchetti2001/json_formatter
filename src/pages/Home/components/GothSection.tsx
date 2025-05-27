@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button'; // Import Button
 import IconButton from '@mui/material/IconButton'; // Import IconButton
 import CloseIcon from '@mui/icons-material/Close'; // Import CloseIcon
+import { ToastContainer, toast } from 'react-toastify'; // Import react-toastify components
+import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify CSS
 
 // Define TypeScript types for props
 interface GothSectionProps {
@@ -107,6 +109,14 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
       if (enableAIVoice) {
         speakSentence(sentence);
       }
+
+      // Show toast notification
+      if (onConvert.success) {
+        toast.success("Conversion successful!");
+      } else {
+        toast.error("Conversion failed.");
+      }
+
       // Removed the timeout to close the drawer automatically
     }
   }, [onConvert, enablePlaySound, enableAIVoice, setGothSentence]); // Depend on onConvert, enablePlaySound, enableAIVoice, and setGothSentence
@@ -149,14 +159,15 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
         className="goth-drawer" // Add class name for styling
       >
         <Box
-          sx={{ width: 250 }} // Adjust width as needed
+          sx={{ width: 400 }} // Adjust width as needed
           role="presentation"
+          alignItems={"center"}
         >
           {gothGirlImg && (
             <img
               src={gothGirlImg}
               alt="Goth Girl"
-              style={{ width: '100%', height: 'auto', display: 'block' }} // Basic image styling
+              style={{ width: '100%', height: 'auto', display: 'block'}} // Basic image styling
               draggable={false}
             />
           )}
@@ -193,6 +204,19 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
           Show Goth Girl
         </Button>
       )}
+
+      {/* Toast Container */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

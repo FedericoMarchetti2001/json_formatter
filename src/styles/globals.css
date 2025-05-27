@@ -280,13 +280,11 @@ input:focus, textarea:focus {
   box-sizing: border-box !important;
   background: linear-gradient(135deg, #18111b 60%, #2d0036 100%) !important; /* Restore background */
   color: #f0e6f6 !important;
-  border: 3px solid #a8326e !important; /* Restore border */
-  box-shadow: 0 0 32px #a8326e55, 0 0 0 4px #3a003a inset !important; /* Restore box shadow */
   border-radius: 0px !important; /* Keep border radius 0 for triangle */
   position: relative !important;
   overflow: hidden !important;
   /* Create the triangular shape */
-  clip-path: polygon(0% 0%, 75% 25%, 100% 50%,75% 75%,0% 100%) !important;
+  clip-path: polygon( 35% 19%, 65% 19% , 100% 38%, 81% 70%, 19% 70%, 0 38%) !important;
 }
 
 .goth-drawer .MuiBox-root {
@@ -302,11 +300,10 @@ input:focus, textarea:focus {
   display: block;
   width: 100% !important; /* Image takes full width of container */
   height: 100% !important; /* Image takes full height of container */
-  object-fit: contain !important; /* Ensure image fits within the triangle */
+  object-fit: cover !important; /* Ensure image fills the triangle, cropping if necessary */
   margin: 0 !important; /* Remove margin */
   border-radius: 16px !important;
   box-shadow: 0 4px 24px #a8326e88, 0 0 0 4px #fff2 inset !important;
-  border: 2px solid #a8326e !important;
 }
 
 .goth-drawer .MuiTypography-root,
@@ -340,4 +337,43 @@ input:focus, textarea:focus {
 .goth-drawer .MuiSvgIcon-root {
   color: #ff69b4 !important;
   filter: drop-shadow(0 0 6px #a8326e99) !important;
+}
+
+/* Goth Toastify Styles */
+.Toastify__toast-container {
+  font-family: var(--font-family) !important;
+  z-index: 9999 !important;
+}
+
+.Toastify__toast {
+  background: linear-gradient(90deg, #18111b 0%, #2d0036 100%) !important;
+  color: var(--text-color) !important;
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px #000a !important;
+  font-size: 1rem !important;
+}
+
+.Toastify__toast--success {
+  background: linear-gradient(90deg, #a8326e 0%, #ff69b4 100%) !important;
+  color: #18141a !important;
+  border-color: var(--accent-color) !important;
+}
+
+.Toastify__toast--error {
+  background: linear-gradient(90deg, #3a003a 0%, #a020f0 100%) !important;
+  color: #f0e6f6 !important;
+  border-color: #a020f0 !important;
+}
+
+.Toastify__progress-bar {
+  background: var(--text-color) !important;
+}
+
+.Toastify__progress-bar--success {
+  background: #18141a !important;
+}
+
+.Toastify__progress-bar--error {
+  background: #f0e6f6 !important;
 }

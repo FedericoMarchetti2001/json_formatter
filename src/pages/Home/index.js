@@ -27,7 +27,6 @@ import InputOutputSection from "./components/InputOutputSection";
 import GothSection from "./components/GothSection";
 
 //Other components
-import { ToastContainer, toast } from "react-toastify";
 import FormatterPagination from "./components/Pagination";
 
 const containerStyle = {
@@ -82,21 +81,6 @@ function Presentation() {
     setFormattedText(formattedTextArray[currentPage - 1]);
   }, [currentPage, textArray, formattedTextArray]);
 
-  // Handle validation and generic error toasts
-  useEffect(() => {
-    if (isValid === true) {
-      toast.success("JSON is valid");
-    } else if (isValid === false) {
-      toast.error("JSON is not valid");
-    }
-  }, [isValid]);
-
-  useEffect(() => {
-    if (genericError !== "") {
-      toast.error(genericError);
-    }
-  }, [genericError]);
-
   // Handler for after conversion to trigger GothSection effects
   const handleConvert = ({ success }) => {
     setGothConvertResult({ success });
@@ -149,17 +133,6 @@ function Presentation() {
           </Grid2>
         </Container>
       </MKBox>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick={true}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 }
