@@ -116,7 +116,7 @@ function Presentation() {
       >
         <Container style={containerStyle}>
           <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
-            <Grid2 item xs={12} style={{ flex: 1 }}>
+            <Grid2 item xs={10} style={{ flex: 1 }}>
               <GothSection
                 enablePlaySound={enablePlaySound}
                 setEnablePlaySound={setEnablePlaySound}
@@ -134,16 +134,18 @@ function Presentation() {
                 gothSentence={gothSentence} // gothSentence is now managed within GothSection
               />
             </Grid2>
-            <FormatterAction
-              textToManage={text}
-              setTextToManage={setText}
-              isValid={isValid}
-              setIsValid={setIsValid}
-              setGenericError={setGenericError}
-              processedText={formattedText}
-              setProcessedText={setFormattedText}
-              onConvert={handleConvert} // Pass the handler to FormatterAction
-            />
+            <Grid2 xs={2} container direction="column" alignItems="stretch" style={{ padding: "10px" }}>
+              <FormatterAction
+                textToManage={text}
+                setTextToManage={setText}
+                isValid={isValid}
+                setIsValid={setIsValid}
+                setGenericError={setGenericError}
+                processedText={formattedText}
+                setProcessedText={setFormattedText}
+                onConvert={handleConvert} // Pass the handler to FormatterAction
+              />
+            </Grid2>
           </Grid2>
         </Container>
       </MKBox>

@@ -32,7 +32,7 @@ function InputOutputSection({ text, setText, formattedText, gothSentence }) {
   };
 
   return (
-    <MKBox style={{ flex: 1 }}>
+    <MKBox style={{ flex: 1, height: "70%" }}>
       <TextareaAutosize
         placeholder="Paste your JSON here"
         minRows={10}

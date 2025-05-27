@@ -89,49 +89,47 @@ export default function FormatterAction(props : IFormatterActionsProps) : React.
   }
 
   return (
-    <Grid2 xs={2} xl={2} container direction="column" justifyContent="space-between" alignItems="stretch" style={{ padding: "10px" }}>
-      <Grid2 container direction="column" sx={{ display: 'flex', width: buttonWidth, padding: '0px' }}>
-          <InputLabel id="tab-spaces--autowidth-label" className="goth-input-label">Tab spaces</InputLabel>
-          <Select
-            className={"menu-select"}
-            labelId="tab-spaces--autowidth-label"
-            id="tab-spaces-select-autowidth"
-            value={tabSpaces}
-            onChange={(e) => setTabSpaces(e.target.value as number)}
-            autoWidth
-            label="Tab spaces"
-          >
-            <MenuItem className={"menu-item"} value={2}>Two</MenuItem>
-            <MenuItem className={"menu-item"} value={4}>Four</MenuItem>
-            <MenuItem className={"menu-item"} value={6}>Six</MenuItem>
-            <MenuItem className={"menu-item"} value={8}>Eigth</MenuItem>
-          </Select>
-      </Grid2>
-      <Grid2 sx={{ display: 'flex'}}>
-        <Button className="primary-button"  sx={{width: buttonWidth}} variant="contained" color="primary" onClick={() =>{
-            const formattedText = format(props.textToManage , tabSpaces);
-            props.setProcessedText(formattedText);
-            if (props.onConvert) {
-              props.onConvert({ success: formattedText !== "" });
-            }
-          }}>
-          <b style={{ color: "white" }}>Format</b>
-        </Button>
-      </Grid2>
-      <Grid2 >
-        <Button className="primary-button" sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => copy(props.textToManage)}>
-          <b style={{ color: "white" }}>Copy</b>
-        </Button>
-      </Grid2>
-      <Grid2 >
-        <Button className="primary-button" sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => clear()}>
-          <b style={{ color: "white" }}>Clear</b>
-        </Button>
-      </Grid2>
-      <Grid2 >
-        <InputLabel>Upload JSON</InputLabel>
-        <input type="file" accept=".json,.txt" onChange={(e) => upload(e.target.files?.item(0) as File)} />
-      </Grid2>
-    </Grid2>
+    <React.Fragment>
+        <Grid2 container direction="column" height="50%" justifyContent="center" alignItems="stretch" style={{ padding: "10px" }}>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly", height: "100%" }}>
+            <Button className="primary-button"  sx={{width: buttonWidth}} variant="contained" color="primary" onClick={() =>{
+                const formattedText = format(props.textToManage , tabSpaces);
+                props.setProcessedText(formattedText);
+                if (props.onConvert) {
+                  props.onConvert({ success: formattedText !== "" });
+                }
+              }}>
+              <b style={{ color: "white" }}>Format</b>
+            </Button>
+            <Button className="primary-button" sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => copy(props.textToManage)}>
+              <b style={{ color: "white" }}>Copy</b>
+            </Button>
+            <Button className="primary-button" sx={{ width: buttonWidth }} variant="contained" color="primary" onClick={() => clear()}>
+              <b style={{ color: "white" }}>Clear</b>
+            </Button>
+          </div>
+        </Grid2>
+        <Grid2 container direction="column" height="50%" justifyContent="center" alignItems="stretch" style={{ padding: "10px" }}>
+          <InputLabel>Upload JSON</InputLabel>
+          <input type="file" accept=".json,.txt" onChange={(e) => upload(e.target.files?.item(0) as File)}/>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
+            <InputLabel id="tab-spaces--autowidth-label" className="goth-input-label">Tab spaces</InputLabel>
+            <Select
+              className={"menu-select"}
+              labelId="tab-spaces--autowidth-label"
+              id="tab-spaces-select-autowidth"
+              value={tabSpaces}
+              onChange={(e) => setTabSpaces(e.target.value as number)}
+              autoWidth
+              label="Tab spaces"
+            >
+              <MenuItem className={"menu-item"} value={2}>Two</MenuItem>
+              <MenuItem className={"menu-item"} value={4}>Four</MenuItem>
+              <MenuItem className={"menu-item"} value={6}>Six</MenuItem>
+              <MenuItem className={"menu-item"} value={8}>Eigth</MenuItem>
+            </Select>
+          </div>
+        </Grid2>
+    </React.Fragment>
   );
 }
