@@ -18,9 +18,6 @@ import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2";
 
-// Material Kit 2 React components
-import MKBox from "components/MKBox";
-
 // Custom components
 import FormatterAction from "./components/FormatterActions";
 import InputOutputSection from "./components/InputOutputSection";
@@ -28,6 +25,7 @@ import GothSection from "./components/GothSection";
 
 //Other components
 import FormatterPagination from "./components/Pagination";
+import { Box } from "@mui/material";
 
 const containerStyle = {
   maxHeight: "70vh",
@@ -81,7 +79,7 @@ function Presentation() {
 
   return (
     <div className="home-container">
-      <MKBox
+      <Box
         minHeight="75vh"
         width="100%"
         sx={{
@@ -125,7 +123,7 @@ function Presentation() {
             </Grid2>
           </Grid2>
         </Container>
-      </MKBox>
+      </Box>
     </div>
   );
 }

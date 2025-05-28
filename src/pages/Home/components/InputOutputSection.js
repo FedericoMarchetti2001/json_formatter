@@ -1,6 +1,5 @@
 import React from "react";
-import { TextareaAutosize } from "@mui/material";
-import MKBox from "components/MKBox";
+import { Box, TextareaAutosize } from "@mui/material";
 import PropTypes from "prop-types";
 
 const textAreaStyle = {
@@ -32,7 +31,7 @@ function InputOutputSection({ text, handleTextChange, formattedText, gothSentenc
   };
 
   return (
-    <MKBox style={{ flex: 1, height: "70%" }}>
+    <Box style={{ flex: 1, height: "70%" }}>
       <TextareaAutosize
         placeholder="Paste your JSON here"
         minRows={10}
@@ -54,7 +53,7 @@ function InputOutputSection({ text, handleTextChange, formattedText, gothSentenc
         value={formattedText}
         readOnly
       />
-    </MKBox>
+    </Box>
   );
 }
 
