@@ -31,6 +31,7 @@ import routes from "routes";
 
 //Vercel Analytics
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 export default function App() {
   const { pathname } = useLocation();
@@ -57,6 +58,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SpeedInsights />
       <Analytics />
       {/* Render the routes */}
       <Routes>
