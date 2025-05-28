@@ -29,6 +29,9 @@ import Presentation from "layouts/pages/home";
 // Material Kit 2 React routes
 import routes from "routes";
 
+//Vercel Analytics
+import { Analytics } from "@vercel/analytics/react"
+
 export default function App() {
   const { pathname } = useLocation();
 
@@ -54,6 +57,8 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Analytics />
+      {/* Render the routes */}
       <Routes>
         {getRoutes(routes)}
         <Route path="/home" element={<Presentation />} />
