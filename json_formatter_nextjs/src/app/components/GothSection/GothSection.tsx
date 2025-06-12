@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { gothSuccessSentences, gothFailureSentences } from "./sentences";
+import { gothSuccessSentences, gothFailureSentences } from "../Helpers/sentences";
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button'; // Import Button

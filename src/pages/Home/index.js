@@ -104,7 +104,7 @@ function Presentation() {
               <FormatterPagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
               <InputOutputSection
                 text={textArray[currentPage - 1]} // Pass current page's text
-                setText={handleTextChange} // Pass handler to update textArray
+                handleTextChange={handleTextChange} // Pass handler to update textArray
                 formattedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
                 gothSentence={gothSentence} // gothSentence is now managed within GothSection
               />

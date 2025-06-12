@@ -21,12 +21,12 @@ import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2";
 
 // Custom components
-import FormatterAction from "./components/FormatterActions";
-import InputOutputSection from "./components/InputOutputSection";
-import GothSection from "./components/GothSection";
+import FormatterAction from "./FormatterActions";
+import InputOutputSection from "./InputOutputSection";
+import GothSection from "../components/GothSection/GothSection";
 
 //Other components
-import FormatterPagination from "./components/Pagination";
+import FormatterPagination from "./Pagination";
 import { Box } from "@mui/material";
 
 const containerStyle = {
@@ -107,7 +107,7 @@ function Presentation() {
               <FormatterPagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
               <InputOutputSection
                 text={textArray[currentPage - 1]} // Pass current page's text
-                setText={handleTextChange} // Pass handler to update textArray
+                handleTextChange={handleTextChange} // Pass handler to update textArray
                 formattedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
                 gothSentence={gothSentence} // gothSentence is now managed within GothSection
               />
