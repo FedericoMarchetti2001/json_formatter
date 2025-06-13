@@ -1,13 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { gothSuccessSentences, gothFailureSentences } from "../sentences";
-import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button'; // Import Button
-import IconButton from '@mui/material/IconButton'; // Import IconButton
-import CloseIcon from '@mui/icons-material/Close'; // Import CloseIcon
-import { ToastContainer, toast } from 'react-toastify'; // Import react-toastify components
-import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify CSS
+import Drawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button"; // Import Button
+import { ToastContainer, toast } from "react-toastify"; // Import react-toastify components
+import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
 
 // Define TypeScript types for props
 interface GothSectionProps {
@@ -20,7 +17,14 @@ interface GothSectionProps {
   setGothSentence: (sentence: string) => void;
 }
 
-function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEnableAIVoice, onConvert, gothSentence, setGothSentence }: GothSectionProps) {
+function GothSection({
+  enablePlaySound,
+  setEnablePlaySound,
+  enableAIVoice,
+  setEnableAIVoice,
+  onConvert,
+  setGothSentence,
+}: GothSectionProps) {
   // GOTH THEME: Sentences, image, and music
   const gothSuccessImages: string[] = [
     "/goth-girls/goth1.jpg",
