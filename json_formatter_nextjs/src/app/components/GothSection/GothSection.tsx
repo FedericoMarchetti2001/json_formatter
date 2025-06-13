@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { gothSuccessSentences, gothFailureSentences } from "../sentences";
+import { gothSuccessSentences, gothFailureSentences } from "../Helpers/sentences";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button"; // Import Button
 import { ToastContainer, toast } from "react-toastify"; // Import react-toastify components
 import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
+import Image from "next/image";
 
 // Define TypeScript types for props
 interface GothSectionProps {
@@ -174,7 +175,7 @@ function GothSection({
           }}
         >
           {gothGirlImg && (
-            <img
+            <Image
               src={gothGirlImg}
               alt="Goth Girl"
               style={{ width: "100%", height: "auto", display: "block" }} // Basic image styling
@@ -208,7 +209,7 @@ function GothSection({
           onClick={() => setIsImageCentered(false)} // Close on click
         >
           {gothGirlImg && (
-            <img
+            <Image
               src={gothGirlImg}
               alt="Goth Girl"
               style={{

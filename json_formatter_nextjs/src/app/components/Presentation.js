@@ -1,3 +1,5 @@
+"use client";
+
 /*
 =========================================================
 * Material Kit 2 React - v2.1.0
@@ -19,12 +21,12 @@ import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2";
 
 // Custom components
-import FormatterAction from "./components/FormatterActions";
-import InputOutputSection from "./components/InputOutputSection";
-import GothSection from "./components/GothSection";
+import FormatterAction from "./FormatterActions";
+import InputOutputSection from "./InputOutputSection";
+import GothSection from "../components/GothSection/GothSection";
 
 //Other components
-import FormatterPagination from "./components/Pagination";
+import FormatterPagination from "./Pagination";
 import { Box } from "@mui/material";
 
 const containerStyle = {
@@ -74,6 +76,7 @@ function Presentation() {
 
   // Handler for after conversion to trigger GothSection effects
   const handleConvert = ({ success }) => {
+    console.log("genericError", genericError); //todo: remove this log
     setGothConvertResult({ success });
   };
 

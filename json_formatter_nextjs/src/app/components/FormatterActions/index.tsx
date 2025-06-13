@@ -36,7 +36,7 @@ export default function FormatterAction(
       console.log("Valid JSON");
       return JSON.stringify(JSON.parse(textToValidate), null, tabSpaces);
     } catch (e) {
-      console.log("Invalid JSON");
+      console.log("Invalid JSON ", e);
       props.setIsValid(false);
       return "";
     }
@@ -48,7 +48,7 @@ export default function FormatterAction(
       console.log("Copy text, ", textToCopy);
       navigator.clipboard.writeText(textToCopy);
     } catch (e) {
-      console.error("Error copying text");
+      console.error("Error copying text", e);
       props.setGenericError("Error copying text");
     }
   };
@@ -59,7 +59,7 @@ export default function FormatterAction(
       console.log("Clear text");
       props.setTextToManage("");
     } catch (e) {
-      console.error("Error clearing text");
+      console.error("Error clearing text: ", e);
       props.setGenericError("Error clearing text");
     }
   };
@@ -79,7 +79,7 @@ export default function FormatterAction(
         props.setGenericError("File type not allowed");
       }
     } catch (e) {
-      console.log("Error uploading file");
+      console.log("Error uploading file ", e);
       props.setGenericError("Error uploading file");
     }
   };
