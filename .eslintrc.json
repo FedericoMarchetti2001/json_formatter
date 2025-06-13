@@ -26,9 +26,7 @@
     // "no-unused-vars": "warn",
     "no-mixed-spaces-and-tabs": "warn",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [
-      0
-    ],
+    "react/jsx-filename-extension": [0],
     "react/jsx-props-no-spreading": [
       1,
       {
@@ -43,9 +41,7 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": [
-          "src"
-        ]
+        "paths": ["src"]
       }
     }
   }

@@ -109,7 +109,13 @@ function Presentation() {
                 gothSentence={gothSentence} // gothSentence is now managed within GothSection
               />
             </Grid2>
-            <Grid2 xs={2} container direction="column" alignItems="stretch" style={{ padding: "10px" }}>
+            <Grid2
+              xs={2}
+              container
+              direction="column"
+              alignItems="stretch"
+              style={{ padding: "10px" }}
+            >
               <FormatterAction
                 textToManage={textArray[currentPage - 1]} // Pass current page's text
                 setTextToManage={handleTextChange} // Pass handler to update textArray

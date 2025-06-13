@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { gothSuccessSentences, gothFailureSentences } from "../sentences";
-import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button'; // Import Button
-import IconButton from '@mui/material/IconButton'; // Import IconButton
-import CloseIcon from '@mui/icons-material/Close'; // Import CloseIcon
-import { ToastContainer, toast } from 'react-toastify'; // Import react-toastify components
-import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify CSS
+import Drawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button"; // Import Button
+import IconButton from "@mui/material/IconButton"; // Import IconButton
+import CloseIcon from "@mui/icons-material/Close"; // Import CloseIcon
+import { ToastContainer, toast } from "react-toastify"; // Import react-toastify components
+import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
 
 // Define TypeScript types for props
 interface GothSectionProps {
@@ -20,7 +20,15 @@ interface GothSectionProps {
   setGothSentence: (sentence: string) => void;
 }
 
-function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEnableAIVoice, onConvert, gothSentence, setGothSentence }: GothSectionProps) {
+function GothSection({
+  enablePlaySound,
+  setEnablePlaySound,
+  enableAIVoice,
+  setEnableAIVoice,
+  onConvert,
+  gothSentence,
+  setGothSentence,
+}: GothSectionProps) {
   // GOTH THEME: Sentences, image, and music
   const gothSuccessImages: string[] = [
     "/goth-girls/goth1.jpg",
@@ -40,8 +48,8 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
     // Add more failure images
   ];
 
-  const successSound= "/sounds/success.mp3";
-  const failSound= "/sounds/fail.mp3";
+  const successSound = "/sounds/success.mp3";
+  const failSound = "/sounds/fail.mp3";
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [gothGirlImg, setGothGirlImg] = useState("");
@@ -63,8 +71,8 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
 
     // Try to pick a "goth and sweet" voice: prefer female, English, lower pitch
     const gothVoice: SpeechSynthesisVoice | undefined =
-      voices.find(v => /female/i.test(v.name) && /en/i.test(v.lang)) ||
-      voices.find(v => /en/i.test(v.lang)) ||
+      voices.find((v) => /female/i.test(v.name) && /en/i.test(v.lang)) ||
+      voices.find((v) => /en/i.test(v.lang)) ||
       voices[0];
 
     // If voices are not loaded yet (Chrome bug), try again after a short delay
@@ -163,7 +171,8 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
           sx={{ width: 400 }} // Adjust width as needed
           role="presentation"
           alignItems={"center"}
-          onClick={() => { // Add onClick handler
+          onClick={() => {
+            // Add onClick handler
             setIsDrawerOpen(false);
             setIsImageCentered(true);
           }}
@@ -172,7 +181,7 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
             <img
               src={gothGirlImg}
               alt="Goth Girl"
-              style={{ width: '100%', height: 'auto', display: 'block'}} // Basic image styling
+              style={{ width: "100%", height: "auto", display: "block" }} // Basic image styling
               draggable={false}
             />
           )}
@@ -183,22 +192,22 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
       {isImageCentered && (
         <Box
           sx={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             zIndex: 1300, // Above the drawer
-            maxWidth: '90vw', // Limit size
-            maxHeight: '90vh', // Limit size
-            bgcolor: 'linear-gradient(135deg, #18111b 60%, #2d0036 100%)', // Background from drawer
-            border: '3px solid red', // Red border as requested
-            borderRadius: '16px', // Rounded corners
-            boxShadow: '0 8px 32px #000c', // Shadow from drawer
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden', // Hide overflow if image is larger than container
-            cursor: 'pointer', // Indicate clickable
+            maxWidth: "90vw", // Limit size
+            maxHeight: "90vh", // Limit size
+            bgcolor: "linear-gradient(135deg, #18111b 60%, #2d0036 100%)", // Background from drawer
+            border: "3px solid red", // Red border as requested
+            borderRadius: "16px", // Rounded corners
+            boxShadow: "0 8px 32px #000c", // Shadow from drawer
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden", // Hide overflow if image is larger than container
+            cursor: "pointer", // Indicate clickable
           }}
           onClick={() => setIsImageCentered(false)} // Close on click
         >
@@ -207,10 +216,10 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
               src={gothGirlImg}
               alt="Goth Girl"
               style={{
-                display: 'block',
-                maxWidth: '100%', // Image takes max width of container
-                maxHeight: '100%', // Image takes max height of container
-                objectFit: 'contain', // Ensure whole image is visible
+                display: "block",
+                maxWidth: "100%", // Image takes max width of container
+                maxHeight: "100%", // Image takes max height of container
+                objectFit: "contain", // Ensure whole image is visible
               }}
             />
           )}
@@ -224,22 +233,22 @@ function GothSection({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEn
           color="primary"
           onClick={handleDrawerOpen}
           sx={{
-            position: 'fixed', // Position fixed to stay on the left middle
+            position: "fixed", // Position fixed to stay on the left middle
             left: 0,
-            top: '50%',
-            transform: 'translateY(-50%)',
+            top: "50%",
+            transform: "translateY(-50%)",
             zIndex: 1200, // Ensure it's above other content but below the open drawer
-            writingMode: 'vertical-rl', // Rotate text vertically
-            textOrientation: 'mixed',
+            writingMode: "vertical-rl", // Rotate text vertically
+            textOrientation: "mixed",
             borderTopLeftRadius: 0, // Style to look goth/triangular
             borderBottomLeftRadius: 0,
-            border: '2px solid var(--accent-color)', // Use CSS variable for border
-            backgroundColor: 'var(--primary-bg-color)', // Use CSS variable for background
-            color: 'var(--text-color)', // Use CSS variable for text color
-            fontFamily: 'var(--gothic-heading)', // Use CSS variable for font
-            '&:hover': {
-              backgroundColor: 'var(--accent-color)', // Hover styles
-              color: '#18141a',
+            border: "2px solid var(--accent-color)", // Use CSS variable for border
+            backgroundColor: "var(--primary-bg-color)", // Use CSS variable for background
+            color: "var(--text-color)", // Use CSS variable for text color
+            fontFamily: "var(--gothic-heading)", // Use CSS variable for font
+            "&:hover": {
+              backgroundColor: "var(--accent-color)", // Hover styles
+              color: "#18141a",
             },
           }}
           className="goth-open-drawer-button" // Add class for potential further styling

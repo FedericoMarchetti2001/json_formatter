@@ -1,5 +1,5 @@
- 1. Flirty & Teasing
-You couldn’t handle all of me—trust me.
+1.  Flirty & Teasing
+    You couldn’t handle all of me—trust me.
 
 I only bite when I’m bored.
 

@@ -10,36 +10,35 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
 */
 
 /* Import gothic font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=IM+Fell+English+SC&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=IM+Fell+English+SC&display=swap");
 
 :root {
-    /* BACKGROUND COLORS */
-    --background-color: #18141a ; /* Deeper goth background */
-    --primary-bg-color: #a8326e ; /* Deep magenta for primary buttons */
-    --secondary-bg-color: #222 ; /* Blackish bg for secondary buttons*/
+  /* BACKGROUND COLORS */
+  --background-color: #18141a; /* Deeper goth background */
+  --primary-bg-color: #a8326e; /* Deep magenta for primary buttons */
+  --secondary-bg-color: #222; /* Blackish bg for secondary buttons*/
 
-    /* TEXT COLORS */
-    --text-color: #f0e6f6 ; /* Pale lavender text */
-    --primary-text-color: #fff ; /* White for headings */
-    --secondary-text-color: #b0b0b0 ; /* Lighter text for secondary elements */
-    --accent-color: #ff69b4 ; /* Hot pink accent */
+  /* TEXT COLORS */
+  --text-color: #f0e6f6; /* Pale lavender text */
+  --primary-text-color: #fff; /* White for headings */
+  --secondary-text-color: #b0b0b0; /* Lighter text for secondary elements */
+  --accent-color: #ff69b4; /* Hot pink accent */
 
-    /* BORDER COLORS */
-    --border-color: #3a2233; /* Dark border */
+  /* BORDER COLORS */
+  --border-color: #3a2233; /* Dark border */
 
-    /* FONT FAMILIES */
-    --font-family: 'IM Fell English SC', 'UnifrakturCook', 'Courier New', Courier, monospace;
-    --gothic-heading: 'UnifrakturCook', cursive;
+  /* FONT FAMILIES */
+  --font-family: "IM Fell English SC", "UnifrakturCook", "Courier New", Courier, monospace;
+  --gothic-heading: "UnifrakturCook", cursive;
 }
 
 body {
-  background-image: 
-    linear-gradient(rgba(24,20,26,0.95), rgba(24,20,26,0.95)),
+  background-image: linear-gradient(rgba(24, 20, 26, 0.95), rgba(24, 20, 26, 0.95)),
     url("../../public/grunge-emo-seamless-pattern-wallpaper.webp") !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
   background-color: var(--background-color) !important;
-  color: var(--text-color)  !important;
+  color: var(--text-color) !important;
   font-family: var(--font-family) !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -58,11 +57,20 @@ body::after {
   width: 100vw !important;
   height: 100vh !important;
   z-index: 1 !important;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%) !important;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.7) 100%
+  ) !important;
 }
 
 /* Headings */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--gothic-heading) !important;
   color: var(--primary-text-color) !important;
   letter-spacing: 2px !important;
@@ -101,15 +109,16 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 24px #ff69b488 !important;
 }
 
-.menu-select{
-  background-color: var(--primary-bg-color)!important;
+.menu-select {
+  background-color: var(--primary-bg-color) !important;
   color: var(--text-color) !important;
   border: 1px solid var(--border-color) !important;
   font-family: var(--font-family) !important;
 }
 
 /* Inputs */
-input, textarea {
+input,
+textarea {
   background: rgba(34, 22, 38, 0.85) !important;
   color: var(--text-color) !important;
   border: 1.5px solid var(--accent-color) !important;
@@ -121,13 +130,14 @@ input, textarea {
   transition: border 0.2s !important;
   outline: none !important;
 }
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   border: 2.5px solid var(--primary-bg-color) !important;
   box-shadow: 0 0 8px var(--accent-color) !important;
 }
 
 /* Menu Items */
-.menu-item{
+.menu-item {
   border-radius: 0px !important;
   border: 2px solid var(--border-color) !important;
 }
@@ -183,19 +193,23 @@ input:focus, textarea:focus {
   height: 100vh !important;
   pointer-events: none !important;
   z-index: 10 !important;
-  background: url('../../public//images/fog.jpeg') repeat !important;
+  background: url("../../public//images/fog.jpeg") repeat !important;
   opacity: 0.12 !important;
   animation: fog-move 30s linear infinite !important;
 }
 @keyframes fog-move {
-  0% { background-position: 0 0; }
-  100% { background-position: 100vw 0; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100vw 0;
+  }
 }
 /* Goth Aesthetic for Menu Items */
 .menu-item {
   background: linear-gradient(90deg, #1a1a1a 0%, #2d0036 100%) !important;
   color: #e0d6eb !important;
-  font-family: 'UnifrakturCook', 'Cinzel Decorative', 'Cormorant Garamond', serif !important;
+  font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
   border: 1.5px solid #6b1e6b !important;
   border-radius: 8px !important;
   margin: 4px 0 !important;
@@ -203,7 +217,8 @@ input:focus, textarea:focus {
   letter-spacing: 0.04em !important;
   transition: background 0.2s, color 0.2s !important;
 }
-.menu-item:hover, .menu-item:focus {
+.menu-item:hover,
+.menu-item:focus {
   background: linear-gradient(90deg, #2d0036 0%, #1a1a1a 100%) !important;
   color: #fff !important;
   border-color: #a020f0 !important;
@@ -246,7 +261,7 @@ input:focus, textarea:focus {
 .MuiTab-root {
   background: #2d0036 !important;
   color: #e0d6eb !important;
-  font-family: 'UnifrakturCook', 'Cinzel Decorative', 'Cormorant Garamond', serif !important;
+  font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
   border: 1.5px solid #6b1e6b !important;
   border-radius: 6px !important;
   margin: 0 6px !important;
@@ -278,14 +293,18 @@ input:focus, textarea:focus {
 .goth-drawer .MuiDrawer-paper {
   width: 300px !important; /* Set a fixed width for the triangle */
   box-sizing: border-box !important;
-  background: linear-gradient(135deg, #18111b 60%, #2d0036 100%) !important; /* Restore background */
+  background: linear-gradient(
+    135deg,
+    #18111b 60%,
+    #2d0036 100%
+  ) !important; /* Restore background */
   color: #f0e6f6 !important;
   border-radius: 0px !important; /* Keep border radius 0 for triangle */
   position: relative !important;
   overflow: hidden !important;
   /* Create the triangular shape */
-  clip-path: polygon( 35% 19%, 65% 19% , 100% 38%, 81% 70%, 19% 70%, 0 38%) !important;
-cursor: pointer !important;
+  clip-path: polygon(35% 19%, 65% 19%, 100% 38%, 81% 70%, 19% 70%, 0 38%) !important;
+  cursor: pointer !important;
 }
 
 .goth-drawer .MuiBox-root {
@@ -309,7 +328,7 @@ cursor: pointer !important;
 
 .goth-drawer .MuiTypography-root,
 .goth-drawer .MuiListItemText-primary {
-  font-family: 'UnifrakturCook', 'Cinzel Decorative', 'Cormorant Garamond', serif !important;
+  font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
   color: #ff69b4 !important;
   text-shadow: 0 2px 8px #a8326e99, 0 0 4px #fff3 !important;
   letter-spacing: 1.5px !important;
