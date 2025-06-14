@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, TextareaAutosize } from "@mui/material";
 import PropTypes from "prop-types";
+import GothAchievementsGallery from "./GothAchievementsGallery"; // Import GothAchievementsGallery
 
 const textAreaStyle = {
   width: "100%",
@@ -13,9 +14,11 @@ InputOutputSection.propTypes = {
   handleTextChange: PropTypes.func.isRequired,
   formattedText: PropTypes.string.isRequired,
   gothSentence: PropTypes.string,
+  unlockedImages: PropTypes.arrayOf(PropTypes.string).isRequired, // Add prop type for unlockedImages
+  onImageClick: PropTypes.func.isRequired, // Add prop type for onImageClick
 };
 
-function InputOutputSection({ text, handleTextChange, formattedText, gothSentence }) {
+function InputOutputSection({ text, handleTextChange, formattedText, gothSentence, unlockedImages, onImageClick }) {
   const handleTextareaKeyDown = (e) => {
     if (e.key === "Tab") {
       e.preventDefault();
@@ -41,10 +44,8 @@ function InputOutputSection({ text, handleTextChange, formattedText, gothSentenc
         onKeyDown={handleTextareaKeyDown}
         onChange={handleTextareaChange}
       />
-      {/* GOTH SENTENCE */}
-      <div className="goth-sentence" style={{ minHeight: "2.5em" }}>
-        {gothSentence}
-      </div>
+      {/* Insert GothAchievementsGallery here */}
+      <GothAchievementsGallery unlockedImages={unlockedImages} onImageClick={onImageClick} />
       <TextareaAutosize
         placeholder="Formatted JSON"
         minRows={10}

@@ -1,3 +1,4 @@
+// GothControlPanel.tsx
 import React, { useState, useEffect } from "react";
 import { gothSuccessSentences, gothFailureSentences } from "../sentences";
 import Box from "@mui/material/Box";
@@ -6,8 +7,6 @@ import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
 import SentenceDisplay from "./SentenceDisplay"; // Import SentenceDisplay
 import SoundAndVoiceControls from "./SoundAndVoiceControls"; // Import SoundAndVoiceControls
 import AchievementImportExport from "./AchievementImportExport"; // Import AchievementImportExport
-import CenteredImageViewer from "./CenteredImageViewer"; // Import CenteredImageViewer
-import { Stack } from "@mui/material";
 
 // Define TypeScript types for props
 interface GothControlPanelProps {
@@ -18,7 +17,6 @@ interface GothControlPanelProps {
   onConvert: { success: boolean } | null; // Assuming onConvert can be null initially
   gothSentence: string;
   setGothSentence: (sentence: string) => void;
-  unlockedImages: string[]; // Add prop for unlocked images
   onExportAchievements: () => void; // Add export prop
   onImportAchievements: (data: string) => void; // Add import prop
 }
@@ -31,7 +29,6 @@ function GothControlPanel({
   onConvert,
   gothSentence, // Keep gothSentence prop to pass to SentenceDisplay
   setGothSentence,
-  unlockedImages, // Keep unlockedImages prop for now, will move later
   onExportAchievements,
   onImportAchievements,
 }: GothControlPanelProps) {
@@ -56,9 +53,6 @@ function GothControlPanel({
 
   const successSound = "/sounds/success.mp3";
   const failSound = "/sounds/fail.mp3";
-
-  const [gothGirlImg, setGothGirlImg] = useState("");
-  const [isImageCentered, setIsImageCentered] = useState(false); // State for centered image visibility
 
   // Play sound utility
   const playSound = (src: string) => {
@@ -104,16 +98,16 @@ function GothControlPanel({
   useEffect(() => {
     if (onConvert) {
       const sentences = onConvert.success ? gothSuccessSentences : gothFailureSentences;
-      const images = onConvert.success ? gothSuccessImages : gothFailureImages;
+      // const images = onConvert.success ? gothSuccessImages : gothFailureImages; // Images handled in InputOutputSection
 
       // Set random sentence
       const sentence = sentences[Math.floor(Math.random() * sentences.length)];
       setGothSentence(sentence);
-      // Set random image and trigger animation
-      const imageUrl = images[Math.floor(Math.random() * images.length)];
-      setGothGirlImg(imageUrl);
-      // Removed setIsDrawerOpen(true)
-      // Removed setShowOpenButton(true)
+      // Set random image and trigger animation (handled in InputOutputSection/Home)
+      // const imageUrl = images[Math.floor(Math.random() * images.length)];
+      // setGothGirlImg(imageUrl);
+      // setIsDrawerOpen(true); // Removed
+      // setShowOpenButton(true); // Removed
       // Play sound if enabled
       if (enablePlaySound) {
         playSound(onConvert.success ? successSound : failSound);
@@ -134,22 +128,9 @@ function GothControlPanel({
     }
   }, [onConvert, enablePlaySound, enableAIVoice, setGothSentence]); // Depend on onConvert, enablePlaySound, enableAIVoice, and setGothSentence
 
-  // Removed handleDrawerOpen
-  // Removed handleDrawerClose
-
-  const handleImageClick = (imagePath: string) => {
-    setGothGirlImg(imagePath); // Set the clicked image as the main image
-    setIsImageCentered(true); // Open the centered image view
-  };
-
-  const handleCenteredImageClose = () => {
-    setIsImageCentered(false);
-  };
-
 
   return (
     <Box>
-      <Stack  direction="row" justifyContent={"center"} alignItems="center" spacing={2} sx={{ marginBottom: "1em" }}>
       {/* Controls for sound and AI voice */}
       <SoundAndVoiceControls
         enablePlaySound={enablePlaySound}
@@ -158,26 +139,11 @@ function GothControlPanel({
         setEnableAIVoice={setEnableAIVoice}
       />
 
-      {/* Achievement Import/Export Component */}
-      <AchievementImportExport onExport={onExportAchievements} onImport={onImportAchievements} />
-      </Stack>
-
-      {/* Centered Goth Girl Image Viewer Component */}
-      <CenteredImageViewer
-        imageUrl={gothGirlImg}
-        isOpen={isImageCentered}
-        onClose={handleCenteredImageClose}
-      />
-
-      {/* Unlocked Images Gallery Component (will be moved) */}
-      {/* <GothAchievementsGallery unlockedImages={unlockedImages} onImageClick={handleImageClick} /> */}
-
-
       {/* Sentence Display Component */}
       <SentenceDisplay sentence={gothSentence} />
 
-      {/* Button to open the drawer */}
-      {/* Removed the button */}
+      {/* Achievement Import/Export Component */}
+      <AchievementImportExport onExport={onExportAchievements} onImport={onImportAchievements} />
 
       {/* Toast Container */}
       <ToastContainer

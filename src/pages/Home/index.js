@@ -21,7 +21,8 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 // Custom components
 import FormatterAction from "./components/FormatterActions";
 import InputOutputSection from "./components/InputOutputSection";
-import GothSection from "./components/GothSection";
+import GothControlPanel from "./components/GothSection"; // Renamed import
+import CenteredImageViewer from "./components/CenteredImageViewer"; // Import CenteredImageViewer
 
 //Other components
 import FormatterPagination from "./components/Pagination";
@@ -51,6 +52,10 @@ function Presentation() {
     unlocked: [], // Array of achievement IDs or names
     images: [], // Array of unlocked image paths
   });
+
+  // State for centered image viewer
+  const [isImageCentered, setIsImageCentered] = useState(false);
+  const [centeredImageUrl, setCenteredImageUrl] = useState("");
 
   // Load achievements from localStorage on component mount
   useEffect(() => {
@@ -96,30 +101,23 @@ function Presentation() {
   };
 
   // Function to import achievements
-  const importAchievements = (event) => {
-    const file = event.target.files[0];
-    if (!file) {
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const importedData = JSON.parse(e.target.result);
-        // Basic validation (can be improved)
-        if (importedData && Array.isArray(importedData.unlocked) && Array.isArray(importedData.images)) {
-          setAchievements(importedData);
-          console.log("Achievements imported successfully!");
-        } else {
-          console.error("Invalid achievement file format.");
-          // Optionally show an error message to the user
-        }
-      } catch (error) {
-        console.error("Error parsing achievement file:", error);
+  const importAchievements = (data) => {
+    try {
+      const importedData = JSON.parse(data);
+      // Basic validation (can be improved)
+      if (importedData && Array.isArray(importedData.unlocked) && Array.isArray(importedData.images)) {
+        setAchievements(importedData);
+        console.log("Achievements imported successfully!");
+      } else {
+        console.error("Invalid achievement file format.");
         // Optionally show an error message to the user
       }
-    };
-    reader.readAsText(file);
+    } catch (error) {
+      console.error("Error parsing achievement data:", error);
+      // Optionally show an error message to the user
+    }
   };
+
 
   // GOTH THEME: State for toggling sound and AI voice
   const [gothSentence, setGothSentence] = useState("");
@@ -152,16 +150,21 @@ function Presentation() {
     setGothConvertResult({ success });
   };
 
+  // Handler for clicking on an achievement image
+  const handleAchievementImageClick = (imageUrl) => {
+    setCenteredImageUrl(imageUrl);
+    setIsImageCentered(true);
+  };
+
+  // Handler to close the centered image viewer
+  const handleCenteredImageClose = () => {
+    setIsImageCentered(false);
+    setCenteredImageUrl("");
+  };
+
+
   return (
     <div className="home-container">
-      {/* Hidden file input for importing */}
-      <input
-        type="file"
-        id="import-achievements"
-        style={{ display: "none" }}
-        accept=".json"
-        onChange={importAchievements}
-      />
       <Box
         minHeight="75vh"
         width="100%"
@@ -175,7 +178,7 @@ function Presentation() {
         <Container style={containerStyle}>
           <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
             <Grid2 item xs={10} style={{ flex: 1 }}>
-              <GothSection
+              <GothControlPanel // Use the renamed component
                 enablePlaySound={enablePlaySound}
                 setEnablePlaySound={setEnablePlaySound}
                 enableAIVoice={enableAIVoice}
@@ -183,7 +186,9 @@ function Presentation() {
                 onConvert={gothConvertResult} // Pass the state to trigger effect
                 setGothSentence={setGothSentence}
                 gothSentence={gothSentence} // Pass the goth sentence to display
-                unlockedImages={achievements.images} // Pass unlocked images to GothSection
+                unlockedImages={achievements.images} // Keep unlockedImages prop for now, will move later
+                onExportAchievements={exportAchievements} // Pass export handler
+                onImportAchievements={importAchievements} // Pass import handler
               />
               <FormatterPagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
               <InputOutputSection
@@ -191,6 +196,8 @@ function Presentation() {
                 handleTextChange={handleTextChange} // Pass handler to update textArray
                 formattedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
                 gothSentence={gothSentence} // gothSentence is now managed within GothSection
+                unlockedImages={achievements.images} // Pass unlocked images to InputOutputSection
+                onImageClick={handleAchievementImageClick} // Pass image click handler
               />
             </Grid2>
             <Grid2
@@ -200,12 +207,6 @@ function Presentation() {
               alignItems="stretch"
               style={{ padding: "10px" }}
             >
-              {/* Export Button */}
-              <button onClick={exportAchievements}>Export Achievements</button>
-              {/* Import Button */}
-              <label htmlFor="import-achievements">
-                <button>Import Achievements</button>
-              </label>
               <FormatterAction
                 textToManage={textArray[currentPage - 1]} // Pass current page's text
                 setTextToManage={handleTextChange} // Pass handler to update textArray
@@ -222,6 +223,12 @@ function Presentation() {
           </Grid2>
         </Container>
       </Box>
+      {/* Centered Image Viewer Component */}
+      <CenteredImageViewer
+        imageUrl={centeredImageUrl}
+        isOpen={isImageCentered}
+        onClose={handleCenteredImageClose}
+      />
     </div>
   );
 }
