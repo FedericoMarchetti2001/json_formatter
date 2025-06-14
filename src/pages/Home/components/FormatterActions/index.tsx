@@ -17,6 +17,9 @@ export interface IFormatterActionsProps {
   setProcessedText: (text: string) => void;
   // goth: callback after conversion
   onConvert?: (result: { success: boolean }) => void;
+  // Achievements
+  achievements: { unlocked: string[]; images: string[] };
+  setAchievements: React.Dispatch<React.SetStateAction<{ unlocked: string[]; images: string[] }>>;
 }
 
 //This is a row/column component, possibly a small flexbox, which will contain actions like "Format", "Copy", "Clear", etc.
@@ -24,6 +27,7 @@ export default function FormatterAction(
   props: IFormatterActionsProps
 ): React.ReactElement<IFormatterActionsProps> {
   const [tabSpaces, setTabSpaces] = React.useState<number>(2);
+  const [successfulFormats, setSuccessfulFormats] = React.useState<number>(0); // State for successful formats count
   const buttonWidth = 100;
 
   //Check if the text is JSON or not, and format according to the tabSpaces
@@ -34,6 +38,7 @@ export default function FormatterAction(
       JSON.parse(textToValidate);
       props.setIsValid(true);
       console.log("Valid JSON");
+
       return JSON.stringify(JSON.parse(textToValidate), null, tabSpaces);
     } catch (e) {
       console.log("Invalid JSON");
@@ -108,8 +113,50 @@ export default function FormatterAction(
             variant="contained"
             color="primary"
             onClick={() => {
+              // Check for "Perfect JSON" achievement before formatting
+              try {
+                JSON.parse(props.textToManage);
+                if (!(props.achievements.unlocked.indexOf("Perfect JSON") !== -1)) {
+                  props.setAchievements((prev: { unlocked: string[]; images: string[] }) => ({
+                    ...prev,
+                    unlocked: [...prev.unlocked, "Perfect JSON"],
+                    images: [...new Set([...prev.images, "/goth-girls/goth3.jpeg"])], // Add image, prevent duplicates
+                  }));
+                  console.log("Achievement unlocked: Perfect JSON");
+                }
+              } catch (e) {
+                // Not a perfect JSON, do nothing for this achievement
+              }
+
               const formattedText = format(props.textToManage, tabSpaces);
               props.setProcessedText(formattedText);
+
+              // Unlock achievements only on successful formatting
+              if (formattedText !== "") {
+                setSuccessfulFormats(prev => prev + 1); // Increment successful formats count
+
+                // Check for "First Format" achievement
+                if (!(props.achievements.unlocked.indexOf("First Format") !== -1)) {
+                  props.setAchievements((prev: { unlocked: string[]; images: string[] }) => ({
+                    ...prev,
+                    unlocked: [...prev.unlocked, "First Format"],
+                    images: [...new Set([...prev.images, "/goth-girls/goth1.jpg"])], // Add image, prevent duplicates
+                  }));
+                  console.log("Achievement unlocked: First Format");
+                }
+
+                // Check for "Format 10 JSONs" achievement
+                if (successfulFormats + 1 >= 10 && !(props.achievements.unlocked.indexOf("Format 10 JSONs") !== -1)) {
+                  props.setAchievements((prev: { unlocked: string[]; images: string[] }) => ({
+                    ...prev,
+                    unlocked: [...prev.unlocked, "Format 10 JSONs"],
+                    images: [...new Set([...prev.images, "/goth-girls/goth2.jpeg"])], // Add image, prevent duplicates
+                  }));
+                  console.log("Achievement unlocked: Format 10 JSONs");
+                }
+              }
+
+
               if (props.onConvert) {
                 props.onConvert({ success: formattedText !== "" });
               }

@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // @mui material components
 import Container from "@mui/material/Container";
@@ -45,6 +45,81 @@ function Presentation() {
   //validation logic
   const [isValid, setIsValid] = useState(undefined);
   const [genericError, setGenericError] = useState("");
+
+  // Achievement State
+  const [achievements, setAchievements] = useState({
+    unlocked: [], // Array of achievement IDs or names
+    images: [], // Array of unlocked image paths
+  });
+
+  // Load achievements from localStorage on component mount
+  useEffect(() => {
+    const savedAchievements = localStorage.getItem('jsonFormatterAchievements');
+    if (savedAchievements) {
+      try {
+        const parsedAchievements = JSON.parse(savedAchievements);
+        // Basic validation
+        if (parsedAchievements && Array.isArray(parsedAchievements.unlocked) && Array.isArray(parsedAchievements.images)) {
+          setAchievements(parsedAchievements);
+          console.log("Achievements loaded from localStorage.");
+        } else {
+          console.error("Invalid data format in localStorage for achievements.");
+        }
+      } catch (error) {
+        console.error("Error parsing achievements from localStorage:", error);
+      }
+    }
+  }, []); // Empty dependency array means this runs once on mount
+
+  // Save achievements to localStorage whenever the state changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('jsonFormatterAchievements', JSON.stringify(achievements));
+      console.log("Achievements saved to localStorage.");
+    } catch (error) {
+      console.error("Error saving achievements to localStorage:", error);
+    }
+  }, [achievements]); // Dependency array ensures this runs when achievements state changes
+
+  // Function to export achievements
+  const exportAchievements = () => {
+    const dataStr = JSON.stringify(achievements, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "achievements.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Function to import achievements
+  const importAchievements = (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const importedData = JSON.parse(e.target.result);
+        // Basic validation (can be improved)
+        if (importedData && Array.isArray(importedData.unlocked) && Array.isArray(importedData.images)) {
+          setAchievements(importedData);
+          console.log("Achievements imported successfully!");
+        } else {
+          console.error("Invalid achievement file format.");
+          // Optionally show an error message to the user
+        }
+      } catch (error) {
+        console.error("Error parsing achievement file:", error);
+        // Optionally show an error message to the user
+      }
+    };
+    reader.readAsText(file);
+  };
 
   // GOTH THEME: State for toggling sound and AI voice
   const [gothSentence, setGothSentence] = useState("");
@@ -79,6 +154,14 @@ function Presentation() {
 
   return (
     <div className="home-container">
+      {/* Hidden file input for importing */}
+      <input
+        type="file"
+        id="import-achievements"
+        style={{ display: "none" }}
+        accept=".json"
+        onChange={importAchievements}
+      />
       <Box
         minHeight="75vh"
         width="100%"
@@ -100,6 +183,7 @@ function Presentation() {
                 onConvert={gothConvertResult} // Pass the state to trigger effect
                 setGothSentence={setGothSentence}
                 gothSentence={gothSentence} // Pass the goth sentence to display
+                unlockedImages={achievements.images} // Pass unlocked images to GothSection
               />
               <FormatterPagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
               <InputOutputSection
@@ -116,6 +200,12 @@ function Presentation() {
               alignItems="stretch"
               style={{ padding: "10px" }}
             >
+              {/* Export Button */}
+              <button onClick={exportAchievements}>Export Achievements</button>
+              {/* Import Button */}
+              <label htmlFor="import-achievements">
+                <button>Import Achievements</button>
+              </label>
               <FormatterAction
                 textToManage={textArray[currentPage - 1]} // Pass current page's text
                 setTextToManage={handleTextChange} // Pass handler to update textArray
@@ -125,6 +215,8 @@ function Presentation() {
                 processedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
                 setProcessedText={handleFormattedTextChange} // Pass handler to update formattedTextArray
                 onConvert={handleConvert} // Pass the handler to FormatterAction
+                achievements={achievements} // Pass achievements to FormatterAction (for unlocking logic later)
+                setAchievements={setAchievements} // Pass setter for achievements
               />
             </Grid2>
           </Grid2>

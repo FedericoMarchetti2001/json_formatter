@@ -15,6 +15,7 @@ interface GothSectionProps {
   onConvert: { success: boolean } | null; // Assuming onConvert can be null initially
   gothSentence: string;
   setGothSentence: (sentence: string) => void;
+  unlockedImages: string[]; // Add prop for unlocked images
 }
 
 function GothSection({
@@ -24,6 +25,7 @@ function GothSection({
   setEnableAIVoice,
   onConvert,
   setGothSentence,
+  unlockedImages, // Destructure unlockedImages prop
 }: GothSectionProps) {
   // GOTH THEME: Sentences, image, and music
   const gothSuccessImages: string[] = [
@@ -156,7 +158,7 @@ function GothSection({
         </label>
       </div>
 
-      {/* GOTH GIRL DRAWER */}
+      {/* GOTH GIRL DRAWER 
       <Drawer
         anchor="left"
         open={isDrawerOpen}
@@ -183,6 +185,7 @@ function GothSection({
           )}
         </Box>
       </Drawer>
+      */}
 
       {/* Centered Goth Girl Image */}
       {isImageCentered && (
@@ -221,6 +224,25 @@ function GothSection({
           )}
         </Box>
       )}
+
+      {/* Unlocked Images Gallery */}
+      <Box sx={{ marginTop: "20px", textAlign: "center" }}>
+        <h3>Unlocked Goth Girls</h3>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px" }}>
+          {unlockedImages.length > 0 ? (
+            unlockedImages.map((imagePath, index) => (
+              <img
+                key={index}
+                src={imagePath}
+                alt={`Unlocked Goth Girl ${index + 1}`}
+                style={{ width: "100px", height: "150px", objectFit: "cover", border: "2px solid #ff00ff" }} // Example styling
+              />
+            ))
+          ) : (
+            <p>No goth girls unlocked yet. Format some JSON!</p>
+          )}
+        </div>
+      </Box>
 
       {/* Button to open the drawer */}
       {showOpenButton && !isDrawerOpen && (
