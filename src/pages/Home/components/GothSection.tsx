@@ -172,10 +172,6 @@ function GothControlPanel({
       {/* Unlocked Images Gallery Component (will be moved) */}
       {/* <GothAchievementsGallery unlockedImages={unlockedImages} onImageClick={handleImageClick} /> */}
 
-
-      {/* Sentence Display Component */}
-      <SentenceDisplay sentence={gothSentence} />
-
       {/* Button to open the drawer */}
       {/* Removed the button */}
 

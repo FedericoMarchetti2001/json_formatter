@@ -2,6 +2,7 @@ import React from "react";
 import { Box, TextareaAutosize } from "@mui/material";
 import PropTypes from "prop-types";
 import GothAchievementsGallery from "./GothAchievementsGallery"; // Import GothAchievementsGallery
+import SentenceDisplay from "./SentenceDisplay"; // Import SentenceDisplay
 
 const textAreaStyle = {
   width: "100%",
@@ -46,6 +47,8 @@ function InputOutputSection({ text, handleTextChange, formattedText, gothSentenc
       />
       {/* Insert GothAchievementsGallery here */}
       <GothAchievementsGallery unlockedImages={unlockedImages} onImageClick={onImageClick} />
+      {/* Sentence Display Component */}
+      <SentenceDisplay sentence={gothSentence} />
       <TextareaAutosize
         placeholder="Formatted JSON"
         minRows={10}

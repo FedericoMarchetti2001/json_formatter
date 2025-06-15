@@ -139,9 +139,6 @@ function GothControlPanel({
         setEnableAIVoice={setEnableAIVoice}
       />
 
-      {/* Sentence Display Component */}
-      <SentenceDisplay sentence={gothSentence} />
-
       {/* Achievement Import/Export Component */}
       <AchievementImportExport onExport={onExportAchievements} onImport={onImportAchievements} />
 

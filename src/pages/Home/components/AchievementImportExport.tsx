@@ -30,10 +30,10 @@ function AchievementImportExport({ onExport, onImport }: AchievementImportExport
 
   return (
     <Box sx={{ marginTop: "20px", textAlign: "center" }}>
-      <Box sx={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-        <Button variant="contained" color="primary" onClick={onExport}>
+      <Box>
+        <button onClick={onExport} style={{ marginRight: "10px" }}>
           Export Achievements
-        </Button>
+        </button>
         <input
           accept=".json"
           style={{ display: "none" }}
@@ -42,9 +42,9 @@ function AchievementImportExport({ onExport, onImport }: AchievementImportExport
           onChange={handleImport}
         />
         <label htmlFor="import-achievements-button">
-          <Button variant="contained" color="secondary" component="span">
+          <button>
             Import Achievements
-          </Button>
+          </button>
         </label>
       </Box>
     </Box>
