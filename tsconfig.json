@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "outDir": "./build", // Explicitly define output directory for compiled files
     "rootDir": "./src", // Define the root directory for source files
-    "types": ["react", "react-dom"],
+    "types": ["react", "react-dom", "jest", "@testing-library/jest-dom"],
     "strict": true, // Optional: enables strict type-checking
     "skipLibCheck": true
   },

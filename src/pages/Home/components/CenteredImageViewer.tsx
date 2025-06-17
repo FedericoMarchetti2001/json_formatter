@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 
-interface CenteredImageViewerProps {
+export interface CenteredImageViewerProps {
   imageUrl: string;
   onClose: () => void;
   isOpen: boolean;
