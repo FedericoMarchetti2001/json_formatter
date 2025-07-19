@@ -205,7 +205,6 @@ function Presentation() {
               container
               direction="column"
               alignItems="stretch"
-              style={{ padding: "10px" }}
             >
               <FormatterAction
                 textToManage={textArray[currentPage - 1]} // Pass current page's text

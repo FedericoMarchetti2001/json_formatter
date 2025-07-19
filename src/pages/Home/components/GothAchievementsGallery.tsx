@@ -25,9 +25,9 @@ function GothAchievementsGallery({ unlockedImages, onImageClick }: GothAchieveme
                 height: "150px",
                 objectFit: "cover",
                 border: "2px solid #ff00ff",
-                cursor: "pointer", // Indicate clickable
+                // cursor: "pointer", // Indicate clickable
               }}
-              onClick={() => onImageClick(imagePath)}
+              // onClick={() => onImageClick(imagePath)}
             />
           ))
         ) : (

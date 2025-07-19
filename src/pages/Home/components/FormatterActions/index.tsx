@@ -97,14 +97,14 @@ export default function FormatterAction(
         height="50%"
         justifyContent="center"
         alignItems="stretch"
-        style={{ padding: "10px" }}
+        style={{ padding: "10px"}}
       >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-evenly",
-            height: "100%",
+            height: "100%"
           }}
         >
           <Button
@@ -190,9 +190,9 @@ export default function FormatterAction(
         height="50%"
         justifyContent="center"
         alignItems="stretch"
-        style={{ padding: "10px" }}
+        style={{ padding: "10px"}}
       >
-        <InputLabel>Upload JSON</InputLabel>
+        <InputLabel style={{ color: "white" }}>Upload JSON</InputLabel>
         <input
           type="file"
           accept=".json,.txt"
