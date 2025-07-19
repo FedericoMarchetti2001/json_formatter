@@ -18,12 +18,8 @@ import { useEffect } from "react";
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
-// @mui material components
-import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-// Material Kit 2 React themes
-import theme from "assets/theme";
 import Presentation from "layouts/pages/home";
 
 // Material Kit 2 React routes
@@ -56,16 +52,16 @@ export default function App() {
     });
 
   return (
-    <ThemeProvider theme={theme}>
+    <div className="App">
+      {/* Render the routes */}
       <CssBaseline />
       <SpeedInsights />
       <Analytics />
-      {/* Render the routes */}
       <Routes>
         {getRoutes(routes)}
         <Route path="/home" element={<Presentation />} />
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
-    </ThemeProvider>
+    </div>
   );
 }
