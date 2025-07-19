@@ -32,17 +32,21 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
   --gothic-heading: "UnifrakturCook", cursive;
 }
 
+html, body {
+  min-height: 100% !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
 body {
-  background-image: linear-gradient(rgba(24, 20, 26, 0.95), rgba(24, 20, 26, 0.95)),
-    url("../../public/grunge-emo-seamless-pattern-wallpaper.webp") !important;
+  background-image:  url("../../public/images/detailed-structure-marble-natural-pattern-background-design.jpg") !important;
   background-repeat: no-repeat !important;
-  background-size: contain !important;
+  background-size: cover !important;
   background-color: var(--background-color) !important;
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
   margin: 0 !important;
   padding: 0 !important;
-  min-height: 100vh !important;
   position: relative !important;
   overflow-x: hidden !important;
 }
