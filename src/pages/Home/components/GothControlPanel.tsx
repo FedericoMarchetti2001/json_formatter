@@ -1,10 +1,9 @@
 // GothControlPanel.tsx
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { gothSuccessSentences, gothFailureSentences } from "../sentences";
 import Box from "@mui/material/Box";
 import { ToastContainer, toast } from "react-toastify"; // Import react-toastify components
 import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
-import SentenceDisplay from "./SentenceDisplay"; // Import SentenceDisplay
 import SoundAndVoiceControls from "./SoundAndVoiceControls"; // Import SoundAndVoiceControls
 import AchievementImportExport from "./AchievementImportExport"; // Import AchievementImportExport
 
@@ -27,29 +26,10 @@ function GothControlPanel({
   enableAIVoice,
   setEnableAIVoice,
   onConvert,
-  gothSentence, // Keep gothSentence prop to pass to SentenceDisplay
   setGothSentence,
   onExportAchievements,
   onImportAchievements,
 }: GothControlPanelProps) {
-  // GOTH THEME: Sentences, image, and music
-  const gothSuccessImages: string[] = [
-    "/goth-girls/goth1.jpg",
-    "/goth-girls/goth2.jpeg",
-    "/goth-girls/goth3.jpeg",
-    "/goth-girls/goth4.jpg",
-    "/goth-girls/goth6.jpg",
-    "/goth-girls/goth8.jpg",
-    // Add more success images
-  ];
-
-  const gothFailureImages: string[] = [
-    "/goth-girls/goth7.jpg",
-    "/goth-girls/goth10.jpg",
-    "/goth-girls/goth11.jpg",
-    "/goth-girls/goth12.jpg",
-    // Add more failure images
-  ];
 
   const successSound = "/sounds/success.mp3";
   const failSound = "/sounds/fail.mp3";

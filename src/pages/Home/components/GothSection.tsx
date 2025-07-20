@@ -3,7 +3,6 @@ import { gothSuccessSentences, gothFailureSentences } from "../sentences";
 import Box from "@mui/material/Box";
 import { ToastContainer, toast } from "react-toastify"; // Import react-toastify components
 import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
-import SentenceDisplay from "./SentenceDisplay"; // Import SentenceDisplay
 import SoundAndVoiceControls from "./SoundAndVoiceControls"; // Import SoundAndVoiceControls
 import AchievementImportExport from "./AchievementImportExport"; // Import AchievementImportExport
 import CenteredImageViewer from "./CenteredImageViewer"; // Import CenteredImageViewer
@@ -29,9 +28,7 @@ function GothControlPanel({
   enableAIVoice,
   setEnableAIVoice,
   onConvert,
-  gothSentence, // Keep gothSentence prop to pass to SentenceDisplay
   setGothSentence,
-  unlockedImages, // Keep unlockedImages prop for now, will move later
   onExportAchievements,
   onImportAchievements,
 }: GothControlPanelProps) {
@@ -133,14 +130,6 @@ function GothControlPanel({
       // Removed the timeout to close the drawer automatically
     }
   }, [onConvert, enablePlaySound, enableAIVoice, setGothSentence]); // Depend on onConvert, enablePlaySound, enableAIVoice, and setGothSentence
-
-  // Removed handleDrawerOpen
-  // Removed handleDrawerClose
-
-  const handleImageClick = (imagePath: string) => {
-    setGothGirlImg(imagePath); // Set the clicked image as the main image
-    setIsImageCentered(true); // Open the centered image view
-  };
 
   const handleCenteredImageClose = () => {
     setIsImageCentered(false);
