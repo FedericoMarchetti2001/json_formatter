@@ -151,13 +151,11 @@ textarea:focus {
 .menu-item:nth-child(odd) {
   background-color: var(--primary-bg-color) !important ;
   color: var(--text-color) !important ;
-  padding: 10px !important;
   text-decoration: none !important;
 }
 .menu-item:nth-child(even) {
   background-color: var(--secondary-bg-color) !important;
   color: var(--text-color) !important;
-  padding: 10px !important;
   text-decoration: none !important;
 }
 
@@ -215,8 +213,6 @@ textarea:focus {
   color: #e0d6eb !important;
   font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
   border: 1.5px solid #6b1e6b !important;
-  border-radius: 8px !important;
-  margin: 4px 0 !important;
   box-shadow: 0 2px 8px #0006 !important;
   letter-spacing: 0.04em !important;
   transition: background 0.2s, color 0.2s !important;
@@ -330,6 +326,14 @@ textarea:focus {
   box-shadow: 0 4px 24px #a8326e88, 0 0 0 4px #fff2 inset !important;
 }
 
+.MuiMenu-list, .MuiMenu-list:checked{
+  padding: 0 !important;
+}
+
+.MuiMenu-list:checked{
+  transition: all 5s ease-in-out !important;
+}
+
 .goth-drawer .MuiTypography-root,
 .goth-drawer .MuiListItemText-primary {
   font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
@@ -339,8 +343,6 @@ textarea:focus {
 }
 
 .goth-drawer .MuiListItem-root {
-  border-radius: 8px !important;
-  margin: 6px 0 !important;
   background: linear-gradient(90deg, #2d0036 0%, #18111b 100%) !important;
   box-shadow: 0 2px 8px #a8326e33 !important;
   transition: background 0.2s, color 0.2s !important;

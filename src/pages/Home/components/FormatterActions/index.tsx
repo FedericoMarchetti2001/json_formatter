@@ -208,7 +208,6 @@ export default function FormatterAction(
             id="tab-spaces-select-autowidth"
             value={tabSpaces}
             onChange={(e) => setTabSpaces(e.target.value as number)}
-            autoWidth
             label="Tab spaces"
           >
             <MenuItem className={"menu-item"} value={2}>
