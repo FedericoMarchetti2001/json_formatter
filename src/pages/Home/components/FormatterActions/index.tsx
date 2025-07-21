@@ -30,6 +30,9 @@ export default function FormatterAction(
   const [successfulFormats, setSuccessfulFormats] = React.useState<number>(0); // State for successful formats count
   const buttonWidth = 100;
 
+  // Ref for the Format button logic, so it can be triggered by keyboard
+  const formatButtonRef = React.useRef<HTMLButtonElement>(null);
+
   //Check if the text is JSON or not, and format according to the tabSpaces
   const format = (textToValidate: string, tabSpaces: number): string => {
     //if it can't convert to JSON, it's not valid and will be catched
@@ -88,6 +91,21 @@ export default function FormatterAction(
       props.setGenericError("Error uploading file");
     }
   };
+
+  // ALT+ENTER triggers Format
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.altKey && e.key === "Enter") {
+        e.preventDefault();
+        // Simulate Format button click
+        if (formatButtonRef.current) {
+          formatButtonRef.current.click();
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <React.Fragment>
@@ -161,6 +179,8 @@ export default function FormatterAction(
                 props.onConvert({ success: formattedText !== "" });
               }
             }}
+            ref={formatButtonRef}
+            title="Format (Alt+Enter)"
           >
             <b style={{ color: "white" }}>Format</b>
           </Button>

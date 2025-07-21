@@ -23,6 +23,7 @@ import FormatterAction from "./components/FormatterActions";
 import InputOutputSection from "./components/InputOutputSection";
 import GothControlPanel from "./components/GothSection"; // Renamed import
 import CenteredImageViewer from "./components/CenteredImageViewer"; // Import CenteredImageViewer
+import GothShortcutsOverlay from "./components/GothShortcutsOverlay";
 
 //Other components
 import FormatterPagination from "./components/Pagination";
@@ -46,6 +47,20 @@ function Presentation() {
   //validation logic
   const [isValid, setIsValid] = useState(undefined);
   const [genericError, setGenericError] = useState("");
+
+  // Shortcuts overlay state
+  const [showShortcutsOverlay, setShowShortcutsOverlay] = useState(false);
+
+  // ESC key handler for overlay
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setShowShortcutsOverlay((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   // Achievement State
   const [achievements, setAchievements] = useState({
@@ -172,76 +187,80 @@ function Presentation() {
 
  return (
    <div className="home-container">
-      <Box
-        minHeight="75vh"
-        width="100%"
-        sx={{
-          backgroundSize: "cover",
-          backgroundPosition: "top",
-          display: "grid",
-          placeItems: "center",
-        }}
-      >
-        <Container style={containerStyle}>
-          <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
-            <Grid2 item xs={10} style={{ flex: 1 }}>
-              <GothControlPanel // Use the renamed component
-                enablePlaySound={enablePlaySound}
-                setEnablePlaySound={setEnablePlaySound}
-                enableAIVoice={enableAIVoice}
-                setEnableAIVoice={setEnableAIVoice}
-                onConvert={gothConvertResult} // Pass the state to trigger effect
-                setGothSentence={setGothSentence}
-                gothSentence={gothSentence} // Pass the goth sentence to display
-                unlockedImages={achievements.images} // Keep unlockedImages prop for now, will move later
-                onExportAchievements={exportAchievements} // Pass export handler
-                onImportAchievements={importAchievements} // Pass import handler
-              />
-              <FormatterPagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPageCount={textArray.length} // Pass total page count
-                onAddPage={handleAddPage} // Pass the new page handler
-              />
-              <InputOutputSection
-                text={textArray[currentPage - 1]} // Pass current page's text
-                handleTextChange={handleTextChange} // Pass handler to update textArray
-                formattedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
-                gothSentence={gothSentence} // gothSentence is now managed within GothSection
-                unlockedImages={achievements.images} // Pass unlocked images to InputOutputSection
-                onImageClick={handleAchievementImageClick} // Pass image click handler
-              />
-            </Grid2>
-            <Grid2
-              xs={2}
-              container
-              direction="column"
-              alignItems="stretch"
-            >
-              <FormatterAction
-                textToManage={textArray[currentPage - 1]} // Pass current page's text
-                setTextToManage={handleTextChange} // Pass handler to update textArray
-                isValid={isValid}
-                setIsValid={setIsValid}
-                setGenericError={setGenericError}
-                processedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
-                setProcessedText={handleFormattedTextChange} // Pass handler to update formattedTextArray
-                onConvert={handleConvert} // Pass the handler to FormatterAction
-                achievements={achievements} // Pass achievements to FormatterAction (for unlocking logic later)
-                setAchievements={setAchievements} // Pass setter for achievements
-              />
-            </Grid2>
-          </Grid2>
-        </Container>
-      </Box>
-      {/* Centered Image Viewer Component */}
-      <CenteredImageViewer
-        imageUrl={centeredImageUrl}
-        isOpen={isImageCentered}
-        onClose={handleCenteredImageClose}
-      />
-    </div>
-  );
+     <GothShortcutsOverlay
+       visible={showShortcutsOverlay}
+       onClose={() => setShowShortcutsOverlay(false)}
+     />
+     <Box
+       minHeight="75vh"
+       width="100%"
+       sx={{
+         backgroundSize: "cover",
+         backgroundPosition: "top",
+         display: "grid",
+         placeItems: "center",
+       }}
+     >
+       <Container style={containerStyle}>
+         <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
+           <Grid2 item xs={10} style={{ flex: 1 }}>
+             <GothControlPanel // Use the renamed component
+               enablePlaySound={enablePlaySound}
+               setEnablePlaySound={setEnablePlaySound}
+               enableAIVoice={enableAIVoice}
+               setEnableAIVoice={setEnableAIVoice}
+               onConvert={gothConvertResult} // Pass the state to trigger effect
+               setGothSentence={setGothSentence}
+               gothSentence={gothSentence} // Pass the goth sentence to display
+               unlockedImages={achievements.images} // Keep unlockedImages prop for now, will move later
+               onExportAchievements={exportAchievements} // Pass export handler
+               onImportAchievements={importAchievements} // Pass import handler
+             />
+             <FormatterPagination
+               currentPage={currentPage}
+               setCurrentPage={setCurrentPage}
+               totalPageCount={textArray.length} // Pass total page count
+               onAddPage={handleAddPage} // Pass the new page handler
+             />
+             <InputOutputSection
+               text={textArray[currentPage - 1]} // Pass current page's text
+               handleTextChange={handleTextChange} // Pass handler to update textArray
+               formattedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
+               gothSentence={gothSentence} // gothSentence is now managed within GothSection
+               unlockedImages={achievements.images} // Pass unlocked images to InputOutputSection
+               onImageClick={handleAchievementImageClick} // Pass image click handler
+             />
+           </Grid2>
+           <Grid2
+             xs={2}
+             container
+             direction="column"
+             alignItems="stretch"
+           >
+             <FormatterAction
+               textToManage={textArray[currentPage - 1]} // Pass current page's text
+               setTextToManage={handleTextChange} // Pass handler to update textArray
+               isValid={isValid}
+               setIsValid={setIsValid}
+               setGenericError={setGenericError}
+               processedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
+               setProcessedText={handleFormattedTextChange} // Pass handler to update formattedTextArray
+               onConvert={handleConvert} // Pass the handler to FormatterAction
+               achievements={achievements} // Pass achievements to FormatterAction (for unlocking logic later)
+               setAchievements={setAchievements} // Pass setter for achievements
+             />
+           </Grid2>
+         </Grid2>
+       </Container>
+     </Box>
+     {/* Centered Image Viewer Component */}
+     <CenteredImageViewer
+       imageUrl={centeredImageUrl}
+       isOpen={isImageCentered}
+       onClose={handleCenteredImageClose}
+     />
+   </div>
+ );
 }
 
 export default Presentation;

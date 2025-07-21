@@ -1,3 +1,11 @@
+/* Goth/Coding Shortcuts Overlay Fonts */
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* Optional: class for overlay root if needed in future */
+.goth-shortcuts-overlay {
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Cascadia Code', monospace;
+  /* Add more goth/coding styles here if needed */
+}
 /* 
 //This is a global CSS file that can be used to define styles that apply to the entire application.
 //It'll contain CSS variables, resets, and any global styles that are not specific to a component.
