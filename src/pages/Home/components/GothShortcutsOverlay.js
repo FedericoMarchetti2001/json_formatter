@@ -106,24 +106,20 @@ export default function GothShortcutsOverlay({ visible, onClose }) {
             <span>Format JSON</span>
           </li>
           <li style={itemStyle}>
-            <span style={keyStyle}>Esc</span>
-            <span>Show/Hide this shortcuts panel</span>
-          </li>
-          <li style={itemStyle}>
             <span style={keyStyle}>Tab</span>
             <span>Indent in editor</span>
           </li>
-          <li style={itemStyle}>
+          {/* <li style={itemStyle}>
             <span style={keyStyle}>Ctrl + C</span>
             <span>Copy selected text</span>
           </li>
           <li style={itemStyle}>
             <span style={keyStyle}>Ctrl + V</span>
             <span>Paste</span>
-          </li>
+          </li> */}
         </ul>
         <div style={closeHintStyle}>
-          Press <span style={keyStyle}>Esc</span> or click outside to close.<br />
+          Press <span style={keyStyle}>Esc</span> or click outside to close.<br /> <br />
           <span style={{ color: "#7f1d1d" }}>Stay goth, keep coding.</span>
         </div>
       </div>
