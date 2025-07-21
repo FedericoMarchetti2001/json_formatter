@@ -3,6 +3,7 @@ import { InputLabel, MenuItem, Select } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
+import localStorageHandler from "../../../../utils/localStorageHandler";
 
 export interface IFormatterActionsProps {
   //original text
@@ -27,6 +28,19 @@ export default function FormatterAction(
   props: IFormatterActionsProps
 ): React.ReactElement<IFormatterActionsProps> {
   const [tabSpaces, setTabSpaces] = React.useState<number>(2);
+
+  // Load tabSpaces from preferences on mount
+  React.useEffect(() => {
+    const prefs = localStorageHandler.getPreferences();
+    if (prefs && typeof prefs.tabSpaces === "number") {
+      setTabSpaces(prefs.tabSpaces);
+    }
+  }, []);
+
+  // Save tabSpaces to preferences when changed
+  React.useEffect(() => {
+    localStorageHandler.updatePreference("tabSpaces", tabSpaces);
+  }, [tabSpaces]);
   const [successfulFormats, setSuccessfulFormats] = React.useState<number>(0); // State for successful formats count
   const buttonWidth = 100;
 

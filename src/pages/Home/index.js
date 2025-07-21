@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import React, { useState, useEffect } from "react";
-
+import localStorageHandler from "../../utils/localStorageHandler";
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2";
@@ -40,10 +40,16 @@ const containerStyle = {
 
 function Presentation() {
   //pagination logic
-  const [textArray, setTextArray] = useState([""]); // Start with one page
+  const [textArray, setTextArray] = useState(() => {
+    const saved = localStorageHandler.getPageContent("textArray");
+    return Array.isArray(saved) ? saved : [""];
+  }); // Load pages from storage or start with one page
   const [currentPage, setCurrentPage] = useState(1);
   //formatted text
-  const [formattedTextArray, setFormattedTextArray] = useState([""]);
+  const [formattedTextArray, setFormattedTextArray] = useState(() => {
+    const saved = localStorageHandler.getPageContent("formattedTextArray");
+    return Array.isArray(saved) ? saved : [""];
+  });
   //validation logic
   const [isValid, setIsValid] = useState(undefined);
   const [genericError, setGenericError] = useState("");
@@ -74,31 +80,19 @@ function Presentation() {
 
   // Load achievements from localStorage on component mount
   useEffect(() => {
-    const savedAchievements = localStorage.getItem('jsonFormatterAchievements');
-    if (savedAchievements) {
-      try {
-        const parsedAchievements = JSON.parse(savedAchievements);
-        // Basic validation
-        if (parsedAchievements && Array.isArray(parsedAchievements.unlocked) && Array.isArray(parsedAchievements.images)) {
-          setAchievements(parsedAchievements);
-          console.log("Achievements loaded from localStorage.");
-        } else {
-          console.error("Invalid data format in localStorage for achievements.");
-        }
-      } catch (error) {
-        console.error("Error parsing achievements from localStorage:", error);
-      }
+    const loaded = localStorageHandler.getAchievements();
+    if (loaded && Array.isArray(loaded.unlocked) && Array.isArray(loaded.images)) {
+      setAchievements(loaded);
+      console.log("Achievements loaded from localStorage.");
+    } else if (loaded) {
+      console.error("Invalid data format in localStorage for achievements.");
     }
   }, []); // Empty dependency array means this runs once on mount
 
   // Save achievements to localStorage whenever the state changes
   useEffect(() => {
-    try {
-      localStorage.setItem('jsonFormatterAchievements', JSON.stringify(achievements));
-      console.log("Achievements saved to localStorage.");
-    } catch (error) {
-      console.error("Error saving achievements to localStorage:", error);
-    }
+    localStorageHandler.setAchievements(achievements);
+    console.log("Achievements saved to localStorage.");
   }, [achievements]); // Dependency array ensures this runs when achievements state changes
 
   // Function to export achievements
@@ -136,9 +130,33 @@ function Presentation() {
 
   // GOTH THEME: State for toggling sound and AI voice
   const [gothSentence, setGothSentence] = useState("");
-  const [enablePlaySound, setEnablePlaySound] = useState(true);
-  const [enableAIVoice, setEnableAIVoice] = useState(true);
+  const [enablePlaySound, setEnablePlaySound] = useState(() => {
+    const prefs = localStorageHandler.getPreferences();
+    return typeof prefs.enablePlaySound === "boolean" ? prefs.enablePlaySound : true;
+  });
+  const [enableAIVoice, setEnableAIVoice] = useState(() => {
+    const prefs = localStorageHandler.getPreferences();
+    return typeof prefs.enableAIVoice === "boolean" ? prefs.enableAIVoice : true;
+  });
   const [gothConvertResult, setGothConvertResult] = useState(null); // State to trigger GothSection effects
+
+  // Persist audio preferences on change
+  useEffect(() => {
+    localStorageHandler.updatePreference("enablePlaySound", enablePlaySound);
+  }, [enablePlaySound]);
+
+  useEffect(() => {
+    localStorageHandler.updatePreference("enableAIVoice", enableAIVoice);
+  }, [enableAIVoice]);
+
+  // Persist page content arrays to localStorage
+  useEffect(() => {
+    localStorageHandler.setPageContent("textArray", textArray);
+  }, [textArray]);
+
+  useEffect(() => {
+    localStorageHandler.setPageContent("formattedTextArray", formattedTextArray);
+  }, [formattedTextArray]);
 
   // Update textArray when text changes
   // Update textArray when input changes
