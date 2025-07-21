@@ -5,16 +5,24 @@ import { Tabs, Tab } from "@mui/material";
 export interface IFormatterPaginationProps {
   currentPage: number;
   setCurrentPage: (page: number) => void;
+  totalPageCount: number;
+  onAddPage: () => void;
 }
 
 export default function FormatterPagination(
   props: IFormatterPaginationProps
 ): React.ReactElement<IFormatterPaginationProps> {
   return (
-    <Tabs value={props.currentPage}>
-      <Tab value={1} label="Page One" onClick={() => props.setCurrentPage(1)} />
-      <Tab value={2} label="Page Two" onClick={() => props.setCurrentPage(2)} />
-      <Tab value={3} label="Page Three" onClick={() => props.setCurrentPage(3)} />
+    <Tabs value={props.currentPage} variant="scrollable" scrollButtons="auto">
+      {Array.from({ length: props.totalPageCount }, (_, i) => (
+        <Tab
+          key={i + 1}
+          value={i + 1}
+          label={`Page ${i + 1}`}
+          onClick={() => props.setCurrentPage(i + 1)}
+        />
+      ))}
+      <Tab value={-1} label="+" onClick={props.onAddPage} />
     </Tabs>
   );
 }

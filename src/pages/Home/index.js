@@ -39,10 +39,10 @@ const containerStyle = {
 
 function Presentation() {
   //pagination logic
-  const [textArray, setTextArray] = useState(["", "", "", "", ""]); //won't ever reset
+  const [textArray, setTextArray] = useState([""]); // Start with one page
   const [currentPage, setCurrentPage] = useState(1);
   //formatted text
-  const [formattedTextArray, setFormattedTextArray] = useState(["", "", "", "", ""]);
+  const [formattedTextArray, setFormattedTextArray] = useState([""]);
   //validation logic
   const [isValid, setIsValid] = useState(undefined);
   const [genericError, setGenericError] = useState("");
@@ -163,8 +163,15 @@ function Presentation() {
   };
 
 
-  return (
-    <div className="home-container">
+ // Function to add a new page
+ const handleAddPage = () => {
+   setTextArray((prevArray) => [...prevArray, ""]);
+   setFormattedTextArray((prevArray) => [...prevArray, ""]);
+   setCurrentPage(textArray.length + 1); // Navigate to the new page
+ };
+
+ return (
+   <div className="home-container">
       <Box
         minHeight="75vh"
         width="100%"
@@ -190,7 +197,12 @@ function Presentation() {
                 onExportAchievements={exportAchievements} // Pass export handler
                 onImportAchievements={importAchievements} // Pass import handler
               />
-              <FormatterPagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+              <FormatterPagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPageCount={textArray.length} // Pass total page count
+                onAddPage={handleAddPage} // Pass the new page handler
+              />
               <InputOutputSection
                 text={textArray[currentPage - 1]} // Pass current page's text
                 handleTextChange={handleTextChange} // Pass handler to update textArray
