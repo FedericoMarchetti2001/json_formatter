@@ -87,12 +87,6 @@ GothShortcutsOverlay.propTypes = {
 export default function GothShortcutsOverlay({ visible, onClose }) {
   if (!visible) return null;
 
-  // Prevent scrolling when overlay is open
-  React.useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
-  }, []);
-
   // Dismiss on click outside the box
   const overlayRef = React.useRef();
 
