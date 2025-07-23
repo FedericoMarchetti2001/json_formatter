@@ -130,7 +130,7 @@ h6 {
 
 /* Inputs */
 input,
-textarea {
+textarea, .react-json-view {
   background: rgba(34, 22, 38, 0.85) !important;
   color: var(--text-color) !important;
   border: 1.5px solid var(--accent-color) !important;
@@ -141,6 +141,7 @@ textarea {
   margin-bottom: 12px !important;
   transition: border 0.2s !important;
   outline: none !important;
+  max-height: 1000px;
 }
 input:focus,
 textarea:focus {
