@@ -141,7 +141,7 @@ textarea, .react-json-view {
   margin-bottom: 12px !important;
   transition: border 0.2s !important;
   outline: none !important;
-  max-height: 1000px;
+  max-height: 70vh;
 }
 input:focus,
 textarea:focus {

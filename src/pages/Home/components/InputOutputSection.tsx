@@ -99,7 +99,7 @@ function InputOutputSection({
             enableClipboard={true} // Allow copying values
             displayObjectSize={false} // Hide object size
             displayDataTypes={false} // Hide data types
-            style={{height: "100%", width: "100%", overflow: "auto"}}
+            style={{width: "100%", overflow: "auto"}}
             theme="monokai" // Choose a theme that fits the goth aesthetic
           />
         </Box>
