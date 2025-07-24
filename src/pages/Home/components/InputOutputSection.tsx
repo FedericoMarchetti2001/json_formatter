@@ -1,5 +1,5 @@
-import React, { ChangeEvent, KeyboardEvent, useState, useEffect, JSX } from "react";
-import { Box, TextareaAutosize, Typography } from "@mui/material";
+import React, { ChangeEvent, KeyboardEvent, useState, useEffect, JSX, RefObject } from "react";
+import { Box, TextareaAutosize } from "@mui/material";
 import GothAchievementsGallery from "./GothAchievementsGallery"; // Import GothAchievementsGallery
 import SentenceDisplay from "./SentenceDisplay"; // Import SentenceDisplay
 import JsonView from "react-json-view"; // Import JsonView for tree view
@@ -12,6 +12,8 @@ interface InputOutputSectionProps {
   gothSentence?: string; // gothSentence can be undefined
   unlockedImages: string[];
   onImageClick: (image: string) => void;
+  textareaRef: RefObject<HTMLTextAreaElement>; // Add ref for TextareaAutosize
+  jsonViewRef: RefObject<HTMLDivElement>; // Add ref for JsonView
   // Add a prop for validation error message
   validationError?: string;
 }
@@ -35,7 +37,8 @@ function InputOutputSection({
   gothSentence,
   unlockedImages,
   onImageClick,
-  validationError, // Destructure validationError prop
+  textareaRef, // Destructure the ref
+  jsonViewRef // Destructure the ref
 }: InputOutputSectionProps): JSX.Element {
   // State to hold the parsed JSON object for JsonView
   const [parsedJson, setParsedJson] = useState<object | null>(null);
@@ -77,6 +80,7 @@ function InputOutputSection({
     <Box style={{ flex: 1, height: "70%" }}>
       {/* Input Textarea for JSON */}
       <TextareaAutosize
+        ref={textareaRef} // Attach the ref
         placeholder="Paste your JSON here"
         minRows={10}
         maxRows={20}
@@ -91,7 +95,7 @@ function InputOutputSection({
       <SentenceDisplay sentence={gothSentence || ""} />
 
       {/* Conditional rendering for JSON Tree View or Error Message */}
-        <Box style={{ ...textAreaStyle}}>
+        <Box ref={jsonViewRef} style={{ ...textAreaStyle}}> {/* Attach the ref */}
           <JsonView
             src={parsedJson ?? {}}
             name={false} // Hide the root name

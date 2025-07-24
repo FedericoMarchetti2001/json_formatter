@@ -126,10 +126,10 @@ export default function FormatterAction(
       <Grid2
         container
         direction="column"
-        height="50%"
+        height="35vh"
         justifyContent="center"
         alignItems="stretch"
-        style={{ padding: "10px"}}
+        style={{ padding: "10px", paddingTop: "10vh"}}
       >
         <div
           style={{
@@ -221,7 +221,7 @@ export default function FormatterAction(
       <Grid2
         container
         direction="column"
-        height="50%"
+        height="45vh"
         justifyContent="center"
         alignItems="stretch"
         style={{ padding: "10px"}}

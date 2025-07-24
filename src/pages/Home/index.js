@@ -12,14 +12,14 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import localStorageHandler from "../../utils/localStorageHandler";
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2";
 
 // Custom components
-import FormatterAction from "./components/FormatterActions";
+import FormatterAction from "./components/FormatterActions/FormatterActions";
 import InputOutputSection from "./components/InputOutputSection";
 import GothControlPanel from "./components/GothSection"; // Renamed import
 import CenteredImageViewer from "./components/CenteredImageViewer"; // Import CenteredImageViewer
@@ -39,25 +39,29 @@ const containerStyle = {
 };
 
 function Presentation() {
-  //pagination logic
+  // Refs for the TextareaAutosize and JsonView components to enable scrolling
+  const textareaRef = useRef(null);
+  const jsonViewRef = useRef(null);
+
+  // Pagination logic: state for managing multiple pages of text input
   const [textArray, setTextArray] = useState(() => {
     const saved = localStorageHandler.getPageContent("textArray");
     return Array.isArray(saved) ? saved : [""];
   }); // Load pages from storage or start with one page
   const [currentPage, setCurrentPage] = useState(1);
-  //formatted text
+  // Formatted text: state for managing multiple pages of formatted JSON output
   const [formattedTextArray, setFormattedTextArray] = useState(() => {
     const saved = localStorageHandler.getPageContent("formattedTextArray");
     return Array.isArray(saved) ? saved : [""];
   });
-  //validation logic
+  // Validation logic: state to track if the JSON input is valid
   const [isValid, setIsValid] = useState(undefined);
   const [genericError, setGenericError] = useState("");
 
-  // Shortcuts overlay state
+  // Shortcuts overlay state: controls the visibility of the shortcuts overlay
   const [showShortcutsOverlay, setShowShortcutsOverlay] = useState(false);
 
-  // ESC key handler for overlay
+  // ESC key handler for overlay: toggles the shortcuts overlay visibility
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
@@ -68,13 +72,13 @@ function Presentation() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Achievement State
+  // Achievement State: manages unlocked achievements and their corresponding images
   const [achievements, setAchievements] = useState({
     unlocked: [], // Array of achievement IDs or names
     images: [], // Array of unlocked image paths
   });
 
-  // State for centered image viewer
+  // State for centered image viewer: controls the visibility and content of the centered image
   const [isImageCentered, setIsImageCentered] = useState(false);
   const [centeredImageUrl, setCenteredImageUrl] = useState("");
 
@@ -95,7 +99,7 @@ function Presentation() {
     console.log("Achievements saved to localStorage.");
   }, [achievements]); // Dependency array ensures this runs when achievements state changes
 
-  // Function to export achievements
+  // Function to export achievements to a JSON file
   const exportAchievements = () => {
     const dataStr = JSON.stringify(achievements, null, 2);
     const blob = new Blob([dataStr], { type: "application/json" });
@@ -109,7 +113,7 @@ function Presentation() {
     URL.revokeObjectURL(url);
   };
 
-  // Function to import achievements
+  // Function to import achievements from a JSON file
   const importAchievements = (data) => {
     try {
       const importedData = JSON.parse(data);
@@ -126,7 +130,6 @@ function Presentation() {
       // Optionally show an error message to the user
     }
   };
-
 
   // GOTH THEME: State for toggling sound and AI voice
   const [gothSentence, setGothSentence] = useState("");
@@ -159,7 +162,6 @@ function Presentation() {
   }, [formattedTextArray]);
 
   // Update textArray when text changes
-  // Update textArray when input changes
   const handleTextChange = (newText) => {
     setTextArray((prevArray) => {
       const newArray = [...prevArray];
@@ -183,7 +185,7 @@ function Presentation() {
     setGothConvertResult({ success });
   };
 
-  // Handler for clicking on an achievement image
+  // Handler for clicking on an achievement image to display it centered
   const handleAchievementImageClick = (imageUrl) => {
     setCenteredImageUrl(imageUrl);
     setIsImageCentered(true);
@@ -195,90 +197,143 @@ function Presentation() {
     setCenteredImageUrl("");
   };
 
+  // Function to add a new page to the text and formatted text arrays
+  const handleAddPage = () => {
+    setTextArray((prevArray) => [...prevArray, ""]);
+    setFormattedTextArray((prevArray) => [...prevArray, ""]);
+    setCurrentPage(textArray.length + 1); // Navigate to the new page
+  };
 
- // Function to add a new page
- const handleAddPage = () => {
-   setTextArray((prevArray) => [...prevArray, ""]);
-   setFormattedTextArray((prevArray) => [...prevArray, ""]);
-   setCurrentPage(textArray.length + 1); // Navigate to the new page
- };
+  // Effect to handle clicks on the window for scrolling to specific sections
+  useEffect(() => {
+    const handleWindowClick = (e) => {
+      // Check if the clicked element or any of its ancestors is an interactive element
+      // This prevents scrolling when the user is interacting with inputs, buttons, etc.
+      const isInteractiveElement = (element) => {
+        if (!element || element === document.body) return false;
+        const tagName = element.tagName;
+        return (
+          tagName === "INPUT" ||
+          tagName === "TEXTAREA" ||
+          tagName === "BUTTON" ||
+          tagName === "A" ||
+          element.hasAttribute("role") || // Covers elements with ARIA roles like 'button'
+          element.hasAttribute("tabindex") || // Covers elements that can be focused
+          element.onclick !== null // Checks if an onclick handler is present
+        );
+      };
 
- return (
-   <div className="home-container">
-     <GothShortcutsOverlay
-       visible={showShortcutsOverlay}
-       onClose={() => setShowShortcutsOverlay(false)}
-     />
-     <Box
-       minHeight="75vh"
-       width="100%"
-       sx={{
-         backgroundSize: "cover",
-         backgroundPosition: "top",
-         display: "grid",
-         placeItems: "center",
-       }}
-     >
-       <Container style={containerStyle}>
-         <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
-           <Grid2 item xs={10} style={{ flex: 1 }}>
-             <GothControlPanel // Use the renamed component
-               enablePlaySound={enablePlaySound}
-               setEnablePlaySound={setEnablePlaySound}
-               enableAIVoice={enableAIVoice}
-               setEnableAIVoice={setEnableAIVoice}
-               onConvert={gothConvertResult} // Pass the state to trigger effect
-               setGothSentence={setGothSentence}
-               gothSentence={gothSentence} // Pass the goth sentence to display
-               unlockedImages={achievements.images} // Keep unlockedImages prop for now, will move later
-               onExportAchievements={exportAchievements} // Pass export handler
-               onImportAchievements={importAchievements} // Pass import handler
-             />
-             <FormatterPagination
-               currentPage={currentPage}
-               setCurrentPage={setCurrentPage}
-               totalPageCount={textArray.length} // Pass total page count
-               onAddPage={handleAddPage} // Pass the new page handler
-             />
-             <InputOutputSection
-               text={textArray[currentPage - 1]} // Pass current page's text
-               handleTextChange={handleTextChange} // Pass handler to update textArray
-               formattedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
-               gothSentence={gothSentence} // gothSentence is now managed within GothSection
-               unlockedImages={achievements.images} // Pass unlocked images to InputOutputSection
-               onImageClick={handleAchievementImageClick} // Pass image click handler
-             />
-           </Grid2>
-           <Grid2
-             xs={2}
-             container
-             direction="column"
-             alignItems="stretch"
-           >
-             <FormatterAction
-               textToManage={textArray[currentPage - 1]} // Pass current page's text
-               setTextToManage={handleTextChange} // Pass handler to update textArray
-               isValid={isValid}
-               setIsValid={setIsValid}
-               setGenericError={setGenericError}
-               processedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
-               setProcessedText={handleFormattedTextChange} // Pass handler to update formattedTextArray
-               onConvert={handleConvert} // Pass the handler to FormatterAction
-               achievements={achievements} // Pass achievements to FormatterAction (for unlocking logic later)
-               setAchievements={setAchievements} // Pass setter for achievements
-             />
-           </Grid2>
-         </Grid2>
-       </Container>
-     </Box>
-     {/* Centered Image Viewer Component */}
-     <CenteredImageViewer
-       imageUrl={centeredImageUrl}
-       isOpen={isImageCentered}
-       onClose={handleCenteredImageClose}
-     />
-   </div>
- );
+      // Traverse up the DOM tree from the clicked element
+      let currentElement = e.target;
+      while (currentElement && currentElement !== document.body) {
+        if (isInteractiveElement(currentElement)) {
+          return; // An interactive element was clicked, do not scroll
+        }
+        currentElement = currentElement.parentElement;
+      }
+
+      // If no interactive element was clicked and no element is currently focused
+      if (!document.activeElement || document.activeElement === document.body) {
+        const viewportHeight = window.innerHeight;
+        const clickY = e.clientY;
+
+        if (clickY < viewportHeight / 2) {
+          // Click in the top half of the viewport, scroll to TextareaAutosize
+          textareaRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          // Click in the bottom half of the viewport, scroll to JsonView
+          jsonViewRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    };
+
+    // Attach the event listener to the window
+    window.addEventListener("click", handleWindowClick);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("click", handleWindowClick);
+    };
+  }, [textareaRef, jsonViewRef]); // Re-run effect if refs change (though they typically won't)
+
+  return (
+    <div className="home-container">
+      <GothShortcutsOverlay
+        visible={showShortcutsOverlay}
+        onClose={() => setShowShortcutsOverlay(false)}
+      />
+      <Box
+        minHeight="75vh"
+        width="100%"
+        sx={{
+          backgroundSize: "cover",
+          backgroundPosition: "top",
+          display: "grid",
+          placeItems: "center",
+        }}
+      >
+        <Container style={containerStyle}>
+          <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
+            <Grid2 item xs={10} style={{ flex: 1 }}>
+              <GothControlPanel // Use the renamed component
+                enablePlaySound={enablePlaySound}
+                setEnablePlaySound={setEnablePlaySound}
+                enableAIVoice={enableAIVoice}
+                setEnableAIVoice={setEnableAIVoice}
+                onConvert={gothConvertResult} // Pass the state to trigger effect
+                setGothSentence={setGothSentence}
+                gothSentence={gothSentence} // Pass the goth sentence to display
+                unlockedImages={achievements.images} // Keep unlockedImages prop for now, will move later
+                onExportAchievements={exportAchievements} // Pass export handler
+                onImportAchievements={importAchievements} // Pass import handler
+              />
+              <FormatterPagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPageCount={textArray.length} // Pass total page count
+                onAddPage={handleAddPage} // Pass the new page handler
+              />
+              <InputOutputSection
+                text={textArray[currentPage - 1]} // Pass current page's text
+                handleTextChange={handleTextChange} // Pass handler to update textArray
+                formattedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
+                gothSentence={gothSentence} // gothSentence is now managed within GothSection
+                unlockedImages={achievements.images} // Pass unlocked images to InputOutputSection
+                onImageClick={handleAchievementImageClick} // Pass image click handler
+                textareaRef={textareaRef} // Pass ref to TextareaAutosize
+                jsonViewRef={jsonViewRef} // Pass ref to JsonView
+              />
+            </Grid2>
+            <Grid2
+              xs={2}
+              container
+              direction="column"
+              alignItems="stretch"
+            >
+              <FormatterAction
+                textToManage={textArray[currentPage - 1]} // Pass current page's text
+                setTextToManage={handleTextChange} // Pass handler to update textArray
+                isValid={isValid}
+                setIsValid={setIsValid}
+                setGenericError={setGenericError}
+                processedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
+                setProcessedText={handleFormattedTextChange} // Pass handler to update formattedTextArray
+                onConvert={handleConvert} // Pass the handler to FormatterAction
+                achievements={achievements} // Pass achievements to FormatterAction (for unlocking logic later)
+                setAchievements={setAchievements} // Pass setter for achievements
+              />
+            </Grid2>
+          </Grid2>
+        </Container>
+      </Box>
+      {/* Centered Image Viewer Component */}
+      <CenteredImageViewer
+        imageUrl={centeredImageUrl}
+        isOpen={isImageCentered}
+        onClose={handleCenteredImageClose}
+      />
+    </div>
+  );
 }
 
 export default Presentation;
