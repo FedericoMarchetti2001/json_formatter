@@ -253,22 +253,6 @@ export default function FormatterAction(
             <MenuItem className={"menu-item"} value={"bright"}>{t("FormatterActions.bright")}</MenuItem>
           </Select>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly", marginTop: "1rem" }}>
-          <InputLabel id="language-label" className="goth-input-label">
-            Language
-          </InputLabel>
-          <Select
-            className={"menu-select"}
-            labelId="language-label"
-            id="language-select"
-            value={i18n.language}
-            onChange={(e) => i18n.changeLanguage(e.target.value as string)}
-            label="Language"
-          >
-            <MenuItem className={"menu-item"} value={"en"}>English</MenuItem>
-            <MenuItem className={"menu-item"} value={"de"}>Deutsch</MenuItem>
-          </Select>
-        </div>
       </Grid2>
     </React.Fragment>
   );

@@ -20,5 +20,9 @@
   },
   "Pagination": {
     "page": "Seite"
+  },
+  "toast": {
+    "success": "Konvertierung erfolgreich!",
+    "failure": "Konvertierung fehlgeschlagen."
   }
 }

@@ -1,7 +1,9 @@
 // GothControlPanel.tsx
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { gothSuccessSentences, gothFailureSentences } from "../sentences";
 import Box from "@mui/material/Box";
+import ReactFlagsSelect from "react-flags-select";
 import { ToastContainer, toast } from "react-toastify"; // Import react-toastify components
 import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
 import SoundAndVoiceControls from "./SoundAndVoiceControls"; // Import SoundAndVoiceControls
@@ -30,7 +32,7 @@ function GothControlPanel({
   onExportAchievements,
   onImportAchievements,
 }: GothControlPanelProps) {
-
+  const { t, i18n } = useTranslation();
   const successSound = "/sounds/success.mp3";
   const failSound = "/sounds/fail.mp3";
 
@@ -99,9 +101,9 @@ function GothControlPanel({
 
       // Show toast notification
       if (onConvert.success) {
-        toast.success("Conversion successful!");
+        toast.success(t("toast.success"));
       } else {
-        toast.error("Conversion failed.");
+        toast.error(t("toast.failure"));
       }
 
       // Removed the timeout to close the drawer automatically
@@ -111,6 +113,16 @@ function GothControlPanel({
 
   return (
     <Box>
+      {/* Language Switcher */}
+      <Box sx={{ mt: 2 }}>
+        <ReactFlagsSelect
+          countries={["US", "DE"]}
+          customLabels={{ US: "English", DE: "Deutsch" }}
+          selected={i18n.language.toUpperCase()}
+          onSelect={(code) => i18n.changeLanguage(code.toLowerCase())}
+        />
+      </Box>
+
       {/* Controls for sound and AI voice */}
       <SoundAndVoiceControls
         enablePlaySound={enablePlaySound}
