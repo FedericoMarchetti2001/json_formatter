@@ -204,6 +204,26 @@ function Presentation() {
     setCurrentPage(textArray.length + 1); // Navigate to the new page
   };
 
+  // Function to delete a page
+  const handleDeletePage = (pageToDelete) => {
+    if (textArray.length <= 1) return; // Prevent deleting the last page
+
+    const newTextArray = textArray.filter((_, index) => index + 1 !== pageToDelete);
+    const newFormattedTextArray = formattedTextArray.filter(
+      (_, index) => index + 1 !== pageToDelete
+    );
+
+    setTextArray(newTextArray);
+    setFormattedTextArray(newFormattedTextArray);
+
+    // Adjust currentPage if necessary
+    if (currentPage === pageToDelete) {
+      setCurrentPage(Math.max(1, pageToDelete - 1));
+    } else if (currentPage > pageToDelete) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   // Effect to handle clicks on the window for scrolling to specific sections
   useEffect(() => {
     const handleWindowClick = (e) => {
@@ -292,6 +312,7 @@ function Presentation() {
                 setCurrentPage={setCurrentPage}
                 totalPageCount={textArray.length} // Pass total page count
                 onAddPage={handleAddPage} // Pass the new page handler
+                onDeletePage={handleDeletePage} // Pass the delete page handler
               />
               <InputOutputSection
                 text={textArray[currentPage - 1]} // Pass current page's text
@@ -302,6 +323,7 @@ function Presentation() {
                 onImageClick={handleAchievementImageClick} // Pass image click handler
                 textareaRef={textareaRef} // Pass ref to TextareaAutosize
                 jsonViewRef={jsonViewRef} // Pass ref to JsonView
+                onDeletePage={() => handleDeletePage(currentPage)}
               />
             </Grid2>
             <Grid2

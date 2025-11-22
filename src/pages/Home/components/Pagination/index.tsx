@@ -7,6 +7,7 @@ export interface IFormatterPaginationProps {
   setCurrentPage: (page: number) => void;
   totalPageCount: number;
   onAddPage: () => void;
+  onDeletePage: (page: number) => void;
 }
 
 export default function FormatterPagination(
@@ -31,6 +32,17 @@ export default function FormatterPagination(
           value={i + 1}
           label={`Page ${i + 1}`}
           onClick={() => props.setCurrentPage(i + 1)}
+          onKeyDown={(event) => {
+            //if the user is focused on a tab and presses delete, remove that pageù
+             console.log("Key down on tab:", event.key);
+            if (
+              (event.key === "Delete" || event.key === "Backspace") &&
+              props.totalPageCount > 1
+            ) {
+              event.preventDefault();
+              props.onDeletePage(i + 1);
+            }
+          }}
         />
       ))}
       <Tab value={-1} label="+" onClick={props.onAddPage} />

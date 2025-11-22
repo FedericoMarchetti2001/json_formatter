@@ -16,6 +16,7 @@ interface InputOutputSectionProps {
   jsonViewRef: RefObject<HTMLDivElement>; // Add ref for JsonView
   // Add a prop for validation error message
   validationError?: string;
+  onDeletePage: () => void;
 }
 
 // Styles for the textarea component
@@ -38,7 +39,8 @@ function InputOutputSection({
   unlockedImages,
   onImageClick,
   textareaRef, // Destructure the ref
-  jsonViewRef // Destructure the ref
+  jsonViewRef, // Destructure the ref
+  onDeletePage,
 }: InputOutputSectionProps): JSX.Element {
   // State to hold the parsed JSON object for JsonView
   const [parsedJson, setParsedJson] = useState<object | null>(null);
@@ -77,7 +79,23 @@ function InputOutputSection({
   };
 
   return (
-    <Box style={{ flex: 1, height: "70%" }}>
+    <Box
+      style={{ flex: 1, height: "70%" }}
+      onKeyDown={(event) => {
+        if (event.key === "Delete" || event.key === "Backspace") {
+          const activeElement = document.activeElement;
+          if (
+            activeElement &&
+            activeElement.tagName !== "TEXTAREA" &&
+            activeElement.tagName !== "INPUT"
+          ) {
+            event.preventDefault();
+            onDeletePage();
+          }
+        }
+      }}
+      tabIndex={0} // Make the Box focusable
+    >
       {/* Input Textarea for JSON */}
       <TextareaAutosize
         ref={textareaRef} // Attach the ref
