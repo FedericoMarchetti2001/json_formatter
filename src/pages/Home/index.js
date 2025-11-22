@@ -58,6 +58,17 @@ function Presentation() {
   const [validationResult, setValidationResult] = useState({ valid: true });
   const [genericError, setGenericError] = useState("");
 
+  // Theme state
+  const [selectedTheme, setSelectedTheme] = useState(() => {
+    const prefs = localStorageHandler.getPreferences();
+    return prefs.jsonTheme || "monokai";
+  });
+
+  // Save theme to preferences when changed
+  useEffect(() => {
+    localStorageHandler.updatePreference("jsonTheme", selectedTheme);
+  }, [selectedTheme]);
+
   // Shortcuts overlay state: controls the visibility of the shortcuts overlay
   const [showShortcutsOverlay, setShowShortcutsOverlay] = useState(false);
 
@@ -325,6 +336,7 @@ function Presentation() {
                 jsonViewRef={jsonViewRef} // Pass ref to JsonView
                 onDeletePage={() => handleDeletePage(currentPage)}
                 validationError={validationResult.error?.message}
+                selectedTheme={selectedTheme}
               />
             </Grid2>
             <Grid2
@@ -343,6 +355,8 @@ function Presentation() {
                 onConvert={handleConvert} // Pass the handler to FormatterAction
                 achievements={achievements} // Pass achievements to FormatterAction (for unlocking logic later)
                 setAchievements={setAchievements} // Pass setter for achievements
+                selectedTheme={selectedTheme}
+                setSelectedTheme={setSelectedTheme}
               />
             </Grid2>
           </Grid2>

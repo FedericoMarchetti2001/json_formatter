@@ -21,6 +21,9 @@ export interface IFormatterActionsProps {
   // Achievements
   achievements: { unlocked: string[]; images: string[] };
   setAchievements: React.Dispatch<React.SetStateAction<{ unlocked: string[]; images: string[] }>>;
+  // Theme
+  selectedTheme: string;
+  setSelectedTheme: (theme: string) => void;
 }
 
 //This is a row/column component, possibly a small flexbox, which will contain actions like "Format", "Copy", "Clear", etc.
@@ -28,6 +31,7 @@ export default function FormatterAction(
   props: IFormatterActionsProps
 ): React.ReactElement<IFormatterActionsProps> {
   const [tabSpaces, setTabSpaces] = React.useState<number>(2);
+  const { selectedTheme, setSelectedTheme } = props;
 
   // Load tabSpaces from preferences on mount
   React.useEffect(() => {
@@ -228,6 +232,23 @@ export default function FormatterAction(
             <MenuItem className={"menu-item"} value={8}>
               Eigth
             </MenuItem>
+          </Select>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly", marginTop: "1rem" }}>
+          <InputLabel id="json-theme-label" className="goth-input-label">
+            Viewer Theme
+          </InputLabel>
+          <Select
+            className={"menu-select"}
+            labelId="json-theme-label"
+            id="json-theme-select"
+            value={selectedTheme}
+            onChange={(e) => setSelectedTheme(e.target.value as string)}
+            label="Viewer Theme"
+          >
+            <MenuItem className={"menu-item"} value={"monokai"}>Monokai</MenuItem>
+            <MenuItem className={"menu-item"} value={"apathy"}>Apathy</MenuItem>
+            <MenuItem className={"menu-item"} value={"bright"}>Bright</MenuItem>
           </Select>
         </div>
       </Grid2>

@@ -17,6 +17,7 @@ interface InputOutputSectionProps {
   // Add a prop for validation error message
   validationError?: string;
   onDeletePage: () => void;
+  selectedTheme: string;
 }
 
 // Styles for the textarea component
@@ -49,6 +50,7 @@ function InputOutputSection({
   jsonViewRef, // Destructure the ref
   onDeletePage,
   validationError,
+  selectedTheme,
 }: InputOutputSectionProps): JSX.Element {
   // State to hold the parsed JSON object for JsonView
   const [parsedJson, setParsedJson] = useState<object | null>(null);
@@ -130,7 +132,7 @@ function InputOutputSection({
             displayObjectSize={false} // Hide object size
             displayDataTypes={false} // Hide data types
             style={{width: "100%", overflow: "auto"}}
-            theme="monokai" // Choose a theme that fits the goth aesthetic
+           theme={selectedTheme as any} // Choose a theme that fits the goth aesthetic
           />
         </Box>
     </Box>
