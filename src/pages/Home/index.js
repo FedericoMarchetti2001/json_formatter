@@ -55,7 +55,7 @@ function Presentation() {
     return Array.isArray(saved) ? saved : [""];
   });
   // Validation logic: state to track if the JSON input is valid
-  const [isValid, setIsValid] = useState(undefined);
+  const [validationResult, setValidationResult] = useState({ valid: true });
   const [genericError, setGenericError] = useState("");
 
   // Shortcuts overlay state: controls the visibility of the shortcuts overlay
@@ -168,7 +168,7 @@ function Presentation() {
       newArray[currentPage - 1] = newText;
       return newArray;
     });
-    setIsValid(undefined); // Reset validation status when text changes
+    setValidationResult({ valid: true }); // Reset validation status when text changes
   };
 
   // Update formattedTextArray when formatted text changes
@@ -324,6 +324,7 @@ function Presentation() {
                 textareaRef={textareaRef} // Pass ref to TextareaAutosize
                 jsonViewRef={jsonViewRef} // Pass ref to JsonView
                 onDeletePage={() => handleDeletePage(currentPage)}
+                validationError={validationResult.error?.message}
               />
             </Grid2>
             <Grid2
@@ -335,8 +336,7 @@ function Presentation() {
               <FormatterAction
                 textToManage={textArray[currentPage - 1]} // Pass current page's text
                 setTextToManage={handleTextChange} // Pass handler to update textArray
-                isValid={isValid}
-                setIsValid={setIsValid}
+                setValidationResult={setValidationResult}
                 setGenericError={setGenericError}
                 processedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
                 setProcessedText={handleFormattedTextChange} // Pass handler to update formattedTextArray

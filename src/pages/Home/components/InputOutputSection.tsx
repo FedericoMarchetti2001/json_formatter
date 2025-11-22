@@ -24,6 +24,13 @@ const textAreaStyle: React.CSSProperties = {
   width: "100%",
   height: "100%",
   overflow: "auto",
+  border: "1px solid transparent", // Add a transparent border
+};
+
+const errorTextAreaStyle: React.CSSProperties = {
+  ...textAreaStyle,
+  border: "1px solid red", // Add a red border for errors
+  boxShadow: "0 0 5px red", // Add a red glow for errors
 };
 
 /**
@@ -41,6 +48,7 @@ function InputOutputSection({
   textareaRef, // Destructure the ref
   jsonViewRef, // Destructure the ref
   onDeletePage,
+  validationError,
 }: InputOutputSectionProps): JSX.Element {
   // State to hold the parsed JSON object for JsonView
   const [parsedJson, setParsedJson] = useState<object | null>(null);
@@ -102,8 +110,8 @@ function InputOutputSection({
         placeholder="Paste your JSON here"
         minRows={10}
         maxRows={20}
-        style={textAreaStyle}
-        value={text}
+        style={validationError ? errorTextAreaStyle : textAreaStyle}
+        value={validationError ? `Error: ${validationError}\n\n${text}` : text}
         onKeyDown={handleTextareaKeyDown}
         onChange={handleTextareaChange} onResize={undefined} onResizeCapture={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}      />
       {/* Goth Achievements Gallery Component */}

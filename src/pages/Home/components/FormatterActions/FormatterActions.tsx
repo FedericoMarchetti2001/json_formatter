@@ -3,6 +3,7 @@ import { InputLabel, MenuItem, Select } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
+import { validateJson, JsonValidationResult } from "../../../../core/json-validator";
 import localStorageHandler from "../../../../utils/localStorageHandler";
 
 export interface IFormatterActionsProps {
@@ -10,8 +11,7 @@ export interface IFormatterActionsProps {
   textToManage: string;
   setTextToManage: (text: string) => void;
   //validity original text
-  isValid: boolean;
-  setIsValid: (isValid: boolean) => void;
+  setValidationResult: (result: JsonValidationResult) => void;
   setGenericError: (error: string) => void;
   //processed text
   processedText: string;
@@ -47,20 +47,23 @@ export default function FormatterAction(
   // Ref for the Format button logic, so it can be triggered by keyboard
   const formatButtonRef = React.useRef<HTMLButtonElement>(null);
 
-  //Check if the text is JSON or not, and format according to the tabSpaces
-  const format = (textToValidate: string, tabSpaces: number): string => {
-    //if it can't convert to JSON, it's not valid and will be catched
-    try {
-      console.log("Validate JSON text, ", textToValidate);
-      JSON.parse(textToValidate);
-      props.setIsValid(true);
-      console.log("Valid JSON");
+  const handleFormat = () => {
+    const validationResult = validateJson(props.textToManage);
+    props.setValidationResult(validationResult);
 
-      return JSON.stringify(JSON.parse(textToValidate), null, tabSpaces);
-    } catch (e) {
-      console.log("Invalid JSON");
-      props.setIsValid(false);
-      return "";
+    if (validationResult.valid) {
+      const formatted = JSON.stringify(JSON.parse(props.textToManage), null, tabSpaces);
+      props.setProcessedText(formatted);
+      // Goth theme success
+      if (props.onConvert) {
+        props.onConvert({ success: true });
+      }
+    } else {
+      props.setProcessedText(""); // Clear processed text on error
+      // Goth theme failure
+      if (props.onConvert) {
+        props.onConvert({ success: false });
+      }
     }
   };
 
@@ -160,38 +163,7 @@ export default function FormatterAction(
                 // Not a perfect JSON, do nothing for this achievement
               }
 
-              const formattedText = format(props.textToManage, tabSpaces);
-              props.setProcessedText(formattedText);
-
-              // Unlock achievements only on successful formatting
-              if (formattedText !== "") {
-                setSuccessfulFormats(prev => prev + 1); // Increment successful formats count
-
-                // Check for "First Format" achievement
-                if (!(props.achievements.unlocked.indexOf("First Format") !== -1)) {
-                  props.setAchievements((prev: { unlocked: string[]; images: string[] }) => ({
-                    ...prev,
-                    unlocked: [...prev.unlocked, "First Format"],
-                    images: [...new Set([...prev.images, "/goth-girls/goth1.jpg"])], // Add image, prevent duplicates
-                  }));
-                  console.log("Achievement unlocked: First Format");
-                }
-
-                // Check for "Format 10 JSONs" achievement
-                if (successfulFormats + 1 >= 10 && !(props.achievements.unlocked.indexOf("Format 10 JSONs") !== -1)) {
-                  props.setAchievements((prev: { unlocked: string[]; images: string[] }) => ({
-                    ...prev,
-                    unlocked: [...prev.unlocked, "Format 10 JSONs"],
-                    images: [...new Set([...prev.images, "/goth-girls/goth2.jpeg"])], // Add image, prevent duplicates
-                  }));
-                  console.log("Achievement unlocked: Format 10 JSONs");
-                }
-              }
-
-
-              if (props.onConvert) {
-                props.onConvert({ success: formattedText !== "" });
-              }
+              handleFormat();
             }}
             ref={formatButtonRef}
             title="Format (Alt+Enter)"
