@@ -4,6 +4,12 @@ import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import {
+  ACHIEVEMENT_IMAGES,
+  AchievementEvent,
+  checkAchievements,
+} from "../../../../config/achievements";
 import { validateJson, JsonValidationResult } from "../../../../core/json-validator";
 import localStorageHandler from "../../../../utils/localStorageHandler";
 
@@ -154,21 +160,33 @@ export default function FormatterAction(
             variant="contained"
             color="primary"
             onClick={() => {
-              // Check for "Perfect JSON" achievement before formatting
-              try {
-                JSON.parse(props.textToManage);
-                if (!(props.achievements.unlocked.indexOf("Perfect JSON") !== -1)) {
-                  props.setAchievements((prev: { unlocked: string[]; images: string[] }) => ({
-                    ...prev,
-                    unlocked: [...prev.unlocked, "Perfect JSON"],
-                    images: [...new Set([...prev.images, "/goth-girls/goth3.jpeg"])], // Add image, prevent duplicates
-                  }));
-                  console.log("Achievement unlocked: Perfect JSON");
-                }
-              } catch (e) {
-                // Not a perfect JSON, do nothing for this achievement
-              }
+              const validationResult = validateJson(props.textToManage);
+              const event = validationResult.valid
+                ? AchievementEvent.FORMAT_SUCCESS
+                : AchievementEvent.FORMAT_FAILURE;
 
+              const context = {
+                previousText: props.processedText,
+                currentText: props.textToManage,
+                successfulFormatsCount: successfulFormats + 1,
+              };
+
+              const newlyUnlocked = checkAchievements(event, props.achievements.unlocked, context);
+
+              if (newlyUnlocked.length > 0) {
+                props.setAchievements((prev) => {
+                  const newAchievements = newlyUnlocked.map((a) => a.id);
+                  const newImages = newlyUnlocked.map((a) => ACHIEVEMENT_IMAGES[a.imageKey]);
+                  return {
+                    ...prev,
+                    unlocked: [...prev.unlocked, ...newAchievements],
+                    images: [...new Set([...prev.images, ...newImages])],
+                  };
+                });
+                newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+              }
+              
+              setSuccessfulFormats(prev => prev + 1);
               handleFormat();
             }}
             ref={formatButtonRef}
@@ -219,7 +237,27 @@ export default function FormatterAction(
             labelId="tab-spaces--autowidth-label"
             id="tab-spaces-select-autowidth"
             value={tabSpaces}
-            onChange={(e) => setTabSpaces(e.target.value as number)}
+            onChange={(e) => {
+              setTabSpaces(e.target.value as number);
+              const newlyUnlocked = checkAchievements(
+                AchievementEvent.CHANGE_INDENTATION,
+                props.achievements.unlocked,
+                {}
+              );
+
+              if (newlyUnlocked.length > 0) {
+                props.setAchievements((prev) => {
+                  const newAchievements = newlyUnlocked.map((a) => a.id);
+                  const newImages = newlyUnlocked.map((a) => ACHIEVEMENT_IMAGES[a.imageKey]);
+                  return {
+                    ...prev,
+                    unlocked: [...prev.unlocked, ...newAchievements],
+                    images: [...new Set([...prev.images, ...newImages])],
+                  };
+                });
+                newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+              }
+            }}
             label="Tab spaces"
           >
             <MenuItem className={"menu-item"} value={2}>

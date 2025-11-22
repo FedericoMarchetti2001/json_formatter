@@ -317,6 +317,8 @@ function Presentation() {
                 unlockedImages={achievements.images} // Keep unlockedImages prop for now, will move later
                 onExportAchievements={exportAchievements} // Pass export handler
                 onImportAchievements={importAchievements} // Pass import handler
+                achievements={achievements}
+                setAchievements={setAchievements}
               />
               <FormatterPagination
                 currentPage={currentPage}
@@ -324,6 +326,8 @@ function Presentation() {
                 totalPageCount={textArray.length} // Pass total page count
                 onAddPage={handleAddPage} // Pass the new page handler
                 onDeletePage={handleDeletePage} // Pass the delete page handler
+                achievements={achievements}
+                setAchievements={setAchievements}
               />
               <InputOutputSection
                 text={textArray[currentPage - 1]} // Pass current page's text

@@ -6,6 +6,11 @@ import Box from "@mui/material/Box";
 import ReactFlagsSelect from "react-flags-select";
 import { ToastContainer, toast } from "react-toastify"; // Import react-toastify components
 import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
+import {
+  AchievementEvent,
+  checkAchievements,
+  ACHIEVEMENT_IMAGES,
+} from "../../../config/achievements";
 import SoundAndVoiceControls from "./SoundAndVoiceControls"; // Import SoundAndVoiceControls
 import AchievementImportExport from "./AchievementImportExport"; // Import AchievementImportExport
 
@@ -20,6 +25,8 @@ interface GothControlPanelProps {
   setGothSentence: (sentence: string) => void;
   onExportAchievements: () => void; // Add export prop
   onImportAchievements: (data: string) => void; // Add import prop
+  achievements: { unlocked: string[]; images: string[] };
+  setAchievements: React.Dispatch<React.SetStateAction<{ unlocked: string[]; images: string[] }>>;
 }
 
 function GothControlPanel({
@@ -31,6 +38,8 @@ function GothControlPanel({
   setGothSentence,
   onExportAchievements,
   onImportAchievements,
+  achievements,
+  setAchievements,
 }: GothControlPanelProps) {
   const { t, i18n } = useTranslation();
   const successSound = "/sounds/success.mp3";
@@ -119,7 +128,26 @@ function GothControlPanel({
           countries={["US", "DE"]}
           customLabels={{ US: "English", DE: "Deutsch" }}
           selected={i18n.language.toUpperCase()}
-          onSelect={(code) => i18n.changeLanguage(code.toLowerCase())}
+          onSelect={(code) => {
+            const newlyUnlocked = checkAchievements(
+              AchievementEvent.CHANGE_LANGUAGE,
+              achievements.unlocked,
+              {}
+            );
+            if (newlyUnlocked.length > 0) {
+              setAchievements((prev) => {
+                const newAchievements = newlyUnlocked.map((a) => a.id);
+                const newImages = newlyUnlocked.map((a) => ACHIEVEMENT_IMAGES[a.imageKey]);
+                return {
+                  ...prev,
+                  unlocked: [...prev.unlocked, ...newAchievements],
+                  images: [...new Set([...prev.images, ...newImages])],
+                };
+              });
+              newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+            }
+            i18n.changeLanguage(code.toLowerCase());
+          }}
         />
       </Box>
 
@@ -132,7 +160,48 @@ function GothControlPanel({
       />
 
       {/* Achievement Import/Export Component */}
-      <AchievementImportExport onExport={onExportAchievements} onImport={onImportAchievements} />
+      <AchievementImportExport
+        onExport={() => {
+          const newlyUnlocked = checkAchievements(
+            AchievementEvent.EXPORT_ACHIEVEMENTS,
+            achievements.unlocked,
+            {}
+          );
+          if (newlyUnlocked.length > 0) {
+            setAchievements((prev) => {
+              const newAchievements = newlyUnlocked.map((a) => a.id);
+              const newImages = newlyUnlocked.map((a) => ACHIEVEMENT_IMAGES[a.imageKey]);
+              return {
+                ...prev,
+                unlocked: [...prev.unlocked, ...newAchievements],
+                images: [...new Set([...prev.images, ...newImages])],
+              };
+            });
+            newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+          }
+          onExportAchievements();
+        }}
+        onImport={(data) => {
+          const newlyUnlocked = checkAchievements(
+            AchievementEvent.IMPORT_ACHIEVEMENTS,
+            achievements.unlocked,
+            {}
+          );
+          if (newlyUnlocked.length > 0) {
+            setAchievements((prev) => {
+              const newAchievements = newlyUnlocked.map((a) => a.id);
+              const newImages = newlyUnlocked.map((a) => ACHIEVEMENT_IMAGES[a.imageKey]);
+              return {
+                ...prev,
+                unlocked: [...prev.unlocked, ...newAchievements],
+                images: [...new Set([...prev.images, ...newImages])],
+              };
+            });
+            newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+          }
+          onImportAchievements(data);
+        }}
+      />
 
       {/* Toast Container */}
       <ToastContainer
