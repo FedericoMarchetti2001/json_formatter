@@ -1,0 +1,24 @@
+{
+  "FormatterActions": {
+    "format": "Formatieren",
+    "copy": "Kopieren",
+    "clear": "Löschen",
+    "upload_json": "JSON hochladen",
+    "tab_spaces": "Tab-Leerzeichen",
+    "two": "Zwei",
+    "four": "Vier",
+    "six": "Sechs",
+    "eight": "Acht",
+    "viewer_theme": "Viewer-Thema",
+    "monokai": "Monokai",
+    "apathy": "Apathie",
+    "bright": "Hell"
+  },
+  "InputOutputSection": {
+    "placeholder": "Fügen Sie Ihr JSON hier ein",
+    "error": "Fehler"
+  },
+  "Pagination": {
+    "page": "Seite"
+  }
+}

@@ -18,6 +18,7 @@ import * as ReactDOMClient from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "styles/globals.css";
 import App from "App";
+import "./i18n";
 
 const container = document.getElementById("root");
 

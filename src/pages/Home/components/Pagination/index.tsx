@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-
+import { useTranslation } from "react-i18next";
 import { Tabs, Tab } from "@mui/material";
 
 export interface IFormatterPaginationProps {
@@ -13,6 +13,7 @@ export interface IFormatterPaginationProps {
 export default function FormatterPagination(
   props: IFormatterPaginationProps
 ): React.ReactElement<IFormatterPaginationProps> {
+  const { t } = useTranslation();
   return (
     <Tabs
       value={props.currentPage}
@@ -30,7 +31,7 @@ export default function FormatterPagination(
         <Tab
           key={i + 1}
           value={i + 1}
-          label={`Page ${i + 1}`}
+          label={`${t("Pagination.page")} ${i + 1}`}
           onClick={() => props.setCurrentPage(i + 1)}
           onKeyDown={(event) => {
             //if the user is focused on a tab and presses delete, remove that pageù

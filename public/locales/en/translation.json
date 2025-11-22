@@ -1,0 +1,24 @@
+{
+  "FormatterActions": {
+    "format": "Format",
+    "copy": "Copy",
+    "clear": "Clear",
+    "upload_json": "Upload JSON",
+    "tab_spaces": "Tab spaces",
+    "two": "Two",
+    "four": "Four",
+    "six": "Six",
+    "eight": "Eight",
+    "viewer_theme": "Viewer Theme",
+    "monokai": "Monokai",
+    "apathy": "Apathy",
+    "bright": "Bright"
+  },
+  "InputOutputSection": {
+    "placeholder": "Paste your JSON here",
+    "error": "Error"
+  },
+  "Pagination": {
+    "page": "Page"
+  }
+}

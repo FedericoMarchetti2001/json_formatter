@@ -3,6 +3,7 @@ import { InputLabel, MenuItem, Select } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { validateJson, JsonValidationResult } from "../../../../core/json-validator";
 import localStorageHandler from "../../../../utils/localStorageHandler";
 
@@ -30,6 +31,7 @@ export interface IFormatterActionsProps {
 export default function FormatterAction(
   props: IFormatterActionsProps
 ): React.ReactElement<IFormatterActionsProps> {
+  const { t, i18n } = useTranslation();
   const [tabSpaces, setTabSpaces] = React.useState<number>(2);
   const { selectedTheme, setSelectedTheme } = props;
 
@@ -172,7 +174,7 @@ export default function FormatterAction(
             ref={formatButtonRef}
             title="Format (Alt+Enter)"
           >
-            <b style={{ color: "white" }}>Format</b>
+            <b style={{ color: "white" }}>{t("FormatterActions.format")}</b>
           </Button>
           <Button
             className="primary-button"
@@ -181,7 +183,7 @@ export default function FormatterAction(
             color="primary"
             onClick={() => copy(props.textToManage)}
           >
-            <b style={{ color: "white" }}>Copy</b>
+            <b style={{ color: "white" }}>{t("FormatterActions.copy")}</b>
           </Button>
           <Button
             className="primary-button"
@@ -190,7 +192,7 @@ export default function FormatterAction(
             color="primary"
             onClick={() => clear()}
           >
-            <b style={{ color: "white" }}>Clear</b>
+            <b style={{ color: "white" }}>{t("FormatterActions.clear")}</b>
           </Button>
         </div>
       </Grid2>
@@ -202,7 +204,7 @@ export default function FormatterAction(
         alignItems="stretch"
         style={{ padding: "10px"}}
       >
-        <InputLabel style={{ color: "white" }}>Upload JSON</InputLabel>
+        <InputLabel style={{ color: "white" }}>{t("FormatterActions.upload_json")}</InputLabel>
         <input
           type="file"
           accept=".json,.txt"
@@ -210,7 +212,7 @@ export default function FormatterAction(
         />
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
           <InputLabel id="tab-spaces--autowidth-label" className="goth-input-label">
-            Tab spaces
+            {t("FormatterActions.tab_spaces")}
           </InputLabel>
           <Select
             className={"menu-select"}
@@ -221,22 +223,22 @@ export default function FormatterAction(
             label="Tab spaces"
           >
             <MenuItem className={"menu-item"} value={2}>
-              Two
+              {t("FormatterActions.two")}
             </MenuItem>
             <MenuItem className={"menu-item"} value={4}>
-              Four
+              {t("FormatterActions.four")}
             </MenuItem>
             <MenuItem className={"menu-item"} value={6}>
-              Six
+              {t("FormatterActions.six")}
             </MenuItem>
             <MenuItem className={"menu-item"} value={8}>
-              Eigth
+              {t("FormatterActions.eight")}
             </MenuItem>
           </Select>
         </div>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly", marginTop: "1rem" }}>
           <InputLabel id="json-theme-label" className="goth-input-label">
-            Viewer Theme
+            {t("FormatterActions.viewer_theme")}
           </InputLabel>
           <Select
             className={"menu-select"}
@@ -246,9 +248,25 @@ export default function FormatterAction(
             onChange={(e) => setSelectedTheme(e.target.value as string)}
             label="Viewer Theme"
           >
-            <MenuItem className={"menu-item"} value={"monokai"}>Monokai</MenuItem>
-            <MenuItem className={"menu-item"} value={"apathy"}>Apathy</MenuItem>
-            <MenuItem className={"menu-item"} value={"bright"}>Bright</MenuItem>
+            <MenuItem className={"menu-item"} value={"monokai"}>{t("FormatterActions.monokai")}</MenuItem>
+            <MenuItem className={"menu-item"} value={"apathy"}>{t("FormatterActions.apathy")}</MenuItem>
+            <MenuItem className={"menu-item"} value={"bright"}>{t("FormatterActions.bright")}</MenuItem>
+          </Select>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly", marginTop: "1rem" }}>
+          <InputLabel id="language-label" className="goth-input-label">
+            Language
+          </InputLabel>
+          <Select
+            className={"menu-select"}
+            labelId="language-label"
+            id="language-select"
+            value={i18n.language}
+            onChange={(e) => i18n.changeLanguage(e.target.value as string)}
+            label="Language"
+          >
+            <MenuItem className={"menu-item"} value={"en"}>English</MenuItem>
+            <MenuItem className={"menu-item"} value={"de"}>Deutsch</MenuItem>
           </Select>
         </div>
       </Grid2>

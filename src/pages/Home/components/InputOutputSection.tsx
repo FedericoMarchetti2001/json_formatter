@@ -1,4 +1,5 @@
 import React, { ChangeEvent, KeyboardEvent, useState, useEffect, JSX, RefObject } from "react";
+import { useTranslation } from "react-i18next";
 import { Box, TextareaAutosize } from "@mui/material";
 import GothAchievementsGallery from "./GothAchievementsGallery"; // Import GothAchievementsGallery
 import SentenceDisplay from "./SentenceDisplay"; // Import SentenceDisplay
@@ -52,6 +53,7 @@ function InputOutputSection({
   validationError,
   selectedTheme,
 }: InputOutputSectionProps): JSX.Element {
+  const { t } = useTranslation();
   // State to hold the parsed JSON object for JsonView
   const [parsedJson, setParsedJson] = useState<object | null>(null);
 
@@ -109,11 +111,11 @@ function InputOutputSection({
       {/* Input Textarea for JSON */}
       <TextareaAutosize
         ref={textareaRef} // Attach the ref
-        placeholder="Paste your JSON here"
+        placeholder={t("InputOutputSection.placeholder")}
         minRows={10}
         maxRows={20}
         style={validationError ? errorTextAreaStyle : textAreaStyle}
-        value={validationError ? `Error: ${validationError}\n\n${text}` : text}
+        value={validationError ? `${t("InputOutputSection.error")}: ${validationError}\n\n${text}` : text}
         onKeyDown={handleTextareaKeyDown}
         onChange={handleTextareaChange} onResize={undefined} onResizeCapture={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}      />
       {/* Goth Achievements Gallery Component */}
