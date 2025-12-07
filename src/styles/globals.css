@@ -516,12 +516,10 @@ input[type="file"]::file-selector-button {
 
 input[type="checkbox"],
 input[type="radio"] {
-  appearance: none !important;
-  width: 1.125rem !important; /* 18px */
+    width: 1.125rem !important; /* 18px */
   height: 1.125rem !important; /* 18px */
   border: 0.125rem solid #a8326e !important; /* 2px */
   border-radius: 0.25rem !important; /* 4px */
-  background: rgba(34, 22, 38, 0.9) !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -535,9 +533,9 @@ input[type="radio"] {
 }
 
 input[type="checkbox"]:checked::after {
-  content: "✢" !important;
   color: #ff69b4 !important;
-  font-size: 0.75rem !important; /* 12px */
+  font-size: 1rem !important;
+  line-height: 1 !important;
 }
 
 input[type="radio"]:checked::after {
