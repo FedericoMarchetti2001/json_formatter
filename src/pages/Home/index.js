@@ -16,10 +16,10 @@ import FormatterPagination from "./components/Pagination";
 import { Box } from "@mui/material";
 
 const containerStyle = {
-  maxHeight: "70vh",
-  minHeight: "50vh",
-  minWidth: "50vw",
-  maxWidth: "65vw",
+  maxHeight: "75rem",
+  minHeight: "30rem",
+  minWidth: "40rem",
+  maxWidth: "70rem",
   display: "flex",
   flexDirection: "column",
 };
@@ -40,6 +40,31 @@ function Presentation() {
     const saved = localStorageHandler.getPageContent("formattedTextArray");
     return Array.isArray(saved) ? saved : [""];
   });
+
+  // Seed first page with sample data from mock_data.json when nothing is stored yet
+  useEffect(() => {
+    const saved = localStorageHandler.getPageContent("textArray");
+    const hasSavedContent =
+      Array.isArray(saved) &&
+      saved.some((entry) => typeof entry === "string" && entry.trim().length > 0);
+
+    if (hasSavedContent) return;
+
+    const loadSample = async () => {
+      try {
+        const response = await fetch("/mock_data.json");
+        if (!response.ok) throw new Error(`Failed to fetch sample data: ${response.status}`);
+        const sample = await response.json();
+        const sampleString = JSON.stringify(sample, null, 2);
+        setTextArray([sampleString]);
+        setFormattedTextArray([sampleString]);
+      } catch (error) {
+        console.error("Error loading sample data:", error);
+      }
+    };
+
+    loadSample();
+  }, []);
   // Validation logic: state to track if the JSON input is valid
   const [validationResult, setValidationResult] = useState({ valid: true });
   const [genericError, setGenericError] = useState("");
@@ -287,6 +312,7 @@ function Presentation() {
           backgroundPosition: "top",
           display: "grid",
           placeItems: "center",
+          paddingTop: "180px", // offset for fixed header
         }}
       >
         <Container style={containerStyle}>

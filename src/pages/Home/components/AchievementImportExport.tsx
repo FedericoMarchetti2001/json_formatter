@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import { Button } from "@mui/material";
 
 interface AchievementImportExportProps {
   onExport: () => void;
@@ -7,6 +8,7 @@ interface AchievementImportExportProps {
 }
 
 function AchievementImportExport({ onExport, onImport }: AchievementImportExportProps) {
+
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -27,11 +29,14 @@ function AchievementImportExport({ onExport, onImport }: AchievementImportExport
   };
 
   return (
-    <Box sx={{ marginTop: "20px", textAlign: "center" }}>
-      <Box>
-        <button onClick={onExport} style={{ marginRight: "10px" }}>
+    <Box sx={{ marginTop: "20px", textAlign: "right" }}>
+      <Box sx={{ display: "inline-flex", gap: "10px" }}>
+        <Button onClick={onExport} className="secondary-button"
+            variant="contained"
+            color="primary"
+            >
           Export Achievements
-        </button>
+        </Button>
         <input
           accept=".json"
           style={{ display: "none" }}
@@ -40,9 +45,13 @@ function AchievementImportExport({ onExport, onImport }: AchievementImportExport
           onChange={handleImport}
         />
         <label htmlFor="import-achievements-button">
-          <button>
+          <Button
+            className="secondary-button"
+            variant="contained"
+            color="primary"
+          >
             Import Achievements
-          </button>
+          </Button>
         </label>
       </Box>
     </Box>
