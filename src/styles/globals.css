@@ -52,8 +52,11 @@ body {
   font-family: var(--font-family) !important;
   margin: 0 !important;
   padding: 0 !important;
+  padding-top: 5rem !important; /* 80px */
+  padding-bottom: 4.375rem !important; /* 70px */
   position: relative !important;
   overflow-x: hidden !important;
+  min-height: 100vh !important;
 }
 
 /* Vignette effect for goth mood */
@@ -80,19 +83,50 @@ body::after {
   right: 0 !important;
   z-index: 1200 !important;
   background: linear-gradient(90deg, #140d17 0%, #2b0f32 45%, #1a0c1f 100%) !important;
-  border-bottom: 2px solid #a8326e !important;
-  box-shadow: 0 8px 24px #000b !important;
-  backdrop-filter: blur(8px) !important;
+  border-bottom: 0.125rem solid #a8326e !important; /* 2px */
+  box-shadow: 0 0.5rem 1.5rem #000b !important; /* 8px 24px */
+  backdrop-filter: blur(0.5rem) !important; /* 8px */
 }
 
 .goth-header__inner {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  gap: 16px !important;
-  padding: 16px 32px !important;
-  max-width: 1200px !important;
+  gap: 1rem !important; /* 16px */
+  padding: 1rem 2rem !important; /* 16px 32px */
+  max-width: 75rem !important; /* 1200px */
   margin: 0 auto !important;
+}
+
+.page-banner {
+  background: linear-gradient(90deg, #140d17 0%, #2b0f32 45%, #1a0c1f 100%) !important;
+  color: var(--primary-text-color) !important;
+  padding: 1rem 1.5rem 1rem 1.5rem !important; /* 24px */
+  text-align: center !important;
+  border-bottom: 0.125rem solid #a8326e !important; /* 2px */
+  box-shadow: 0 0.375rem 1.125rem #000a !important; /* 6px 18px */
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1200 !important;
+  margin: 0 !important;
+}
+
+.page-banner__title {
+  margin: 0 !important;
+  font-family: var(--gothic-heading) !important;
+  font-size: 2.4rem !important;
+  letter-spacing: 0.1875rem !important; /* 3px */
+  text-shadow: 0 0.125rem 0.625rem #a8326e99 !important; /* 2px 10px */
+}
+
+.page-banner__subtitle {
+  margin: 0.75rem 0 0 0 !important; /* 12px */
+  font-family: var(--font-family) !important;
+  font-size: 1.05rem !important;
+  color: var(--text-color) !important;
+  opacity: 0.9 !important;
 }
 
 /* Headings */
@@ -104,66 +138,68 @@ h5,
 h6 {
   font-family: var(--gothic-heading) !important;
   color: var(--primary-text-color) !important;
-  letter-spacing: 2px !important;
-  text-shadow: 0 2px 8px #a8326e99 !important;
+  letter-spacing: 0.125rem !important; /* 2px */
+  text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
 }
 
 /* Formatter container */
 .formatter-container {
   background: rgba(34, 22, 38, 0.85) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 4px 32px #000a !important;
-  padding: 32px !important;
-  margin: 32px auto !important;
-  max-width: 700px !important;
+  border-radius: 1rem !important; /* 16px */
+  box-shadow: 0 0.25rem 2rem #000a !important; /* 4px 32px */
+  padding: 2rem !important; /* 32px */
+  margin: 2rem auto !important; /* 32px */
+  max-width: 43.75rem !important; /* 700px */
   z-index: 2 !important;
   position: relative !important;
+  overflow: auto !important;
+  max-height: calc(100vh - 12.5rem) !important; /* 200px */
 }
 
 /* Buttons */
 .primary-button {
   background-color: var(--primary-bg-color) !important;
   color: var(--text-color) !important;
-  border: 2px solid var(--accent-color) !important;
-  border-radius: 8px !important;
-  padding: 12px 28px !important;
+  border: 0.125rem solid var(--accent-color) !important; /* 2px */
+  border-radius: 0.5rem !important; /* 8px */
+  padding: 0.75rem 1.75rem !important; /* 12px 28px */
   cursor: pointer !important;
   font-family: var(--gothic-heading) !important;
   font-size: 1.1rem !important;
-  letter-spacing: 1px !important;
-  box-shadow: 0 2px 12px #a8326e55 !important;
+  letter-spacing: 0.0625rem !important; /* 1px */
+  box-shadow: 0 0.125rem 0.75rem #a8326e55 !important; /* 2px 12px */
   transition: background 0.2s, color 0.2s, box-shadow 0.2s !important;
 }
 .primary-button:hover {
   background-color: var(--accent-color) !important;
   color: #18141a !important;
-  box-shadow: 0 4px 24px #ff69b488 !important;
+  box-shadow: 0 0.25rem 1.5rem #ff69b488 !important; /* 4px 24px */
 }
 
 .secondary-button {
   background: transparent !important;
   color: var(--text-color) !important;
-  border: 1.5px solid var(--accent-color) !important;
-  border-radius: 8px !important;
-  padding: 10px 12px !important;
+  border: 0.09375rem solid var(--accent-color) !important; /* 1.5px */
+  border-radius: 0.5rem !important; /* 8px */
+  padding: 0.625rem 0.75rem !important; /* 10px 12px */
   cursor: pointer !important;
   font-family: var(--font-family) !important;
   font-size: 1rem !important;
-  letter-spacing: 0.5px !important;
-  box-shadow: 0 2px 10px #0006 !important;
+  letter-spacing: 0.03125rem !important; /* 0.5px */
+  box-shadow: 0 0.125rem 0.625rem #0006 !important; /* 2px 10px */
   transition: background 0.2s, color 0.2s, box-shadow 0.2s !important;
 }
 
 .secondary-button:hover {
   background: rgba(255, 105, 180, 0.15) !important;
   color: #fff !important;
-  box-shadow: 0 4px 16px #ff69b455 !important;
+  box-shadow: 0 0.25rem 1rem #ff69b455 !important; /* 4px 16px */
 }
 
 .menu-select {
   background-color: var(--primary-bg-color) !important;
   color: var(--text-color) !important;
-  border: 1px solid var(--border-color) !important;
+  border: 0.0625rem solid var(--border-color) !important; /* 1px */
   font-family: var(--font-family) !important;
 }
 
@@ -172,26 +208,22 @@ input,
 textarea, .react-json-view {
   background: rgba(34, 22, 38, 0.85) !important;
   color: var(--text-color) !important;
-  border: 1.5px solid var(--accent-color) !important;
-  border-radius: 6px !important;
-  padding: 10px !important;
+  border: 0.09375rem solid var(--accent-color) !important; /* 1.5px */
+  border-radius: 0.375rem !important; /* 6px */
+  padding: 0.625rem !important; /* 10px */
   font-family: var(--font-family) !important;
   font-size: 1rem !important;
-  margin-bottom: 12px !important;
+  margin-bottom: 0.75rem !important; /* 12px */
   transition: border 0.2s !important;
   outline: none !important;
-  max-height: 75rem !important;
-}
-input:focus,
-textarea:focus {
-  border: 2.5px solid var(--primary-bg-color) !important;
-  box-shadow: 0 0 8px var(--accent-color) !important;
+  max-height: 50rem !important;
+  overflow-y: auto !important; /* Add scrollbar if content exceeds max-height */
 }
 
 /* Menu Items */
 .menu-item {
-  border-radius: 0px !important;
-  border: 2px solid var(--border-color) !important;
+  border-radius: 0 !important;
+  border: 0.125rem solid var(--border-color) !important; /* 2px */
 }
 .menu-item:hover {
   opacity: 0.8 !important;
@@ -213,11 +245,11 @@ textarea:focus {
   color: var(--accent-color) !important;
   font-size: 1.3rem !important;
   text-align: center !important;
-  margin: 24px 0 8px 0 !important;
+  margin: 1.5rem 0 0.5rem 0 !important; /* 24px 8px */
   min-height: 2.5em !important;
-  letter-spacing: 1.5px !important;
+  letter-spacing: 0.09375rem !important; /* 1.5px */
   z-index: 3 !important;
-  text-shadow: 0 2px 8px #a8326e99 !important;
+  text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
   transition: opacity 0.4s !important;
 }
 
@@ -226,12 +258,12 @@ textarea:focus {
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 10px !important;
+  width: 0.625rem !important; /* 10px */
   background: #2a1a2a !important;
 }
 ::-webkit-scrollbar-thumb {
   background: #a8326e !important;
-  border-radius: 6px !important;
+  border-radius: 0.375rem !important; /* 6px */
 }
 
 /* Utility: overlay for fog (optional, JS can toggle this) */
@@ -260,8 +292,8 @@ textarea:focus {
   background: linear-gradient(90deg, #1a1a1a 0%, #2d0036 100%) !important;
   color: #e0d6eb !important;
   font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
-  border: 1.5px solid #6b1e6b !important;
-  box-shadow: 0 2px 8px #0006 !important;
+  border: 0.09375rem solid #6b1e6b !important; /* 1.5px */
+  box-shadow: 0 0.125rem 0.5rem #0006 !important; /* 2px 8px */
   letter-spacing: 0.04em !important;
   transition: background 0.2s, color 0.2s !important;
 }
@@ -277,20 +309,20 @@ textarea:focus {
   animation: goth-slide-in 1.2s cubic-bezier(0.77, 0, 0.175, 1) !important;
   max-width: 30rem !important;
   max-height: 50rem !important;
-  left: 0px !important;
-  border: 3px solid #a020f0 !important;
-  border-radius: 16px !important;
-  box-shadow: 0 8px 32px #000c !important;
+  left: 0 !important;
+  border: 0.1875rem solid #a020f0 !important; /* 3px */
+  border-radius: 1rem !important; /* 16px */
+  box-shadow: 0 0.5rem 2rem #000c !important; /* 8px 32px */
   background: #18111b !important;
   opacity: 0.97 !important;
 }
 @keyframes goth-slide-in {
   0% {
-    transform: translateY(-80px) scale(0.7) rotate(-8deg);
+    transform: translateY(-5rem) scale(0.7) rotate(-8deg); /* -80px */
     opacity: 0;
   }
   60% {
-    transform: translateY(10px) scale(1.05) rotate(2deg);
+    transform: translateY(0.625rem) scale(1.05) rotate(2deg); /* 10px */
     opacity: 1;
   }
   100% {
@@ -301,21 +333,21 @@ textarea:focus {
 /* Goth Aesthetic for MUI Tabs Pagination */
 .MuiTabs-root {
   background: #18111b !important;
-  border-radius: 12px !important;
-  box-shadow: 0 4px 24px #000a !important;
-  padding: 12px 0 !important;
-  border: 2px solid #3a003a !important;
+  border-radius: 0.75rem !important; /* 12px */
+  box-shadow: 0 0.25rem 1.5rem #000a !important; /* 4px 24px */
+  padding: 0.75rem 0 !important; /* 12px */
+  border: 0.125rem solid #3a003a !important; /* 2px */
 }
 .MuiTab-root {
   background: #2d0036 !important;
   color: #e0d6eb !important;
   font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
-  border: 1.5px solid #6b1e6b !important;
-  border-radius: 6px !important;
-  margin: 0 6px !important;
-  box-shadow: 0 1px 4px #0006 !important;
+  border: 0.09375rem solid #6b1e6b !important; /* 1.5px */
+  border-radius: 0.375rem !important; /* 6px */
+  margin: 0 0.375rem !important; /* 6px */
+  box-shadow: 0 0.0625rem 0.25rem #0006 !important; /* 1px 4px */
   transition: background 0.2s, color 0.2s !important;
-  min-width: 100px !important;
+  min-width: 6.25rem !important; /* 100px */
 }
 .MuiTab-root.Mui-selected,
 .MuiTab-root:focus,
@@ -326,8 +358,8 @@ textarea:focus {
 }
 .MuiTabs-indicator {
   background: linear-gradient(90deg, #a020f0 0%, #6b1e6b 100%) !important;
-  height: 4px !important;
-  border-radius: 2px !important;
+  height: 0.25rem !important; /* 4px */
+  border-radius: 0.125rem !important; /* 2px */
 }
 
 /* Goth Aesthetic for Input Labels */
@@ -335,19 +367,19 @@ textarea:focus {
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
   font-size: 1rem !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 0.5rem !important; /* 8px */
 }
 /* Goth Drawer Styling */
 .goth-drawer .MuiDrawer-paper {
-  width: 300px !important; /* Set a fixed width for the triangle */
+  width: 18.75rem !important; /* 300px */
   box-sizing: border-box !important;
   background: linear-gradient(
     135deg,
     #18111b 60%,
     #2d0036 100%
-  ) !important; /* Restore background */
+  ) !important;
   color: #f0e6f6 !important;
-  border-radius: 0px !important; /* Keep border radius 0 for triangle */
+  border-radius: 0 !important;
   position: relative !important;
   overflow: hidden !important;
   /* Create the triangular shape */
@@ -366,12 +398,12 @@ textarea:focus {
 
 .goth-drawer img {
   display: block;
-  width: 100% !important; /* Image takes full width of container */
-  height: 100% !important; /* Image takes full height of container */
-  object-fit: cover !important; /* Ensure image fills the triangle, cropping if necessary */
-  margin: 0 !important; /* Remove margin */
-  border-radius: 16px !important;
-  box-shadow: 0 4px 24px #a8326e88, 0 0 0 4px #fff2 inset !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  margin: 0 !important;
+  border-radius: 1rem !important; /* 16px */
+  box-shadow: 0 0.25rem 1.5rem #a8326e88, 0 0 0 0.25rem #fff2 inset !important; /* 4px 24px, 4px */
 }
 
 .MuiMenu-list, .MuiMenu-list:checked{
@@ -386,13 +418,13 @@ textarea:focus {
 .goth-drawer .MuiListItemText-primary {
   font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
   color: #ff69b4 !important;
-  text-shadow: 0 2px 8px #a8326e99, 0 0 4px #fff3 !important;
-  letter-spacing: 1.5px !important;
+  text-shadow: 0 0.125rem 0.5rem #a8326e99, 0 0 0.25rem #fff3 !important; /* 2px 8px, 4px */
+  letter-spacing: 0.09375rem !important; /* 1.5px */
 }
 
 .goth-drawer .MuiListItem-root {
   background: linear-gradient(90deg, #2d0036 0%, #18111b 100%) !important;
-  box-shadow: 0 2px 8px #a8326e33 !important;
+  box-shadow: 0 0.125rem 0.5rem #a8326e33 !important; /* 2px 8px */
   transition: background 0.2s, color 0.2s !important;
 }
 
@@ -400,7 +432,7 @@ textarea:focus {
 .goth-drawer .MuiListItem-root:focus {
   background: linear-gradient(90deg, #a8326e 0%, #3a003a 100%) !important;
   color: #fff !important;
-  box-shadow: 0 4px 16px #ff69b488 !important;
+  box-shadow: 0 0.25rem 1rem #ff69b488 !important; /* 4px 16px */
 }
 
 .goth-drawer .MuiDivider-root {
@@ -410,7 +442,7 @@ textarea:focus {
 
 .goth-drawer .MuiSvgIcon-root {
   color: #ff69b4 !important;
-  filter: drop-shadow(0 0 6px #a8326e99) !important;
+  filter: drop-shadow(0 0 0.375rem #a8326e99) !important; /* 6px */
 }
 
 /* Input styling per type */
@@ -425,76 +457,76 @@ input[type="date"],
 input[type="time"] {
   background: rgba(34, 22, 38, 0.9) !important;
   color: var(--text-color) !important;
-  border: 1.5px solid var(--accent-color) !important;
-  border-radius: 8px !important;
-  padding: 10px 12px !important;
+  border: 0.09375rem solid var(--accent-color) !important; /* 1.5px */
+  border-radius: 0.5rem !important; /* 8px */
+  padding: 0.625rem 0.75rem !important; /* 10px 12px */
   font-family: var(--font-family) !important;
   font-size: 1rem !important;
-  box-shadow: 0 2px 12px #0006 !important;
+  box-shadow: 0 0.125rem 0.75rem #0006 !important; /* 2px 12px */
   transition: border 0.2s, box-shadow 0.2s, transform 0.1s !important;
 }
 
 textarea {
   background: rgba(34, 22, 38, 0.9) !important;
   color: var(--text-color) !important;
-  border: 1.5px solid var(--accent-color) !important;
-  border-radius: 8px !important;
-  padding: 12px !important;
+  border: 0.09375rem solid var(--accent-color) !important; /* 1.5px */
+  border-radius: 0.5rem !important; /* 8px */
+  padding: 0.75rem !important; /* 12px */
   font-family: var(--font-family) !important;
   font-size: 1rem !important;
-  box-shadow: 0 2px 12px #0006 !important;
+  box-shadow: 0 0.125rem 0.75rem #0006 !important; /* 2px 12px */
   transition: border 0.2s, box-shadow 0.2s, transform 0.1s !important;
-  min-height: 120px !important;
+  min-height: 7.5rem !important; /* 120px */
   resize: vertical !important;
 }
 
 select {
   background: linear-gradient(90deg, #2d0036 0%, #18111b 100%) !important;
   color: var(--text-color) !important;
-  border: 1.5px solid var(--accent-color) !important;
-  border-radius: 8px !important;
-  padding: 10px 12px !important;
+  border: 0.09375rem solid var(--accent-color) !important; /* 1.5px */
+  border-radius: 0.5rem !important; /* 8px */
+  padding: 0.625rem 0.75rem !important; /* 10px 12px */
   font-family: var(--font-family) !important;
-  box-shadow: 0 2px 12px #0006 !important;
+  box-shadow: 0 0.125rem 0.75rem #0006 !important; /* 2px 12px */
 }
 
 input[type="file"] {
   background: rgba(34, 22, 38, 0.9) !important;
   color: var(--text-color) !important;
-  border: 1.5px solid var(--accent-color) !important;
-  border-radius: 8px !important;
-  padding: 8px !important;
+  border: 0.09375rem solid var(--accent-color) !important; /* 1.5px */
+  border-radius: 0.5rem !important; /* 8px */
+  padding: 0.5rem !important; /* 8px */
   font-family: var(--font-family) !important;
-  box-shadow: 0 2px 12px #0006 !important;
+  box-shadow: 0 0.125rem 0.75rem #0006 !important; /* 2px 12px */
 }
 
 input[type="file"]::file-selector-button {
   background: #2d0036 !important;
   color: #f0e6f6 !important;
-  border: 1px solid #a8326e !important;
-  border-radius: 6px !important;
-  padding: 8px 12px !important;
-  margin-right: 10px !important;
+  border: 0.0625rem solid #a8326e !important; /* 1px */
+  border-radius: 0.375rem !important; /* 6px */
+  padding: 0.5rem 0.75rem !important; /* 8px 12px */
+  margin-right: 0.625rem !important; /* 10px */
   cursor: pointer !important;
   font-family: var(--gothic-heading) !important;
   text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  box-shadow: 0 2px 12px #0006 !important;
+  letter-spacing: 0.0625rem !important; /* 1px */
+  box-shadow: 0 0.125rem 0.75rem #0006 !important; /* 2px 12px */
 }
 
 input[type="checkbox"],
 input[type="radio"] {
   appearance: none !important;
-  width: 18px !important;
-  height: 18px !important;
-  border: 2px solid #a8326e !important;
-  border-radius: 4px !important;
+  width: 1.125rem !important; /* 18px */
+  height: 1.125rem !important; /* 18px */
+  border: 0.125rem solid #a8326e !important; /* 2px */
+  border-radius: 0.25rem !important; /* 4px */
   background: rgba(34, 22, 38, 0.9) !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  box-shadow: 0 2px 6px #0006 !important;
-  margin-right: 8px !important;
+  box-shadow: 0 0.125rem 0.375rem #0006 !important; /* 2px 6px */
+  margin-right: 0.5rem !important; /* 8px */
   cursor: pointer !important;
 }
 
@@ -505,13 +537,13 @@ input[type="radio"] {
 input[type="checkbox"]:checked::after {
   content: "✢" !important;
   color: #ff69b4 !important;
-  font-size: 12px !important;
+  font-size: 0.75rem !important; /* 12px */
 }
 
 input[type="radio"]:checked::after {
   content: "" !important;
-  width: 10px !important;
-  height: 10px !important;
+  width: 0.625rem !important; /* 10px */
+  height: 0.625rem !important; /* 10px */
   background: #ff69b4 !important;
   border-radius: 50% !important;
   display: block !important;
@@ -525,21 +557,55 @@ input[type="range"] {
 
 input[type="color"] {
   background: rgba(34, 22, 38, 0.9) !important;
-  border: 1.5px solid var(--accent-color) !important;
-  border-radius: 8px !important;
+  border: 0.09375rem solid var(--accent-color) !important; /* 1.5px */
+  border-radius: 0.5rem !important; /* 8px */
   padding: 0 !important;
-  height: 42px !important;
-  width: 64px !important;
-  box-shadow: 0 2px 12px #0006 !important;
+  height: 2.625rem !important; /* 42px */
+  width: 4rem !important; /* 64px */
+  box-shadow: 0 0.125rem 0.75rem #0006 !important; /* 2px 12px */
 }
 
 input:focus,
 textarea:focus,
 select:focus,
 input[type="file"]:focus-within {
-  border: 2.5px solid var(--primary-bg-color) !important;
-  box-shadow: 0 0 8px var(--accent-color) !important;
-  transform: translateY(-1px) !important;
+  border: 0.15625rem solid var(--primary-bg-color) !important; /* 2.5px */
+  box-shadow: 0 0 0.5rem var(--accent-color) !important; /* 8px */
+  transform: translateY(-0.0625rem) !important; /* -1px */
+}
+
+.page-footer {
+  background: linear-gradient(90deg, #140d17 0%, #2b0f32 45%, #1a0c1f 100%) !important;
+  color: var(--text-color) !important;
+  padding: 1.125rem 1.5rem !important; /* 18px 24px */
+  border-top: 0.125rem solid #a8326e !important; /* 2px */
+  box-shadow: 0 -0.375rem 1.125rem #000a !important; /* -6px 18px */
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1200 !important;
+  margin: 0 !important;
+}
+
+.page-footer__content {
+  max-width: 75rem !important; /* 1200px */
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.75rem !important; /* 12px */
+  font-family: var(--font-family) !important;
+  font-size: 0.95rem !important;
+}
+
+.page-footer__brand {
+  font-weight: 700 !important;
+  letter-spacing: 0.0625rem !important; /* 1px */
+}
+
+.page-footer__text {
+  opacity: 0.9 !important;
 }
 
 /* Goth Toastify Styles */
@@ -551,9 +617,9 @@ input[type="file"]:focus-within {
 .Toastify__toast {
   background: linear-gradient(90deg, #18111b 0%, #2d0036 100%) !important;
   color: var(--text-color) !important;
-  border: 1.5px solid var(--border-color) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 16px #000a !important;
+  border: 0.09375rem solid var(--border-color) !important; /* 1.5px */
+  border-radius: 0.5rem !important; /* 8px */
+  box-shadow: 0 0.25rem 1rem #000a !important; /* 4px 16px */
   font-size: 1rem !important;
 }
 

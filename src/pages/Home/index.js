@@ -10,6 +10,8 @@ import InputOutputSection from "./components/InputOutputSection";
 import GothControlPanel from "./components/GothSection"; // Renamed import
 import CenteredImageViewer from "./components/CenteredImageViewer"; // Import CenteredImageViewer
 import GothShortcutsOverlay from "./components/GothShortcutsOverlay";
+import PageHeader from "./components/PageHeader";
+import PageFooter from "./components/PageFooter";
 
 //Other components
 import FormatterPagination from "./components/Pagination";
@@ -304,6 +306,7 @@ function Presentation() {
         visible={showShortcutsOverlay}
         onClose={() => setShowShortcutsOverlay(false)}
       />
+      <PageHeader />
       <Box
         minHeight="75vh"
         width="100%"
@@ -312,7 +315,7 @@ function Presentation() {
           backgroundPosition: "top",
           display: "grid",
           placeItems: "center",
-          paddingTop: "180px", // offset for fixed header
+          paddingTop: "7rem", // offset for fixed header
         }}
       >
         <Container style={containerStyle}>
@@ -384,6 +387,7 @@ function Presentation() {
         isOpen={isImageCentered}
         onClose={handleCenteredImageClose}
       />
+      <PageFooter />
     </div>
   );
 }
