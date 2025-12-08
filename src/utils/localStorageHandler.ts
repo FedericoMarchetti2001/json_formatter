@@ -9,6 +9,7 @@ type Preferences = {
   tabSpaces?: number;
   enablePlaySound?: boolean;
   enableAIVoice?: boolean;
+  formatClickCount?: number;
   [key: string]: any;
 };
 

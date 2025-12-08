@@ -31,13 +31,15 @@ export interface IFormatterActionsProps {
   // Theme
   selectedTheme: string;
   setSelectedTheme: (theme: string) => void;
+  // Ad Modal
+  onShowAd?: () => void;
 }
 
 //This is a row/column component, possibly a small flexbox, which will contain actions like "Format", "Copy", "Clear", etc.
 export default function FormatterAction(
   props: IFormatterActionsProps
 ): React.ReactElement<IFormatterActionsProps> {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [tabSpaces, setTabSpaces] = React.useState<number>(2);
   const { selectedTheme, setSelectedTheme } = props;
 
@@ -53,11 +55,30 @@ export default function FormatterAction(
   React.useEffect(() => {
     localStorageHandler.updatePreference("tabSpaces", tabSpaces);
   }, [tabSpaces]);
+  
+  // Load format click count from localStorage
+  const [formatClickCount, setFormatClickCount] = React.useState<number>(() => {
+    const prefs = localStorageHandler.getPreferences();
+    return prefs.formatClickCount || 0;
+  });
+  
   const [successfulFormats, setSuccessfulFormats] = React.useState<number>(0); // State for successful formats count
   const buttonWidth = 100;
 
   // Ref for the Format button logic, so it can be triggered by keyboard
   const formatButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  // Increment format click count and check if ad should be shown
+  const incrementFormatClickCount = () => {
+    const newCount = formatClickCount + 1;
+    setFormatClickCount(newCount);
+    localStorageHandler.updatePreference("formatClickCount", newCount);
+
+    // Show ad every 10 clicks
+    if (newCount % 10 === 0 && props.onShowAd) {
+      props.onShowAd();
+    }
+  };
 
   const handleFormat = () => {
     const validationResult = validateJson(props.textToManage);
@@ -187,6 +208,7 @@ export default function FormatterAction(
               }
               
               setSuccessfulFormats(prev => prev + 1);
+              incrementFormatClickCount();
               handleFormat();
             }}
             ref={formatButtonRef}

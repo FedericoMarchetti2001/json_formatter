@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import localStorageHandler from "../../utils/localStorageHandler";
+import { getAdStats } from "../../utils/adTracking";
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2";
@@ -10,6 +11,7 @@ import InputOutputSection from "./components/InputOutputSection";
 import GothControlPanel from "./components/GothSection"; // Renamed import
 import CenteredImageViewer from "./components/CenteredImageViewer"; // Import CenteredImageViewer
 import GothShortcutsOverlay from "./components/GothShortcutsOverlay";
+import AdModal from "./components/AdModal"; // Import AdModal
 import PageHeader from "./components/PageHeader";
 import PageFooter from "./components/PageFooter";
 
@@ -69,7 +71,9 @@ function Presentation() {
   }, []);
   // Validation logic: state to track if the JSON input is valid
   const [validationResult, setValidationResult] = useState({ valid: true });
-  const [genericError, setGenericError] = useState("");
+  const setGenericError = (error) => {
+    console.error('Generic error:', error);
+  };
 
   // Theme state
   const [selectedTheme, setSelectedTheme] = useState(() => {
@@ -84,6 +88,9 @@ function Presentation() {
 
   // Shortcuts overlay state: controls the visibility of the shortcuts overlay
   const [showShortcutsOverlay, setShowShortcutsOverlay] = useState(false);
+
+  // Ad Modal state: controls the visibility of the ad modal
+  const [showAdModal, setShowAdModal] = useState(false);
 
   // ESC key handler for overlay: toggles the shortcuts overlay visibility
   useEffect(() => {
@@ -219,6 +226,22 @@ function Presentation() {
   const handleCenteredImageClose = () => {
     setIsImageCentered(false);
     setCenteredImageUrl("");
+  };
+
+  // Handler to show ad modal (called every 10 format clicks)
+  const handleShowAd = () => {
+    setShowAdModal(true);
+  };
+
+  // Handler to close ad modal
+  const handleCloseAd = () => {
+    setShowAdModal(false);
+  };
+
+  // Handler when ad is shown (for tracking)
+  const handleAdShown = () => {
+    const stats = getAdStats();
+    console.log(`Ad impression #${stats.impressions} tracked`);
   };
 
   // Function to add a new page to the text and formatted text arrays
@@ -376,6 +399,7 @@ function Presentation() {
                 setAchievements={setAchievements} // Pass setter for achievements
                 selectedTheme={selectedTheme}
                 setSelectedTheme={setSelectedTheme}
+                onShowAd={handleShowAd} // Pass ad modal trigger
               />
             </Grid2>
           </Grid2>
@@ -386,6 +410,12 @@ function Presentation() {
         imageUrl={centeredImageUrl}
         isOpen={isImageCentered}
         onClose={handleCenteredImageClose}
+      />
+      {/* Ad Modal Component */}
+      <AdModal
+        visible={showAdModal}
+        onClose={handleCloseAd}
+        onAdShown={handleAdShown}
       />
       <PageFooter />
     </div>
