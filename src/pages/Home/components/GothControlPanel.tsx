@@ -78,7 +78,7 @@ function GothControlPanel({
     
     const utter = new window.SpeechSynthesisUtterance(sentence);
     utter.voice = gothVoice;
-    utter.pitch = 0.7; // lower pitch for goth
+    utter.pitch = 0.2; // lower pitch for goth
     utter.rate = rate;
     utter.volume = 1.0;
     utter.lang = gothVoice ? gothVoice.lang : "en-US";
@@ -127,7 +127,7 @@ function GothControlPanel({
         <ReactFlagsSelect
           countries={["US", "DE"]}
           customLabels={{ US: "English", DE: "Deutsch" }}
-          selected={i18n.language.toUpperCase()}
+          selected={i18n.language}
           onSelect={(code) => {
             const newlyUnlocked = checkAchievements(
               AchievementEvent.CHANGE_LANGUAGE,

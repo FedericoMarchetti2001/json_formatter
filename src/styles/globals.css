@@ -32,6 +32,8 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
   --secondary-text-color: #b0b0b0; /* Lighter text for secondary elements */
   --accent-color: #ff69b4; /* Hot pink accent */
 
+  --standard-linear-gradient: linear-gradient(90deg, #7f27b6 90%, #6b1e6b 100%);
+
   /* BORDER COLORS */
   --border-color: #3a2233; /* Dark border */
 
@@ -76,30 +78,10 @@ body::after {
   ) !important;
 }
 
-.goth-header {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 1200 !important;
-  background: linear-gradient(90deg, #140d17 0%, #2b0f32 45%, #1a0c1f 100%) !important;
-  border-bottom: 0.125rem solid #a8326e !important; /* 2px */
-  box-shadow: 0 0.5rem 1.5rem #000b !important; /* 8px 24px */
-  backdrop-filter: blur(0.5rem) !important; /* 8px */
-}
-
-.goth-header__inner {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 1rem !important; /* 16px */
-  padding: 1rem 2rem !important; /* 16px 32px */
-  max-width: 75rem !important; /* 1200px */
-  margin: 0 auto !important;
-}
-
 .page-banner {
-  background: linear-gradient(90deg, #140d17 0%, #2b0f32 45%, #1a0c1f 100%) !important;
+  background:  var(--standard-linear-gradient) !important;
+  border-bottom-right-radius: 15% !important;
+  border-bottom-left-radius: 15% !important;
   color: var(--primary-text-color) !important;
   padding: 1rem 1.5rem 1rem 1.5rem !important; /* 24px */
   text-align: center !important;
@@ -332,8 +314,8 @@ textarea, .react-json-view {
 }
 /* Goth Aesthetic for MUI Tabs Pagination */
 .MuiTabs-root {
-  background: #18111b !important;
-  border-radius: 0.75rem !important; /* 12px */
+  background:  #e0d6eb !important;
+  border-radius: 0.35rem !important; /* 12px */
   box-shadow: 0 0.25rem 1.5rem #000a !important; /* 4px 24px */
   padding: 0.75rem 0 !important; /* 12px */
   border: 0.125rem solid #3a003a !important; /* 2px */
@@ -341,7 +323,7 @@ textarea, .react-json-view {
 .MuiTab-root {
   background: #2d0036 !important;
   color: #e0d6eb !important;
-  font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
+  font-family: var(--font-family) !important;
   border: 0.09375rem solid #6b1e6b !important; /* 1.5px */
   border-radius: 0.375rem !important; /* 6px */
   margin: 0 0.375rem !important; /* 6px */
@@ -357,9 +339,14 @@ textarea, .react-json-view {
   border-color: #a020f0 !important;
 }
 .MuiTabs-indicator {
-  background: linear-gradient(90deg, #a020f0 0%, #6b1e6b 100%) !important;
+  background: var(--standard-linear-gradient) !important;
   height: 0.25rem !important; /* 4px */
   border-radius: 0.125rem !important; /* 2px */
+}
+
+.MuiSvgIcon-root {
+  color: var(--background-color) !important;
+  opacity: 1 !important;
 }
 
 /* Goth Aesthetic for Input Labels */
@@ -572,7 +559,7 @@ input[type="file"]:focus-within {
 }
 
 .page-footer {
-  background: linear-gradient(90deg, #140d17 0%, #2b0f32 45%, #1a0c1f 100%) !important;
+  background: var(--standard-linear-gradient) !important;
   color: var(--text-color) !important;
   padding: 1.125rem 1.5rem !important; /* 18px 24px */
   border-top: 0.125rem solid #a8326e !important; /* 2px */
