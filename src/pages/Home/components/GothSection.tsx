@@ -151,13 +151,6 @@ function GothControlPanel({
       <AchievementImportExport onExport={onExportAchievements} onImport={onImportAchievements} />
       </Stack>
 
-      {/* Centered Goth Girl Image Viewer Component */}
-      <CenteredImageViewer
-        imageUrl={gothGirlImg}
-        isOpen={isImageCentered}
-        onClose={handleCenteredImageClose}
-      />
-
       {/* Unlocked Images Gallery Component (will be moved) */}
       {/* <GothAchievementsGallery unlockedImages={unlockedImages} onImageClick={handleImageClick} /> */}
 
