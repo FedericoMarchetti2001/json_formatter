@@ -7,7 +7,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 // Custom components
 import FormatterAction from "./components/FormatterActions/FormatterActions";
 import InputOutputSection from "./components/InputOutputSection";
-import GothControlPanel from "./components/GothSection"; // Renamed import
+import GothControlPanel from "./components/GothControlPanel"; // Renamed import
 import CenteredImageViewer from "./components/CenteredImageViewer"; // Import CenteredImageViewer
 import GothShortcutsOverlay from "./components/GothShortcutsOverlay";
 import PageHeader from "./components/PageHeader";

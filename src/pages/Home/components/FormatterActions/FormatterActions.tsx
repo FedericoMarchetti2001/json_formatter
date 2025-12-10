@@ -16,6 +16,8 @@ import {
 } from "../../../../config/achievements";
 import { validateJson, JsonValidationResult } from "../../../../core/json-validator";
 import localStorageHandler from "../../../../utils/localStorageHandler";
+import ReactFlagsSelect from "react-flags-select";
+import i18n from "i18n";
 
 export interface IFormatterActionsProps {
   //original text
@@ -154,6 +156,31 @@ export default function FormatterAction(
           gap: { xs: 1, md: 2 }
         }}
       >
+          {/* <ReactFlagsSelect
+            countries={["US", "DE"]}
+            customLabels={{ US: "English", DE: "Deutsch" }}
+            selected={i18n.language}
+            onSelect={(code) => {
+              const newlyUnlocked = checkAchievements(
+                AchievementEvent.CHANGE_LANGUAGE,
+                props.achievements.unlocked,
+                {}
+              );
+              if (newlyUnlocked.length > 0) {
+                props.setAchievements((prev) => {
+                  const newAchievements = newlyUnlocked.map((a) => a.id);
+                  const newImages = newlyUnlocked.map((a) => ACHIEVEMENT_IMAGES[a.imageKey]);
+                  return {
+                    ...prev,
+                    unlocked: [...prev.unlocked, ...newAchievements],
+                    images: [...new Set([...prev.images, ...newImages])],
+                  };
+                });
+                newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+              }
+              i18n.changeLanguage(code.toLowerCase());
+            }}
+          /> */}
           <Button
             className="primary-button formatter-action-button"
             sx={{ width: buttonWidth }}

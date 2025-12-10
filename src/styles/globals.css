@@ -700,3 +700,53 @@ formatter-action-buttons-container {
 .formatter-action-button:hover .MuiSvgIcon-root {
   color: #18141a !important;
 }
+
+/* Goth Control Panel Layout */
+.goth-header {
+  width: 100% !important;
+  padding: 1rem !important;
+}
+
+.goth-header__inner {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important; /* 24px gap between rows */
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+.goth-header__row {
+  display: flex !important;
+  width: 100% !important;
+}
+
+/* First row: Language selector takes full width */
+.goth-header__row--language {
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.goth-header__row--language .flag-select {
+  max-width: 300px !important;
+  width: 100% !important;
+}
+
+/* Second row: Controls side by side with gap */
+.goth-header__row--controls {
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 2rem !important; /* 32px gap between controls */
+  flex-wrap: wrap !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .goth-header__inner {
+    gap: 1rem !important; /* 16px on mobile */
+  }
+  
+  .goth-header__row--controls {
+    flex-direction: column !important;
+    gap: 1rem !important; /* 16px on mobile */
+  }
+}

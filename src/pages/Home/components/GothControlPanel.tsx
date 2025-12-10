@@ -123,43 +123,19 @@ function GothControlPanel({
   return (
     <Box className="goth-header">
       <Box className="goth-header__inner">
-        {/* Language Switcher */}
-        <ReactFlagsSelect
-          countries={["US", "DE"]}
-          customLabels={{ US: "English", DE: "Deutsch" }}
-          selected={i18n.language}
-          onSelect={(code) => {
-            const newlyUnlocked = checkAchievements(
-              AchievementEvent.CHANGE_LANGUAGE,
-              achievements.unlocked,
-              {}
-            );
-            if (newlyUnlocked.length > 0) {
-              setAchievements((prev) => {
-                const newAchievements = newlyUnlocked.map((a) => a.id);
-                const newImages = newlyUnlocked.map((a) => ACHIEVEMENT_IMAGES[a.imageKey]);
-                return {
-                  ...prev,
-                  unlocked: [...prev.unlocked, ...newAchievements],
-                  images: [...new Set([...prev.images, ...newImages])],
-                };
-              });
-              newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
-            }
-            i18n.changeLanguage(code.toLowerCase());
-          }}
-        />
 
-        {/* Controls for sound and AI voice */}
-        <SoundAndVoiceControls
-          enablePlaySound={enablePlaySound}
-          setEnablePlaySound={setEnablePlaySound}
-          enableAIVoice={enableAIVoice}
-          setEnableAIVoice={setEnableAIVoice}
-        />
+        {/* Second Row: Sound Controls and Achievement Import/Export */}
+        <Box className="goth-header__row goth-header__row--controls">
+          {/* Controls for sound and AI voice */}
+          <SoundAndVoiceControls
+            enablePlaySound={enablePlaySound}
+            setEnablePlaySound={setEnablePlaySound}
+            enableAIVoice={enableAIVoice}
+            setEnableAIVoice={setEnableAIVoice}
+          />
 
-        {/* Achievement Import/Export Component */}
-        <AchievementImportExport
+          {/* Achievement Import/Export Component */}
+          <AchievementImportExport
           onExport={() => {
             const newlyUnlocked = checkAchievements(
               AchievementEvent.EXPORT_ACHIEVEMENTS,
@@ -201,9 +177,8 @@ function GothControlPanel({
             onImportAchievements(data);
           }}
         />
+        </Box>
       </Box>
-
-      {/* Toast Container */}
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
