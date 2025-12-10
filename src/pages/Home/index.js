@@ -20,8 +20,8 @@ import { Box } from "@mui/material";
 const containerStyle = {
   maxHeight: "75rem",
   minHeight: "30rem",
-  minWidth: "40rem",
-  maxWidth: "70rem",
+  minWidth: "60rem",
+  maxWidth: "80rem",
   display: "flex",
   flexDirection: "column",
 };

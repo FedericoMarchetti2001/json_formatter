@@ -124,6 +124,11 @@ h6 {
   text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
 }
 
+.formatter-action-grid {
+  min-height: 60rem !important;
+  max-height: 80rem !important;
+}
+
 /* Formatter container */
 .formatter-container {
   background: rgba(34, 22, 38, 0.85) !important;
@@ -629,4 +634,40 @@ input[type="file"]:focus-within {
 
 .Toastify__progress-bar--error {
   background: #f0e6f6 !important;
+}
+
+formatter-action-buttons-container {
+  gap: 1rem !important; /* 16px */
+  margin-top: 1rem !important; /* 16px */
+  width: 20rem !important;
+}
+
+/* Formatter Action Button Styles */
+.formatter-action-button {
+  width: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important; /* 8px */
+}
+
+.formatter-action-button .button-icon {
+  color: var(--text-color) !important;
+  font-size: 1.25rem !important; /* 20px */
+  transition: transform 0.2s, color 0.2s !important;
+}
+
+.formatter-action-button:hover .button-icon {
+  color: #18141a !important;
+  transform: scale(1.1) !important;
+}
+
+/* Icon color override for specific button states */
+.formatter-action-button .MuiSvgIcon-root {
+  color: var(--text-color) !important;
+  opacity: 1 !important;
+}
+
+.formatter-action-button:hover .MuiSvgIcon-root {
+  color: #18141a !important;
 }

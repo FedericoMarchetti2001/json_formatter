@@ -1,10 +1,14 @@
 // @mui material components
-import { InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, InputLabel, MenuItem, Select } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+// Import Material-UI icons
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ClearIcon from '@mui/icons-material/Clear';
 import {
   ACHIEVEMENT_IMAGES,
   AchievementEvent,
@@ -37,7 +41,7 @@ export interface IFormatterActionsProps {
 export default function FormatterAction(
   props: IFormatterActionsProps
 ): React.ReactElement<IFormatterActionsProps> {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [tabSpaces, setTabSpaces] = React.useState<number>(2);
   const { selectedTheme, setSelectedTheme } = props;
 
@@ -137,25 +141,21 @@ export default function FormatterAction(
   }, []);
 
   return (
-    <React.Fragment>
+    <Box className="formatter-action-grid">
       <Grid2
+        className="formatter-action-buttons-container"
         container
         direction="column"
-        height="35vh"
-        justifyContent="center"
-        alignItems="stretch"
-        style={{ padding: "10px", paddingTop: "10vh"}}
+        sx={{
+          justifyContent: "center",
+          alignItems: "stretch",
+          padding: { xs: "0.5rem", md: "10px" },
+          paddingTop: { xs: "2rem", md: "10vh" },
+          gap: { xs: 1, md: 2 }
+        }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-            height: "100%"
-          }}
-        >
           <Button
-            className="primary-button"
+            className="primary-button formatter-action-button"
             sx={{ width: buttonWidth }}
             variant="contained"
             color="primary"
@@ -191,44 +191,56 @@ export default function FormatterAction(
             }}
             ref={formatButtonRef}
             title="Format (Alt+Enter)"
+            startIcon={<FormatAlignLeftIcon className="button-icon" />}
           >
             <b style={{ color: "white" }}>{t("FormatterActions.format")}</b>
-          </Button>
-          <Button
-            className="primary-button"
-            sx={{ width: buttonWidth }}
-            variant="contained"
-            color="primary"
-            onClick={() => copy(props.textToManage)}
+        </Button>
+        <Button
+          className="primary-button formatter-action-button"
+          sx={{ 
+            width: { xs: "100%", md: buttonWidth },
+            minWidth: { xs: "auto", md: buttonWidth }
+          }}
+          variant="contained"
+          color="primary"
+          onClick={() => copy(props.textToManage)}
+            startIcon={<ContentCopyIcon className="button-icon" />}
           >
             <b style={{ color: "white" }}>{t("FormatterActions.copy")}</b>
-          </Button>
-          <Button
-            className="primary-button"
-            sx={{ width: buttonWidth }}
-            variant="contained"
-            color="primary"
-            onClick={() => clear()}
-          >
-            <b style={{ color: "white" }}>{t("FormatterActions.clear")}</b>
-          </Button>
-        </div>
+        </Button>
+        <Button
+          className="primary-button formatter-action-button"
+          sx={{ 
+            width: { xs: "100%", md: buttonWidth },
+            minWidth: { xs: "auto", md: buttonWidth }
+          }}
+          variant="contained"
+          color="primary"
+          onClick={() => clear()}
+          startIcon={<ClearIcon className="button-icon" />}
+        >
+          <b style={{ color: "white" }}>{t("FormatterActions.clear")}</b>
+        </Button>
       </Grid2>
       <Grid2
         container
         direction="column"
-        height="45vh"
-        justifyContent="center"
-        alignItems="stretch"
-        style={{ padding: "10px"}}
+        sx={{
+          justifyContent: "center",
+          alignItems: "stretch",
+          padding: { xs: "0.5rem", md: "10px" },
+          gap: { xs: 1.5, md: 2 }
+        }}
       >
-        <InputLabel style={{ color: "white" }}>{t("FormatterActions.upload_json")}</InputLabel>
+        <InputLabel sx={{ color: "white", fontSize: { xs: "0.875rem", md: "1rem" } }}>
+          {t("FormatterActions.upload_json")}
+        </InputLabel>
         <input
           type="file"
           accept=".json,.txt"
           onChange={(e) => upload(e.target.files?.item(0) as File)}
         />
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
+        <Grid2 sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <InputLabel id="tab-spaces--autowidth-label" className="goth-input-label">
             {t("FormatterActions.tab_spaces")}
           </InputLabel>
@@ -259,6 +271,7 @@ export default function FormatterAction(
               }
             }}
             label="Tab spaces"
+            sx={{ width: { xs: "100%", md: "auto" } }}
           >
             <MenuItem className={"menu-item"} value={2}>
               {t("FormatterActions.two")}
@@ -273,8 +286,8 @@ export default function FormatterAction(
               {t("FormatterActions.eight")}
             </MenuItem>
           </Select>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly", marginTop: "1rem" }}>
+        </Grid2>
+        <Grid2 sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <InputLabel id="json-theme-label" className="goth-input-label">
             {t("FormatterActions.viewer_theme")}
           </InputLabel>
@@ -285,13 +298,14 @@ export default function FormatterAction(
             value={selectedTheme}
             onChange={(e) => setSelectedTheme(e.target.value as string)}
             label="Viewer Theme"
+            sx={{ width: { xs: "100%", md: "auto" } }}
           >
             <MenuItem className={"menu-item"} value={"monokai"}>{t("FormatterActions.monokai")}</MenuItem>
             <MenuItem className={"menu-item"} value={"apathy"}>{t("FormatterActions.apathy")}</MenuItem>
             <MenuItem className={"menu-item"} value={"bright"}>{t("FormatterActions.bright")}</MenuItem>
           </Select>
-        </div>
+        </Grid2>
       </Grid2>
-    </React.Fragment>
+    </Box>
   );
 }
