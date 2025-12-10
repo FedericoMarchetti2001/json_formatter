@@ -21,6 +21,7 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
 @import url("https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=IM+Fell+English+SC&display=swap");
 
 :root {
+
   /* BACKGROUND COLORS */
   --background-color: #18141a; /* Deeper goth background */
   --primary-bg-color: #a8326e; /* Deep magenta for primary buttons */
@@ -40,15 +41,19 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
   /* FONT FAMILIES */
   --font-family: monospace;
   --gothic-heading: serif, cursive;
+
+  /* FOOTER HEIGHT */
+  --footer-height: 4.375rem; 
 }
 
-html, body {
-  min-height: 100% !important;
-  height: 100% !important;
+html{
+  height: 160rem !important;
   width: 100% !important;
 }
 
 body {
+   height: inherit !important;
+  width: inherit !important;
   background-color: var(--background-color) !important;
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
@@ -57,7 +62,6 @@ body {
   padding-top: 5rem !important; /* 80px */
   padding-bottom: 4.375rem !important; /* 70px */
   position: relative !important;
-  overflow-x: hidden !important;
   min-height: 100vh !important;
 }
 
@@ -78,7 +82,32 @@ body::after {
   ) !important;
 }
 
+#root{
+  height: inherit !important;
+  width: inherit !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.App{
+  height: inherit !important;
+}
+
+.home-container{
+  height: inherit !important;
+}
+
+.body-content {
+  min-height: calc(100% - var(--footer-height)) !important;
+  width: 100% !important;
+  background-size: cover !important;
+  background-position: top !important;
+  display: grid !important;
+  padding-top: 7rem !important; /* offset for fixed header */
+}
+
 .page-banner {
+  height: 9rem !important;
   background:  var(--standard-linear-gradient) !important;
   border-bottom-right-radius: 15% !important;
   border-bottom-left-radius: 15% !important;
@@ -564,12 +593,12 @@ input[type="file"]:focus-within {
 }
 
 .page-footer {
+  height: var(--footer-height) !important;
   background: var(--standard-linear-gradient) !important;
   color: var(--text-color) !important;
   padding: 1.125rem 1.5rem !important; /* 18px 24px */
   border-top: 0.125rem solid #a8326e !important; /* 2px */
   box-shadow: 0 -0.375rem 1.125rem #000a !important; /* -6px 18px */
-  position: fixed !important;
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;

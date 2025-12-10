@@ -308,15 +308,7 @@ function Presentation() {
       />
       <PageHeader />
       <Box
-        minHeight="75vh"
-        width="100%"
-        sx={{
-          backgroundSize: "cover",
-          backgroundPosition: "top",
-          display: "grid",
-          placeItems: "center",
-          paddingTop: "7rem", // offset for fixed header
-        }}
+        className="body-content"
       >
         <Container style={containerStyle}>
           <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
