@@ -27,7 +27,7 @@ const containerStyle = {
 };
 
 function Presentation() {
-  // Refs for the TextareaAutosize and JsonView components to enable scrolling
+  // Refs for the editor and JsonView components to enable scrolling
   const textareaRef = useRef(null);
   const jsonViewRef = useRef(null);
 
@@ -68,7 +68,12 @@ function Presentation() {
     loadSample();
   }, []);
   // Validation logic: state to track if the JSON input is valid
-  const [validationResult, setValidationResult] = useState({ valid: true });
+  const [validationResult, setValidationResult] = useState({
+    valid: true,
+    issues: [],
+    rowsWithErrors: [],
+    totalRowsWithErrors: 0,
+  });
   const [genericError, setGenericError] = useState("");
 
   // Theme state
@@ -192,7 +197,12 @@ function Presentation() {
       newArray[currentPage - 1] = newText;
       return newArray;
     });
-    setValidationResult({ valid: true }); // Reset validation status when text changes
+    setValidationResult({
+      valid: true,
+      issues: [],
+      rowsWithErrors: [],
+      totalRowsWithErrors: 0,
+    }); // Reset validation status when text changes
   };
 
   // Update formattedTextArray when formatted text changes
@@ -343,10 +353,13 @@ function Presentation() {
                 gothSentence={gothSentence} // gothSentence is now managed within GothSection
                 unlockedImages={achievements.images} // Pass unlocked images to InputOutputSection
                 onImageClick={handleAchievementImageClick} // Pass image click handler
-                textareaRef={textareaRef} // Pass ref to TextareaAutosize
+                editorRef={textareaRef} // Pass ref to editor
                 jsonViewRef={jsonViewRef} // Pass ref to JsonView
                 onDeletePage={() => handleDeletePage(currentPage)}
                 validationError={validationResult.error?.message}
+                validationIssues={validationResult.issues ?? []}
+                rowsWithErrors={validationResult.rowsWithErrors ?? []}
+                totalRowsWithErrors={validationResult.totalRowsWithErrors ?? 0}
                 selectedTheme={selectedTheme}
               />
             </Grid2>
