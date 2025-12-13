@@ -22,6 +22,10 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
 
 :root {
 
+  /* INFO for AI and developers:
+  /* Lighter or darker tonalities must both be achieved via color-mix() AND percentage 80% (white/black) to ensure proper contrast and visibility across different devices and screens.
+  /* Example: color-mix(in srgb, #a8326e 80%, white) for lighter and color-mix(in srgb, #a8326e 80%, black) for darker tonalities.
+
   /* BACKGROUND COLORS */
   --background-color: #18141a; /* Deeper goth background */
   --primary-bg-color: #a8326e; /* Deep magenta for primary buttons */
@@ -37,7 +41,9 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
   --editor-stripe: rgba(255, 255, 255, 0.02);
   --editor-gutter-bg: rgba(0, 0, 0, 0.35);
 
-  --standard-linear-gradient: linear-gradient(90deg, #7f27b6 90%, #6b1e6b 100%);
+  --horizontal-linear-gradient: linear-gradient(90deg, #7f27b6 90%, #6b1e6b 100%);
+  --vertical-linear-gradient: linear-gradient(0deg, #7f27b6 90%, #6b1e6b 100%);
+  --reversed-vertical-linear-gradient: linear-gradient(180deg, #7f27b6 90%, #6b1e6b 100%);
 
   /* BORDER COLORS */
   --border-color: #3a2233; /* Dark border */
@@ -112,7 +118,7 @@ body::after {
 
 .page-banner {
   height: 9rem !important;
-  background:  var(--standard-linear-gradient) !important;
+  background:  var(--vertical-linear-gradient) !important;
   border-bottom-right-radius: 15% !important;
   border-bottom-left-radius: 15% !important;
   color: var(--primary-text-color) !important;
@@ -310,7 +316,7 @@ textarea, .react-json-view {
 /* Goth Aesthetic for Menu Items */
 .menu-item {
   background: linear-gradient(90deg, #1a1a1a 0%, #2d0036 100%) !important;
-  color: #e0d6eb !important;
+  color: var(--text-color) !important;
   font-family: "UnifrakturCook", "Cinzel Decorative", "Cormorant Garamond", serif !important;
   border: 0.09375rem solid #6b1e6b !important; /* 1.5px */
   box-shadow: 0 0.125rem 0.5rem #0006 !important; /* 2px 8px */
@@ -352,15 +358,21 @@ textarea, .react-json-view {
 }
 /* Goth Aesthetic for MUI Tabs Pagination */
 .MuiTabs-root {
-  background:  #e0d6eb !important;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--text-color),
+    var(--text-color) 0.50rem,
+    var(--background-color) 0.5rem, 
+    var(--background-color) 1rem 
+  );
   border-radius: 0.35rem !important; /* 12px */
   box-shadow: 0 0.25rem 1.5rem #000a !important; /* 4px 24px */
   padding: 0.75rem 0 !important; /* 12px */
   border: 0.125rem solid #3a003a !important; /* 2px */
 }
 .MuiTab-root {
-  background: #2d0036 !important;
-  color: #e0d6eb !important;
+  background: color-mix(in srgb, var(--secondary-bg-color) 80%, white) !important;
+  color: var(--text-color) !important;
   font-family: var(--font-family) !important;
   border: 0.09375rem solid #6b1e6b !important; /* 1.5px */
   border-radius: 0.375rem !important; /* 6px */
@@ -377,7 +389,7 @@ textarea, .react-json-view {
   border-color: #a020f0 !important;
 }
 .MuiTabs-indicator {
-  background: var(--standard-linear-gradient) !important;
+  background: var(--horizontal-linear-gradient) !important;
   height: 0.25rem !important; /* 4px */
   border-radius: 0.125rem !important; /* 2px */
 }
@@ -745,7 +757,7 @@ input[type="file"]:focus-within {
 
 .page-footer {
   height: var(--footer-height) !important;
-  background: var(--standard-linear-gradient) !important;
+  background: var(--reversed-vertical-linear-gradient) !important;
   color: var(--text-color) !important;
   padding: 1.125rem 1.5rem !important; /* 18px 24px */
   border-top: 0.125rem solid #a8326e !important; /* 2px */
