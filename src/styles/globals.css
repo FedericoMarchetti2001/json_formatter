@@ -42,8 +42,8 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
   --editor-gutter-bg: rgba(0, 0, 0, 0.35);
 
   --horizontal-linear-gradient: linear-gradient(90deg, #7f27b6 90%, #6b1e6b 100%);
-  --vertical-linear-gradient: linear-gradient(0deg, #7f27b6 90%, #6b1e6b 100%);
-  --reversed-vertical-linear-gradient: linear-gradient(180deg, #7f27b6 90%, #6b1e6b 100%);
+  --vertical-linear-gradient: linear-gradient(0deg, #7f27b6 20%, #6b1e6b 100%);
+  --reversed-vertical-linear-gradient: linear-gradient(180deg, #7f27b6 20%, #6b1e6b 100%);
 
   /* BORDER COLORS */
   --border-color: #3a2233; /* Dark border */
@@ -119,19 +119,51 @@ body::after {
 .page-banner {
   height: 9rem !important;
   background:  var(--vertical-linear-gradient) !important;
-  border-bottom-right-radius: 15% !important;
-  border-bottom-left-radius: 15% !important;
   color: var(--primary-text-color) !important;
-  padding: 1rem 1.5rem 1rem 1.5rem !important; /* 24px */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   text-align: center !important;
-  border-bottom: 0.125rem solid #a8326e !important; /* 2px */
+  border-bottom: 0.4rem solid var(--border-color) !important; 
   box-shadow: 0 0.375rem 1.125rem #000a !important; /* 6px 18px */
   position: fixed !important;
-  top: 0 !important;
+    top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   z-index: 1200 !important;
   margin: 0 !important;
+  width: 100% !important;
+}
+
+.page-banner__wrapper {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.5rem !important; /* Gap between logo and text */
+  max-width: 75rem !important; /* 1200px - matches MuiContainer max-width */
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.page-banner__logo-column {
+  flex-grow: 2 !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.page-banner__logo {
+  height: 3.5rem !important; /* 56px */
+  width: 3.5rem !important; /* 56px */
+  object-fit: contain !important;
+}
+
+.page-banner__text-column {
+  flex: 10 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  text-align: left !important;
 }
 
 .page-banner__title {
@@ -148,6 +180,41 @@ body::after {
   font-size: 1.05rem !important;
   color: var(--text-color) !important;
   opacity: 0.9 !important;
+}
+
+/* Responsive Page Banner - Mobile */
+@media (max-width: 768px) {
+  .page-banner__wrapper {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .page-banner__logo-column {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .page-banner__text-column {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .page-banner__title {
+    font-size: 1.8rem !important;
+    letter-spacing: 0.125rem !important;
+  }
+
+  .page-banner__subtitle {
+    font-size: 0.875rem !important;
+    margin: 0.5rem 0 0 0 !important;
+  }
+}
+
+/* Page Banner Title with Icon */
+.page-banner__title--with-icon {
+  padding-left: 2.5rem !important; /* Space for icon */
+  background-image: url("../../public/jg-favicon.svg") !important;
+  background-repeat: no-repeat !important;
 }
 
 /* Headings */
@@ -896,8 +963,8 @@ formatter-action-buttons-container {
 
 /* Second row: Controls side by side with gap */
 .goth-header__row--controls {
-  justify-content: center !important;
-  align-items: center !important;
+  /* justify-content: center !important;
+  align-items: center !important; */
   gap: 2rem !important; /* 32px gap between controls */
   flex-wrap: wrap !important;
 }
