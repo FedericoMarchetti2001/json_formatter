@@ -169,7 +169,7 @@ body::after {
 .page-banner__title {
   margin: 0 !important;
   font-family: var(--gothic-heading) !important;
-  font-size: 2.4rem !important;
+  font-size: 1.7rem !important;
   letter-spacing: 0.1875rem !important; /* 3px */
   text-shadow: 0 0.125rem 0.625rem #a8326e99 !important; /* 2px 10px */
 }
@@ -200,7 +200,7 @@ body::after {
   }
 
   .page-banner__title {
-    font-size: 1.8rem !important;
+    font-size: 1.7rem !important;
     letter-spacing: 0.125rem !important;
   }
 

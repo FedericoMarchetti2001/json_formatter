@@ -6,7 +6,7 @@ function PageHeader() {
       <div className="page-banner__wrapper">
         {/* Text Column */}
         <div className="page-banner__text-column">
-          <h1 className="page-banner__title">JGoth Validator</h1>
+          <h5 className="page-banner__title">JGoth Validator</h5>
           <p className="page-banner__subtitle">Honestly, I have no clue what I&apos;m doing, I&apos;m just building a JSON validator that somehow rewards you with goth girls.</p>
         </div>
 
