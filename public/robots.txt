@@ -1,3 +1,10 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.next/
+Disallow: /build/
+
+# Sitemap
+Sitemap: https://jgothvalidator.com/sitemap.xml

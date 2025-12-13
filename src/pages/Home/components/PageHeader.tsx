@@ -1,13 +1,20 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 function PageHeader() {
+  const { t } = useTranslation();
+
   return (
     <header className="page-banner">
       <div className="page-banner__wrapper">
         {/* Text Column */}
         <div className="page-banner__text-column">
-          <h5 className="page-banner__title">JGoth Validator</h5>
-          <p className="page-banner__subtitle">Honestly, I have no clue what I&apos;m doing, I&apos;m just building a JSON validator that somehow rewards you with goth girls.</p>
+          <h1 className="page-banner__title">
+            {t("header.title", "JSON Formatter & Validator")}
+          </h1>
+          <p className="page-banner__subtitle">
+            {t("header.subtitle", "Format, validate, and beautify JSON instantly with detailed error reporting and a unique goth aesthetic")}
+          </p>
         </div>
 
         {/* Logo Column */}

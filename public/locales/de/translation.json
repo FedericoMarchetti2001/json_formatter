@@ -1,4 +1,35 @@
 {
+  "header": {
+    "title": "JSON Formatter & Validator",
+    "subtitle": "Formatieren, validieren und verschönern Sie JSON sofort mit detaillierter Fehlerberichterstattung und einer einzigartigen Goth-Ästhetik"
+  },
+  "features": {
+    "title": "Warum JGoth Validator wählen?",
+    "validation": {
+      "title": "Echtzeit-JSON-Validierung",
+      "desc": "Validieren Sie Ihr JSON sofort mit detaillierten Fehlermeldungen, Zeilennummern und Code-Snippets, um Probleme schnell zu beheben."
+    },
+    "formatting": {
+      "title": "Fortgeschrittene Formatierung",
+      "desc": "Formatieren und verschönern Sie JSON mit anpassbarer Einrückung (2, 4, 6 oder 8 Leerzeichen). Wählen Sie aus mehreren Viewer-Designs."
+    },
+    "multipage": {
+      "title": "Mehrseitige Dokumente",
+      "desc": "Arbeiten Sie gleichzeitig mit mehreren JSON-Dokumenten mit unserem Tabs-Paginationssystem. Wechseln Sie zwischen Seiten, ohne Ihre Arbeit zu verlieren."
+    },
+    "themes": {
+      "title": "Anpassbare Designs",
+      "desc": "Wählen Sie aus mehreren JSON-Viewer-Designs, einschließlich Monokai, Apathy und Bright. Passen Sie sich Ihrem bevorzugten Coding-Stil an."
+    },
+    "private": {
+      "title": "100% Privat & Client-Seitig",
+      "desc": "Die gesamte Verarbeitung erfolgt in Ihrem Browser. Keine Daten werden an einen Server gesendet. Ihr JSON bleibt völlig privat."
+    },
+    "offline": {
+      "title": "Funktioniert Offline",
+      "desc": "Nach dem Laden funktioniert JGoth Validator ohne Internetverbindung. Formatieren und validieren Sie JSON überall, jederzeit."
+    }
+  },
   "FormatterActions": {
     "format": "Formatieren",
     "copy": "Kopieren",

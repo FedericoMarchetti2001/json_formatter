@@ -12,6 +12,7 @@ import CenteredImageViewer from "./components/CenteredImageViewer"; // Import Ce
 import GothShortcutsOverlay from "./components/GothShortcutsOverlay";
 import PageHeader from "./components/PageHeader";
 import PageFooter from "./components/PageFooter";
+import FeaturesSection from "./components/FeaturesSection"; // Import FeaturesSection
 
 //Other components
 import FormatterPagination from "./components/Pagination";
@@ -386,6 +387,10 @@ function Presentation() {
           </Grid2>
         </Container>
       </Box>
+      
+      {/* Features Section for SEO */}
+      <FeaturesSection />
+      
       {/* Centered Image Viewer Component */}
       <CenteredImageViewer
         imageUrl={centeredImageUrl}

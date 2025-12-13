@@ -217,10 +217,37 @@ body::after {
   background-repeat: no-repeat !important;
 }
 
-/* Headings */
-h1,
-h2,
-h3,
+/* Headings - Semantic & SEO */
+h1 {
+  font-family: var(--gothic-heading) !important;
+  color: var(--primary-text-color) !important;
+  letter-spacing: 0.125rem !important; /* 2px */
+  text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
+  font-size: 2.5rem !important;
+  line-height: 1.2 !important;
+  margin: 1rem 0 !important;
+}
+
+h2 {
+  font-family: var(--gothic-heading) !important;
+  color: var(--primary-text-color) !important;
+  letter-spacing: 0.125rem !important; /* 2px */
+  text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
+  font-size: 2rem !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+h3 {
+  font-family: var(--gothic-heading) !important;
+  color: var(--primary-text-color) !important;
+  letter-spacing: 0.125rem !important; /* 2px */
+  text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
+  font-size: 1.5rem !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.625rem !important;
+}
+
 h4,
 h5,
 h6 {

@@ -1,10 +1,26 @@
 {
-  "name": "goth-json-formatter",
+  "name": "jgoth-validator",
   "version": "0.1.0",
   "private": true,
-  "author": "Goth JSON Formatter",
+  "author": "Federico Marchetti",
   "license": "MIT",
-  "description": "Goth/emo themed JSON formatter with achievements, theming, and multi-page editing.",
+  "description": "A free online JSON formatter and validator with a unique goth aesthetic, detailed error reporting, and multi-page document support.",
+  "homepage": "https://jgothvalidator.com",
+  "keywords": [
+    "json",
+    "formatter",
+    "validator",
+    "prettifier",
+    "json-validator",
+    "json-formatter",
+    "online-tools",
+    "developer-tools",
+    "web-tools"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FedericoMarchetti2001/json_formatter.git"
+  },
   "dependencies": {
     "@emotion/cache": "11.10.7",
     "@emotion/react": "11.10.6",
