@@ -262,6 +262,61 @@ h6 {
   max-height: 80rem !important;
 }
 
+/* Goth Achievements Gallery - Carousel */
+.goth-achievements-gallery {
+  margin-top: 1.25rem !important; /* 20px */
+  text-align: center !important;
+}
+
+.goth-achievements-gallery__title {
+  font-family: var(--gothic-heading) !important;
+  color: var(--text-color) !important;
+}
+
+.goth-achievements-gallery__empty {
+  color: var(--text-color) !important;
+}
+
+.goth-achievements-carousel {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  justify-content: center !important; /* centers when there are few images */
+  align-items: center !important;
+  gap: 0.625rem !important; /* 10px: keeps images near each other */
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 0.5rem 0.25rem !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-padding: 0.5rem !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.goth-achievements-carousel__image {
+  flex: 0 0 auto !important;
+  width: 6.25rem !important; /* 100px */
+  height: 9.375rem !important; /* 150px */
+  object-fit: cover !important;
+  border: 0.125rem solid var(--accent-color) !important; /* 2px */
+  border-radius: 0.5rem !important; /* 8px */
+  cursor: pointer !important;
+  transition: transform 0.2s, box-shadow 0.2s !important;
+  scroll-snap-align: center !important;
+}
+
+.goth-achievements-carousel__image:hover {
+  transform: scale(1.06) !important;
+  box-shadow: 0 0.25rem 1rem #ff69b455 !important; /* 4px 16px */
+}
+
+.goth-achievements-carousel::-webkit-scrollbar {
+  height: 0.5rem !important; /* 8px */
+}
+
+.goth-achievements-carousel::-webkit-scrollbar-thumb {
+  background: #a8326e !important;
+  border-radius: 0.375rem !important; /* 6px */
+}
+
 /* Formatter container */
 .formatter-container {
   background: rgba(34, 22, 38, 0.85) !important;

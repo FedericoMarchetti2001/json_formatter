@@ -15,11 +15,11 @@ function GothAchievementsGallery({ unlockedImages, onImageClick }: GothAchieveme
   };
 
   return (
-    <Box sx={{ marginTop: "20px", textAlign: "center" }}>
-      <Typography variant="h5" component="h3" sx={{ fontFamily: "var(--gothic-heading)", color: "var(--text-color)" }}>
+    <Box className="goth-achievements-gallery">
+      <Typography variant="h5" component="h3" className="goth-achievements-gallery__title">
         Unlocked Goth Girls
       </Typography>
-      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))", gap: "10px", justifyContent: "center" }}>
+      <Box className="goth-achievements-carousel" aria-label="Unlocked goth girls carousel">
         {unlockedImages.length > 0 ? (
           unlockedImages.map((imagePath, index) => (
             !imageErrors.has(imagePath) && (
@@ -30,26 +30,12 @@ function GothAchievementsGallery({ unlockedImages, onImageClick }: GothAchieveme
                 loading="lazy"
                 onError={() => handleImageError(imagePath)}
                 onClick={() => onImageClick(imagePath)}
-                style={{
-                  width: "100px",
-                  height: "150px",
-                  objectFit: "cover",
-                  border: "2px solid #ff00ff",
-                  cursor: "pointer",
-                  transition: "transform 0.2s",
-                  borderRadius: "8px"
-                }}
-                onMouseEnter={(e) => {
-                  (e.target as HTMLImageElement).style.transform = "scale(1.1)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.target as HTMLImageElement).style.transform = "scale(1)";
-                }}
+                className="goth-achievements-carousel__image"
               />
             )
           ))
         ) : (
-          <Typography variant="body1" component="p" sx={{ color: "var(--text-color)" }}>
+          <Typography variant="body1" component="p" className="goth-achievements-gallery__empty">
             No goth girls unlocked yet. Format some JSON!
           </Typography>
         )}
