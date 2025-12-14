@@ -36,49 +36,30 @@ function FeaturesSection() {
   ];
 
   return (
-    <Box sx={{ 
-      backgroundColor: "rgba(34, 22, 38, 0.5)",
-      borderTop: "2px solid var(--border-color)",
-      borderBottom: "2px solid var(--border-color)",
-      py: { xs: 4, md: 6 },
-      mt: 4
-    }}>
-      <Container maxWidth="lg">
+    <Box className="features-section">
+      <Container maxWidth="lg" className="features-section__container">
         <Typography 
           component="h2" 
           variant="h2"
-          sx={{ 
-            textAlign: "center",
-            mb: 4,
-            color: "var(--primary-text-color)"
-          }}
+          className="features-section__title"
         >
           {t("features.title", "Why Choose JGoth Validator?")}
         </Typography>
         
-        <Grid2 container spacing={3}>
+        <Grid2 container spacing={3} className="features-section__grid">
           {features.map((feature, idx) => (
             <Grid2 key={idx} xs={12} sm={6} md={4}>
-              <Box sx={{
-                p: 2,
-                borderLeft: "4px solid var(--accent-color)",
-                backgroundColor: "rgba(168, 50, 110, 0.1)",
-                borderRadius: "8px"
-              }}>
+              <Box className="features-section__card">
                 <Typography 
                   component="h3" 
                   variant="h6"
-                  sx={{ 
-                    mb: 1,
-                    color: "var(--accent-color)",
-                    fontWeight: "bold"
-                  }}
+                  className="features-section__card-title"
                 >
                   {feature.title}
                 </Typography>
                 <Typography 
                   variant="body2"
-                  sx={{ color: "var(--text-color)" }}
+                  className="features-section__card-description"
                 >
                   {feature.description}
                 </Typography>
