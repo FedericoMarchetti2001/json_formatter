@@ -689,7 +689,7 @@ textarea, .react-json-view {
 }
 
 /* Goth Aesthetic for MUI Tabs Pagination */
-.MuiTabs-root {
+.MuiTabs-root.pagination-tabs {
   background: repeating-linear-gradient(
     45deg,
     var(--text-color),
@@ -703,7 +703,7 @@ textarea, .react-json-view {
   flex-grow: 6 !important;
   padding: 0rem 1rem !important; /* 0px 16px */
 }
-.MuiTab-root {
+.MuiTab-root.pagination-tab {
   background: color-mix(in srgb, var(--secondary-bg-color) 80%, white) !important;
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
@@ -714,9 +714,9 @@ textarea, .react-json-view {
   transition: background 0.2s, color 0.2s !important;
   min-width: 6.25rem !important; /* 100px */
 }
-.MuiTab-root.Mui-selected,
-.MuiTab-root:focus,
-.MuiTab-root:hover {
+.MuiTab-root.pagination-tab.Mui-selected,
+.MuiTab-root.pagination-tab:focus,
+.MuiTab-root.pagination-tab:hover {
   background: #3a003a !important;
   color: #fff !important;
   border-color: #a020f0 !important;
@@ -725,8 +725,30 @@ textarea, .react-json-view {
 .MuiTabs-scroller {
   display: flex !important;
   align-items: center !important;
-  flex-direction: row !important;
+    flex-direction: row !important;
 }
+
+  /* Hook for MUI Tabs scroll buttons (left/right) inside pagination */
+  .MuiTabScrollButton-root.pagination-scroll-button {
+    background: color-mix(in srgb, var(--secondary-bg-color) 80%, white) !important;
+  }
+
+  .MuiTabScrollButton-root.pagination-scroll-button:hover {
+    background: #3a003a !important;
+    color: #fff !important;
+    border-color: #a020f0 !important;
+  }
+
+  /* The left/right arrows are an SVG icon inside the scroll button */
+  .MuiTabScrollButton-root.pagination-scroll-button .MuiSvgIcon-root {
+    color: currentColor !important;
+    opacity: 1 !important;
+  }
+
+  .MuiTabScrollButton-root.pagination-scroll-button.Mui-disabled {
+    opacity: 0.35 !important;
+  }
+
 
 .MuiTabs-indicator {
   background: var(--horizontal-linear-gradient) !important;

@@ -24,9 +24,12 @@ export default function FormatterPagination(
   const { t } = useTranslation();
   return (
     <Tabs
+      className="pagination-tabs"
       value={props.currentPage}
       variant="scrollable"
       scrollButtons="auto"
+      TabIndicatorProps={{ className: "pagination-scroll-indicator"}}
+      TabScrollButtonProps={{ className: "pagination-scroll-button" }}
       onKeyDown={(event) => {
         if (event.key === "Tab") {
           event.preventDefault();
@@ -37,6 +40,7 @@ export default function FormatterPagination(
     >
       {Array.from({ length: props.totalPageCount }, (_, i) => (
         <Tab
+          className="pagination-tab"
           key={i + 1}
           value={i + 1}
           label={`${t("Pagination.page")} ${i + 1}`}
