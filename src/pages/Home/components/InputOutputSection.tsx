@@ -26,8 +26,7 @@ interface InputOutputSectionProps {
 }
 
 const scrollAreaStyle: React.CSSProperties = {
-  width: "100%",
-  height: "100%",
+  flexGrow: 5,
   overflow: "auto",
   border: "1px solid transparent",
 };
@@ -71,7 +70,7 @@ function InputOutputSection({
 
   return (
     <Box
-      style={{ flex: 1, height: "70%" }}
+      className="input-output-section"
       onKeyDown={(event) => {
         if (event.key === "Delete" || event.key === "Backspace") {
           const activeElement = document.activeElement as HTMLElement | null;
@@ -95,15 +94,17 @@ function InputOutputSection({
         editorRef={resolvedEditorRef}
       />
 
-      <JsonErrorPanel
-        issues={issues}
-        rowsWithErrors={errorLines}
-        totalRowsWithErrors={errorLineCount}
-        fallbackMessage={validationError}
-      />
+      <Box className="indirect-output-section">
+        <JsonErrorPanel
+          issues={issues}
+          rowsWithErrors={errorLines}
+          totalRowsWithErrors={errorLineCount}
+          fallbackMessage={validationError}
+        />
 
-      <GothAchievementsGallery unlockedImages={unlockedImages} onImageClick={onImageClick} />
-      <SentenceDisplay sentence={gothSentence || ""} />
+        <GothAchievementsGallery unlockedImages={unlockedImages} onImageClick={onImageClick} />
+        <SentenceDisplay sentence={gothSentence || ""} />
+      </Box>
 
       <Box ref={jsonViewRef} style={{ ...scrollAreaStyle }}>
         <JsonView

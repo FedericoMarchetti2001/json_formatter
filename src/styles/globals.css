@@ -275,8 +275,96 @@ h6 {
 }
 
 .formatter-action-grid {
-  min-height: 60rem !important;
-  max-height: 80rem !important;
+  flex: 5 1 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  -ms-flex-align: start !important;
+}
+
+.spacer {
+  flex-grow: 1 !important;
+  flex-shrink: 1 !important;
+  flex-basis: 0 !important; 
+  min-height: 1rem !important;
+}
+
+.double-spacer {
+  flex-grow: 2 !important;
+  flex-shrink: 1 !important;
+  flex-basis: 0 !important; 
+  min-height: 2rem !important;
+}
+
+.formatter-action-buttons-container {
+  align-items: stretch !important;
+  gap: 1rem !important;
+  padding: 1rem !important;
+  margin-top: 1rem !important; /* 16px */
+  width: 20rem !important;
+  flex-grow: 10 !important;
+
+}
+
+.formatter-action-upload-container {
+  justify-content: center !important;
+  align-items: stretch !important;
+  padding: 1rem !important;
+  gap: 1rem !important;
+  flex-grow: 2 !important;
+}
+
+.formatter-action-upload-label {
+  color: var(--primary-text-color) !important;
+  font-size: 1rem !important;
+}
+
+.formatter-action-button {
+  width: 100px !important;
+  min-width: 100px !important;
+}
+
+.formatter-action-button__label {
+  color: var(--primary-text-color) !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 768px) {
+  .formatter-action-buttons-container {
+    padding: 0.5rem !important;
+    padding-top: 2rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .formatter-action-upload-container {
+    padding: 0.5rem !important;
+    gap: 0.75rem !important;
+  }
+
+  .formatter-action-upload-label {
+    font-size: 0.875rem !important;
+  }
+
+  .formatter-action-button {
+    width: 100% !important;
+    min-width: auto !important;
+  }
+}
+
+.viewer-actions-grid {
+  flex: 5 1 0 !important;
+  margin-top: 1rem !important;
+}
+
+.home-actions-column {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+}
+
+.viewer-actions-container {
+  border-top: 0.125rem solid var(--border-color) !important;
+  padding-top: 1rem !important;
 }
 
 /* Features Section */
@@ -323,8 +411,15 @@ h6 {
   font-size: var(--font-size-body) !important;
 }
 
+.sentence-display {
+  margin-bottom: 1rem !important;
+  text-align: center !important;
+  flex-grow: 3 !important;
+}
+
 /* Goth Achievements Gallery - Carousel */
 .goth-achievements-gallery {
+  flex-grow: 3 !important;
   margin-top: 1.25rem !important; /* 20px */
   text-align: center !important;
 }
@@ -456,6 +551,10 @@ textarea, .react-json-view {
   overflow-y: auto !important; /* Add scrollbar if content exceeds max-height */
 }
 
+.react-json-view {
+  height: 50rem !important; /* 800px */
+}
+
 /* Menu Items */
 .menu-item {
   border-radius: 0 !important;
@@ -566,6 +665,29 @@ textarea, .react-json-view {
     opacity: 0.97;
   }
 }
+
+.input-output-section {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: content !important;
+  flex-grow: 11 !important;
+}
+
+.action-panel-group{
+  flex-grow: 11 !important;
+  flex-shrink: 1 !important;
+  flex-basis: 0 !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.indirect-output-section{
+  flex-grow: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
 /* Goth Aesthetic for MUI Tabs Pagination */
 .MuiTabs-root {
   background: repeating-linear-gradient(
@@ -577,8 +699,9 @@ textarea, .react-json-view {
   );
   border-radius: 0.35rem !important; /* 12px */
   box-shadow: 0 0.25rem 1.5rem #000a !important; /* 4px 24px */
-  padding: 0.75rem 0 !important; /* 12px */
   border: 0.125rem solid #3a003a !important; /* 2px */
+  flex-grow: 6 !important;
+  padding: 0rem 1rem !important; /* 0px 16px */
 }
 .MuiTab-root {
   background: color-mix(in srgb, var(--secondary-bg-color) 80%, white) !important;
@@ -598,6 +721,13 @@ textarea, .react-json-view {
   color: #fff !important;
   border-color: #a020f0 !important;
 }
+
+.MuiTabs-scroller {
+  display: flex !important;
+  align-items: center !important;
+  flex-direction: row !important;
+}
+
 .MuiTabs-indicator {
   background: var(--horizontal-linear-gradient) !important;
   height: 0.25rem !important; /* 4px */
@@ -820,13 +950,13 @@ input[type="file"]:focus-within {
 
 .json-editor {
   display: flex !important;
+  flex-grow: 5 !important;
   background: rgba(34, 22, 38, 0.9) !important;
   border: 0.09375rem solid var(--accent-color) !important;
   border-radius: 0.5rem !important;
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
-  min-height: 16rem !important;
-  max-height: 40rem !important;
+  height: 50rem !important; /* 800px */
   position: relative !important;
   overflow: hidden !important;
   margin-bottom: 1rem !important;
@@ -900,6 +1030,7 @@ input[type="file"]:focus-within {
 }
 
 .json-error-panel {
+  flex-grow: 6 !important;
   background: rgba(58, 0, 58, 0.35) !important;
   border: 0.09375rem solid var(--border-color) !important;
   border-radius: 0.5rem !important;
@@ -1038,12 +1169,6 @@ input[type="file"]:focus-within {
   background: #f0e6f6 !important;
 }
 
-formatter-action-buttons-container {
-  gap: 1rem !important; /* 16px */
-  margin-top: 1rem !important; /* 16px */
-  width: 20rem !important;
-}
-
 /* Formatter Action Button Styles */
 .formatter-action-button {
   width: 50% !important;
@@ -1074,10 +1199,18 @@ formatter-action-buttons-container {
   color: #18141a !important;
 }
 
+.control-panel-with-pagination {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-grow: 1 !important;
+  width: 100% !important;
+}
+
 /* Goth Control Panel Layout */
 .goth-header {
   width: 100% !important;
-  padding: 1rem !important;
+  padding: 0rem 1rem !important;
+  flex-grow: 6 !important;
 }
 
 .goth-header__inner {

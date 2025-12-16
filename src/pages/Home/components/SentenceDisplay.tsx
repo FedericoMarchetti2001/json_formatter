@@ -8,7 +8,7 @@ interface SentenceDisplayProps {
 
 function SentenceDisplay({ sentence }: SentenceDisplayProps) {
   return (
-    <Box sx={{ textAlign: "center", marginBottom: "20px" }}>
+    <Box className="sentence-display">
       <Typography className="goth-sentence"  variant="h5" component="p" sx={{ fontFamily: "var(--gothic-heading)", color: "var(--text-color)" }}>
         {sentence}
       </Typography>

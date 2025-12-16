@@ -6,6 +6,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 
 // Custom components
 import FormatterAction from "./components/FormatterActions/FormatterActions";
+import ViewerActions from "./components/ViewerActions/ViewerActions";
 import InputOutputSection from "./components/InputOutputSection";
 import GothControlPanel from "./components/GothControlPanel"; // Renamed import
 import CenteredImageViewer from "./components/CenteredImageViewer"; // Import CenteredImageViewer
@@ -19,10 +20,11 @@ import FormatterPagination from "./components/Pagination";
 import { Box } from "@mui/material";
 
 const containerStyle = {
-  maxHeight: "75rem",
+  maxHeight: "140rem",
   minHeight: "30rem",
   minWidth: "60rem",
   maxWidth: "80rem",
+  height: "100%",
   display: "flex",
   flexDirection: "column",
 };
@@ -75,7 +77,7 @@ function Presentation() {
     rowsWithErrors: [],
     totalRowsWithErrors: 0,
   });
-  const [genericError, setGenericError] = useState("");
+  const [, setGenericError] = useState("");
 
   // Theme state
   const [selectedTheme, setSelectedTheme] = useState(() => {
@@ -322,31 +324,38 @@ function Presentation() {
         className="body-content"
       >
         <Container style={containerStyle}>
-          <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1 }}>
-            <Grid2 item xs={10} style={{ flex: 1 }}>
-              <GothControlPanel // Use the renamed component
-                enablePlaySound={enablePlaySound}
-                setEnablePlaySound={setEnablePlaySound}
-                enableAIVoice={enableAIVoice}
-                setEnableAIVoice={setEnableAIVoice}
-                onConvert={gothConvertResult} // Pass the state to trigger effect
-                setGothSentence={setGothSentence}
-                gothSentence={gothSentence} // Pass the goth sentence to display
-                unlockedImages={achievements.images} // Keep unlockedImages prop for now, will move later
-                onExportAchievements={exportAchievements} // Pass export handler
-                onImportAchievements={importAchievements} // Pass import handler
-                achievements={achievements}
-                setAchievements={setAchievements}
-              />
-              <FormatterPagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPageCount={textArray.length} // Pass total page count
-                onAddPage={handleAddPage} // Pass the new page handler
-                onDeletePage={handleDeletePage} // Pass the delete page handler
-                achievements={achievements}
-                setAchievements={setAchievements}
-              />
+          <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1, height: "100%" }}>
+            <Grid2 
+              xs={10}
+              container
+              direction="row"
+              alignItems="stretch">
+
+              <Box className="control-panel-with-pagination"> 
+                <GothControlPanel // Use the renamed component
+                  enablePlaySound={enablePlaySound}
+                  setEnablePlaySound={setEnablePlaySound}
+                  enableAIVoice={enableAIVoice}
+                  setEnableAIVoice={setEnableAIVoice}
+                  onConvert={gothConvertResult} // Pass the state to trigger effect
+                  setGothSentence={setGothSentence}
+                  gothSentence={gothSentence} // Pass the goth sentence to display
+                  unlockedImages={achievements.images} // Keep unlockedImages prop for now, will move later
+                  onExportAchievements={exportAchievements} // Pass export handler
+                  onImportAchievements={importAchievements} // Pass import handler
+                  achievements={achievements}
+                  setAchievements={setAchievements}
+                />
+                <FormatterPagination
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  totalPageCount={textArray.length} // Pass total page count
+                  onAddPage={handleAddPage} // Pass the new page handler
+                  onDeletePage={handleDeletePage} // Pass the delete page handler
+                  achievements={achievements}
+                  setAchievements={setAchievements}
+                />
+              </Box>
               <InputOutputSection
                 text={textArray[currentPage - 1]} // Pass current page's text
                 handleTextChange={handleTextChange} // Pass handler to update textArray
@@ -368,21 +377,28 @@ function Presentation() {
               xs={2}
               container
               direction="column"
-              alignItems="stretch"
+              className="home-actions-column"
             >
-              <FormatterAction
-                textToManage={textArray[currentPage - 1]} // Pass current page's text
-                setTextToManage={handleTextChange} // Pass handler to update textArray
-                setValidationResult={setValidationResult}
-                setGenericError={setGenericError}
-                processedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
-                setProcessedText={handleFormattedTextChange} // Pass handler to update formattedTextArray
-                onConvert={handleConvert} // Pass the handler to FormatterAction
-                achievements={achievements} // Pass achievements to FormatterAction (for unlocking logic later)
-                setAchievements={setAchievements} // Pass setter for achievements
-                selectedTheme={selectedTheme}
-                setSelectedTheme={setSelectedTheme}
-              />
+              <Box className="spacer" aria-hidden="true" />
+
+              <Box className="action-panel-group" aria-hidden="true">
+                <FormatterAction
+                  textToManage={textArray[currentPage - 1]} // Pass current page's text
+                  setTextToManage={handleTextChange} // Pass handler to update textArray
+                  setValidationResult={setValidationResult}
+                  setGenericError={setGenericError}
+                  processedText={formattedTextArray[currentPage - 1]} // Pass current page's formatted text
+                  setProcessedText={handleFormattedTextChange} // Pass handler to update formattedTextArray
+                  onConvert={handleConvert} // Pass the handler to FormatterAction
+                  achievements={achievements} // Pass achievements to FormatterAction (for unlocking logic later)
+                  setAchievements={setAchievements} // Pass setter for achievements
+                />
+                <Box className="double-spacer" aria-hidden="true" />
+                <ViewerActions
+                  selectedTheme={selectedTheme}
+                  setSelectedTheme={setSelectedTheme}
+                />
+              </Box>
             </Grid2>
           </Grid2>
         </Container>
