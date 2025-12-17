@@ -40,6 +40,8 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
   --error-row-bg: rgba(255, 92, 138, 0.15);
   --editor-stripe: rgba(255, 255, 255, 0.02);
   --editor-gutter-bg: rgba(0, 0, 0, 0.35);
+  --json-editor-height: 50rem !important;
+  --json-error-overlay-width: 16rem !important;
 
   --horizontal-linear-gradient: linear-gradient(90deg, #7f27b6 90%, #6b1e6b 100%);
   --vertical-linear-gradient: linear-gradient(0deg, #7f27b6 20%, #6b1e6b 100%);
@@ -688,6 +690,38 @@ textarea, .react-json-view {
   flex-direction: column !important;
 }
 
+.json-error-overlay {
+  position: fixed !important;
+  top: var(--json-error-overlay-top, 12rem) !important;
+  left: var(--json-error-overlay-left, 1rem) !important;
+  width: var(--json-error-overlay-width) !important;
+  height: var(--json-error-overlay-height, var(--json-editor-height)) !important;
+  z-index: 1400 !important;
+  display: flex !important;
+  align-items: stretch !important;
+  pointer-events: auto !important;
+}
+
+.json-error-overlay .json-error-panel {
+  margin: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.json-error-panel {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.json-error-panel__list {
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  max-height: 100% !important;
+  padding-right: 0.25rem !important;
+}
+
 /* Goth Aesthetic for MUI Tabs Pagination */
 .MuiTabs-root.pagination-tabs {
   background: repeating-linear-gradient(
@@ -978,7 +1012,7 @@ input[type="file"]:focus-within {
   border-radius: 0.5rem !important;
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
-  height: 50rem !important; /* 800px */
+  height: var(--json-editor-height) !important; /* 800px */
   position: relative !important;
   overflow: hidden !important;
   margin-bottom: 1rem !important;

@@ -31,7 +31,6 @@ describe('InputOutputSection', () => {
   const mockOnDeletePage = jest.fn();
 
   const defaultProps = {
-    activePageId: 'page-1',
     text: 'initial input text',
     handleTextChange: mockHandleTextChange,
     formattedText: 'formatted output text',
@@ -40,6 +39,7 @@ describe('InputOutputSection', () => {
     onImageClick: mockOnImageClick,
     jsonViewRef: React.createRef(),
     onDeletePage: mockOnDeletePage,
+    rowsWithErrors: [],
     selectedTheme: 'monokai',
   };
 

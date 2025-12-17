@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { JsonValidationIssue } from "../../../core/json-validator";
 
 export interface JsonErrorPanelProps {
@@ -32,6 +33,8 @@ export function JsonErrorPanel({
     return null;
   }
 
+  const { t } = useTranslation();
+
   const grouped = groupByLine(issues);
   const summary =
     totalRowsWithErrors > 0
@@ -50,12 +53,14 @@ export function JsonErrorPanel({
           const lineIssues = grouped[line] ?? [];
           return (
             <div key={line} className="json-error-panel__line-group">
-              <div className="json-error-panel__line-label">Line {line}</div>
-            <ul className="json-error-panel__items">
+              <div className="json-error-panel__line-label">
+                {t("JsonErrorPanel.lineLabel", { line })}
+              </div>
+              <ul className="json-error-panel__items">
                 {lineIssues.map((issue: JsonValidationIssue, idx: number) => (
                   <li key={`${issue.index}-${idx}`} className="json-error-panel__item">
                     <span className="json-error-panel__badge">
-                      col {issue.column}
+                      {t("JsonErrorPanel.columnLabel", { column: issue.column })}
                       {issue.code ? ` · ${issue.code}` : ""}
                     </span>
                     <span className="json-error-panel__message">{issue.message}</span>
@@ -70,9 +75,7 @@ export function JsonErrorPanel({
         })}
       </div>
       {rowsWithErrors.length > 0 && (
-        <div className="json-error-panel__legend">
-          Rows highlighted in the editor match the errors listed above.
-        </div>
+        <div className="json-error-panel__legend">{t("JsonErrorPanel.legend")}</div>
       )}
     </div>
   );

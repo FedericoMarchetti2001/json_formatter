@@ -4,12 +4,9 @@ import { Box } from "@mui/material";
 import GothAchievementsGallery from "./GothAchievementsGallery";
 import SentenceDisplay from "./SentenceDisplay";
 import JsonView from "react-json-view";
-import { JsonValidationIssue } from "../../../core/json-validator";
 import JsonEditor from "./JsonEditor";
-import JsonErrorPanel from "./JsonErrorPanel";
 
 interface InputOutputSectionProps {
-  activePageId: string;
   text: string;
   handleTextChange: (text: string) => void;
   formattedText: string;
@@ -18,10 +15,7 @@ interface InputOutputSectionProps {
   onImageClick: (image: string) => void;
   editorRef?: RefObject<HTMLTextAreaElement | null>;
   jsonViewRef: RefObject<HTMLDivElement | null>;
-  validationIssues?: JsonValidationIssue[];
   rowsWithErrors?: number[];
-  totalRowsWithErrors?: number;
-  validationError?: string;
   onDeletePage: () => void;
   selectedTheme: string;
 }
@@ -33,7 +27,6 @@ const scrollAreaStyle: React.CSSProperties = {
 };
 
 function InputOutputSection({
-  activePageId,
   text,
   handleTextChange,
   formattedText,
@@ -42,10 +35,7 @@ function InputOutputSection({
   onImageClick,
   editorRef,
   jsonViewRef,
-  validationIssues,
   rowsWithErrors,
-  totalRowsWithErrors,
-  validationError,
   onDeletePage,
   selectedTheme,
 }: InputOutputSectionProps): JSX.Element {
@@ -67,12 +57,7 @@ function InputOutputSection({
     }
   }, [formattedText]);
 
-  const issues = useMemo(() => validationIssues ?? [], [validationIssues]);
   const errorLines = useMemo(() => rowsWithErrors ?? [], [rowsWithErrors]);
-  const errorLineCount = useMemo(
-    () => totalRowsWithErrors ?? errorLines.length,
-    [totalRowsWithErrors, errorLines.length]
-  );
 
   return (
     <Box
@@ -101,14 +86,6 @@ function InputOutputSection({
       />
 
       <Box className="indirect-output-section">
-        <JsonErrorPanel
-          pageId={activePageId}
-          issues={issues}
-          rowsWithErrors={errorLines}
-          totalRowsWithErrors={errorLineCount}
-          fallbackMessage={validationError}
-        />
-
         <GothAchievementsGallery unlockedImages={unlockedImages} onImageClick={onImageClick} />
         <SentenceDisplay sentence={gothSentence || ""} />
       </Box>
