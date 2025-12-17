@@ -29,7 +29,7 @@ function AchievementImportExport({ onExport, onImport }: AchievementImportExport
   };
 
   return (
-    <Box sx={{ marginTop: "20px", textAlign: "right" }}>
+    <Box sx={{ textAlign: "right" }}>
       <Box sx={{ display: "inline-flex", gap: "10px" }}>
         <Button onClick={onExport} className="secondary-button"
             variant="contained"

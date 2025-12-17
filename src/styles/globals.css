@@ -125,7 +125,7 @@ body::after {
 }
 
 .body-content {
-  min-height: calc(100% - var(--footer-height)) !important;
+height: 150rem !important;
   width: 100% !important;
   background-size: cover !important;
   background-position: top !important;
@@ -242,7 +242,6 @@ h1 {
   text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
   font-size: var(--font-size-h1) !important;
   line-height: 1.2 !important;
-  margin: 1rem 0 !important;
 }
 
 h2 {
@@ -251,8 +250,6 @@ h2 {
   letter-spacing: 0.125rem !important; /* 2px */
   text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
   font-size: var(--font-size-h2) !important;
-  margin-top: 1.5rem !important;
-  margin-bottom: 0.75rem !important;
 }
 
 h3 {
@@ -261,8 +258,6 @@ h3 {
   letter-spacing: 0.125rem !important; /* 2px */
   text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
   font-size: var(--font-size-h3) !important;
-  margin-top: 1.25rem !important;
-  margin-bottom: 0.625rem !important;
 }
 
 h4,
@@ -298,16 +293,14 @@ h6 {
 .formatter-action-buttons-container {
   align-items: stretch !important;
   gap: 1rem !important;
-  padding: 1rem !important;
-  margin-top: 1rem !important; /* 16px */
-  width: 20rem !important;
+  padding: 0rem 1rem !important;
   flex-grow: 10 !important;
 
 }
 
 .formatter-action-upload-container {
-  justify-content: center !important;
-  align-items: stretch !important;
+  display: flex !important;
+  flex-direction: column !important;
   padding: 1rem !important;
   gap: 1rem !important;
   flex-grow: 2 !important;
@@ -316,11 +309,6 @@ h6 {
 .formatter-action-upload-label {
   color: var(--primary-text-color) !important;
   font-size: 1rem !important;
-}
-
-.formatter-action-button {
-  width: 100px !important;
-  min-width: 100px !important;
 }
 
 .formatter-action-button__label {
@@ -352,7 +340,6 @@ h6 {
 
 .viewer-actions-grid {
   flex: 5 1 0 !important;
-  margin-top: 1rem !important;
 }
 
 .home-actions-column {
@@ -360,11 +347,6 @@ h6 {
   display: flex !important;
   flex-direction: column !important;
   align-items: stretch !important;
-}
-
-.viewer-actions-container {
-  border-top: 0.125rem solid var(--border-color) !important;
-  padding-top: 1rem !important;
 }
 
 /* Features Section */
@@ -412,7 +394,6 @@ h6 {
 }
 
 .sentence-display {
-  margin-bottom: 1rem !important;
   text-align: center !important;
   flex-grow: 3 !important;
 }
@@ -420,7 +401,6 @@ h6 {
 /* Goth Achievements Gallery - Carousel */
 .goth-achievements-gallery {
   flex-grow: 3 !important;
-  margin-top: 1.25rem !important; /* 20px */
   text-align: center !important;
 }
 
@@ -441,7 +421,6 @@ h6 {
   gap: 0.625rem !important; /* 10px: keeps images near each other */
   overflow-x: auto !important;
   overflow-y: hidden !important;
-  padding: 0.5rem 0.25rem !important;
   scroll-snap-type: x mandatory !important;
   scroll-padding: 0.5rem !important;
   -webkit-overflow-scrolling: touch !important;
@@ -541,13 +520,10 @@ textarea, .react-json-view {
   color: var(--text-color) !important;
   border: 0.09375rem solid var(--accent-color) !important; /* 1.5px */
   border-radius: 0.375rem !important; /* 6px */
-  padding: 0.625rem !important; /* 10px */
   font-family: var(--font-family) !important;
   font-size: var(--font-size-body) !important;
-  margin-bottom: 0.75rem !important; /* 12px */
   transition: border 0.2s !important;
   outline: none !important;
-  max-height: 50rem !important;
   overflow-y: auto !important; /* Add scrollbar if content exceeds max-height */
 }
 
@@ -580,7 +556,6 @@ textarea, .react-json-view {
   color: var(--accent-color) !important;
   font-size: var(--font-size-sentence) !important;
   text-align: center !important;
-  margin: 1.5rem 0 0.5rem 0 !important; /* 24px 8px */
   min-height: 2.5em !important;
   letter-spacing: 0.09375rem !important; /* 1.5px */
   z-index: 3 !important;
@@ -669,7 +644,6 @@ textarea, .react-json-view {
 .input-output-section {
   display: flex !important;
   flex-direction: column !important;
-  flex: content !important;
   flex-grow: 11 !important;
 }
 
@@ -767,23 +741,6 @@ textarea, .react-json-view {
   font-family: var(--font-family) !important;
   font-size: var(--font-size-body) !important;
   margin-bottom: 0.5rem !important; /* 8px */
-}
-/* Goth Drawer Styling */
-.goth-drawer .MuiDrawer-paper {
-  width: 18.75rem !important; /* 300px */
-  box-sizing: border-box !important;
-  background: linear-gradient(
-    135deg,
-    #18111b 60%,
-    #2d0036 100%
-  ) !important;
-  color: #f0e6f6 !important;
-  border-radius: 0 !important;
-  position: relative !important;
-  overflow: hidden !important;
-  /* Create the triangular shape */
-  clip-path: polygon(35% 19%, 65% 19%, 100% 38%, 81% 70%, 19% 70%, 0 38%) !important;
-  cursor: pointer !important;
 }
 
 .goth-drawer .MuiBox-root {
@@ -976,12 +933,12 @@ input[type="file"]:focus-within {
   background: rgba(34, 22, 38, 0.9) !important;
   border: 0.09375rem solid var(--accent-color) !important;
   border-radius: 0.5rem !important;
+  border-top-right-radius: 0 !important;
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
   height: 50rem !important; /* 800px */
   position: relative !important;
   overflow: hidden !important;
-  margin-bottom: 1rem !important;
 }
 
 .json-editor__gutter {
@@ -1240,41 +1197,21 @@ input[type="file"]:focus-within {
   flex-direction: column !important;
   gap: 1.5rem !important; /* 24px gap between rows */
   width: 100% !important;
+  height: 100% !important;
   align-items: stretch !important;
 }
 
 .goth-header__row {
   display: flex !important;
-  width: 100% !important;
-}
-
-/* First row: Language selector takes full width */
-.goth-header__row--language {
-  justify-content: center !important;
   align-items: center !important;
-}
-
-.goth-header__row--language .flag-select {
-  max-width: 300px !important;
   width: 100% !important;
-}
-
-/* Second row: Controls side by side with gap */
-.goth-header__row--controls {
-  /* justify-content: center !important;
-  align-items: center !important; */
-  gap: 2rem !important; /* 32px gap between controls */
-  flex-wrap: wrap !important;
+  height: 100% !important;
+  gap: 1rem !important; /* 16px gap between elements */
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .goth-header__inner {
-    gap: 1rem !important; /* 16px on mobile */
-  }
-  
-  .goth-header__row--controls {
-    flex-direction: column !important;
     gap: 1rem !important; /* 16px on mobile */
   }
 }

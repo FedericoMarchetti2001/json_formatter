@@ -14,7 +14,7 @@ function SoundAndVoiceControls({
   setEnableAIVoice,
 }: SoundAndVoiceControlsProps) {
   return (
-    <div style={{ textAlign: "left", marginTop: "20px", gap: "10px", display: "flex" }}>
+    <div style={{ textAlign: "left", gap: "10px", display: "flex" }}>
       <label>
         <input
           type="checkbox"

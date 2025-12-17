@@ -125,7 +125,7 @@ function GothControlPanel({
       <Box className="goth-header__inner">
 
         {/* Second Row: Sound Controls and Achievement Import/Export */}
-        <Box className="goth-header__row goth-header__row--controls">
+        <Box className="goth-header__row">
           {/* Controls for sound and AI voice */}
           <SoundAndVoiceControls
             enablePlaySound={enablePlaySound}

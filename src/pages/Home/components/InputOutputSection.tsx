@@ -29,6 +29,8 @@ const scrollAreaStyle: React.CSSProperties = {
   flexGrow: 5,
   overflow: "auto",
   border: "1px solid transparent",
+  display: "flex",
+  flexDirection: "column",
 };
 
 function InputOutputSection({

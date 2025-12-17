@@ -20,11 +20,9 @@ import FormatterPagination from "./components/Pagination";
 import { Box } from "@mui/material";
 
 const containerStyle = {
-  maxHeight: "140rem",
-  minHeight: "30rem",
   minWidth: "60rem",
-  maxWidth: "80rem",
-  height: "100%",
+  maxWidth: "90rem",
+  height: "inherit",
   display: "flex",
   flexDirection: "column",
 };
@@ -324,9 +322,9 @@ function Presentation() {
         className="body-content"
       >
         <Container style={containerStyle}>
-          <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ flex: 1, height: "100%" }}>
+          <Grid2 container xs={12} lg={12} justifyContent="center" mx="auto" style={{ display: "flex", flexGrow: 1 }}>
             <Grid2 
-              xs={10}
+              xs={9}
               container
               direction="row"
               alignItems="stretch">
@@ -374,7 +372,7 @@ function Presentation() {
               />
             </Grid2>
             <Grid2
-              xs={2}
+              xs={3}
               container
               direction="column"
               className="home-actions-column"
