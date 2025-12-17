@@ -18,11 +18,12 @@ import { validateJson, JsonValidationResult } from "../../../../core/json-valida
 import localStorageHandler from "../../../../utils/localStorageHandler";
 
 export interface IFormatterActionsProps {
+  pageId: string;
   //original text
   textToManage: string;
   setTextToManage: (text: string) => void;
   //validity original text
-  setValidationResult: (result: JsonValidationResult) => void;
+  setValidationResultForPage: (pageId: string, result: JsonValidationResult) => void;
   setGenericError: (error: string) => void;
   //processed text
   processedText: string;
@@ -58,20 +59,19 @@ export default function FormatterAction(
   // Ref for the Format button logic, so it can be triggered by keyboard
   const formatButtonRef = React.useRef<HTMLButtonElement>(null);
 
-  const handleFormat = () => {
-    const validationResult = validateJson(props.textToManage);
-    props.setValidationResult(validationResult);
+  const handleFormat = (validationResult: JsonValidationResult) => {
+    if (props.pageId) {
+      props.setValidationResultForPage(props.pageId, validationResult);
+    }
 
     if (validationResult.valid) {
       const formatted = JSON.stringify(JSON.parse(props.textToManage), null, tabSpaces);
       props.setProcessedText(formatted);
-      // Goth theme success
       if (props.onConvert) {
         props.onConvert({ success: true });
       }
     } else {
-      props.setProcessedText(""); // Clear processed text on error
-      // Goth theme failure
+      props.setProcessedText("");
       if (props.onConvert) {
         props.onConvert({ success: false });
       }
@@ -213,7 +213,7 @@ export default function FormatterAction(
               }
               
               setSuccessfulFormats(prev => prev + 1);
-              handleFormat();
+              handleFormat(validationResult);
             }}
             ref={formatButtonRef}
             title="Format (Alt+Enter)"

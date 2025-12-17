@@ -2,6 +2,7 @@ import React from "react";
 import { JsonValidationIssue } from "../../../core/json-validator";
 
 export interface JsonErrorPanelProps {
+  pageId?: string;
   issues: JsonValidationIssue[];
   rowsWithErrors: number[];
   totalRowsWithErrors: number;
@@ -21,6 +22,7 @@ const pluralize = (count: number, singular: string, plural: string): string =>
   count === 1 ? singular : plural;
 
 export function JsonErrorPanel({
+  pageId,
   issues,
   rowsWithErrors,
   totalRowsWithErrors,
@@ -41,7 +43,7 @@ export function JsonErrorPanel({
     .sort((a, b) => a - b);
 
   return (
-    <div className="json-error-panel" aria-live="polite">
+    <div className="json-error-panel" aria-live="polite" data-page-id={pageId ?? ""}>
       {summary && <div className="json-error-panel__summary">{summary}</div>}
       <div className="json-error-panel__list">
         {lineKeys.map((line) => {

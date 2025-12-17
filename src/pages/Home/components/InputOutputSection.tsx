@@ -9,6 +9,7 @@ import JsonEditor from "./JsonEditor";
 import JsonErrorPanel from "./JsonErrorPanel";
 
 interface InputOutputSectionProps {
+  activePageId: string;
   text: string;
   handleTextChange: (text: string) => void;
   formattedText: string;
@@ -32,6 +33,7 @@ const scrollAreaStyle: React.CSSProperties = {
 };
 
 function InputOutputSection({
+  activePageId,
   text,
   handleTextChange,
   formattedText,
@@ -51,6 +53,10 @@ function InputOutputSection({
   const [parsedJson, setParsedJson] = React.useState<object | null>(null);
   const fallbackEditorRef = useRef<HTMLTextAreaElement | null>(null);
   const resolvedEditorRef = editorRef ?? fallbackEditorRef;
+
+  type JsonViewTheme = "monokai" | "apathy" | "bright";
+  const resolvedTheme: JsonViewTheme =
+    selectedTheme === "apathy" || selectedTheme === "bright" ? selectedTheme : "monokai";
 
   useEffect(() => {
     try {
@@ -96,6 +102,7 @@ function InputOutputSection({
 
       <Box className="indirect-output-section">
         <JsonErrorPanel
+          pageId={activePageId}
           issues={issues}
           rowsWithErrors={errorLines}
           totalRowsWithErrors={errorLineCount}
@@ -115,7 +122,7 @@ function InputOutputSection({
           displayObjectSize={false}
           displayDataTypes={false}
           style={{ width: "100%", overflow: "auto" }}
-          theme={selectedTheme as any}
+          theme={resolvedTheme}
         />
       </Box>
     </Box>
