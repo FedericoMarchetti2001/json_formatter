@@ -52,6 +52,37 @@
   "Pagination": {
     "page": "Seite"
   },
+  "GothAchievementsGallery": {
+    "title": "Freigeschaltete Goth Girls",
+    "carouselLabel": "Karussell mit freigeschalteten Goth Girls",
+    "alt": "Freigeschaltetes Goth Girl {{index}}",
+    "empty": "Noch keine Goth Girls freigeschaltet. Formatiere etwas JSON!"
+  },
+  "AchievementImportExport": {
+    "export": "Erfolge exportieren",
+    "import": "Erfolge importieren",
+    "invalidFile": "Ungültige Datei. Bitte wählen Sie eine gültige JSON-Datei aus."
+  },
+  "SoundAndVoiceControls": {
+    "playSound": "Sound abspielen",
+    "aiVoice": "KI-Stimme (Goth & Sweet)"
+  },
+  "CenteredImageViewer": {
+    "alt": "Zentriertes Bild"
+  },
+  "GothShortcutsOverlay": {
+    "title": "Goth-Tastenkürzel",
+    "format": "JSON formatieren",
+    "indent": "Im Editor einrücken",
+    "closeHintPrefix": "Drücke",
+    "closeHintSuffix": "oder klicke außerhalb, um zu schließen.",
+    "stayGoth": "Bleib goth, codiere weiter."
+  },
+  "JsonErrorPanel": {
+    "lineLabel": "Zeile {{line}}",
+    "columnLabel": "Spalte {{column}}",
+    "legend": "Im Editor hervorgehobene Zeilen entsprechen den oben genannten Fehlern."
+  },
   "toast": {
     "success": "Konvertierung erfolgreich!",
     "failure": "Konvertierung fehlgeschlagen."

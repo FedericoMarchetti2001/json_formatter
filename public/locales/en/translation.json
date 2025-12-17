@@ -52,6 +52,37 @@
   "Pagination": {
     "page": "Page"
   },
+  "GothAchievementsGallery": {
+    "title": "Unlocked Goth Girls",
+    "carouselLabel": "Unlocked goth girls carousel",
+    "alt": "Unlocked Goth Girl {{index}}",
+    "empty": "No goth girls unlocked yet. Format some JSON!"
+  },
+  "AchievementImportExport": {
+    "export": "Export Achievements",
+    "import": "Import Achievements",
+    "invalidFile": "Invalid achievements file. Please select a valid JSON file."
+  },
+  "SoundAndVoiceControls": {
+    "playSound": "Play Sound",
+    "aiVoice": "AI Voice (Goth & Sweet)"
+  },
+  "CenteredImageViewer": {
+    "alt": "Centered Image"
+  },
+  "GothShortcutsOverlay": {
+    "title": "Goth Shortcuts",
+    "format": "Format JSON",
+    "indent": "Indent in editor",
+    "closeHintPrefix": "Press",
+    "closeHintSuffix": "or click outside to close.",
+    "stayGoth": "Stay goth, keep coding."
+  },
+  "JsonErrorPanel": {
+    "lineLabel": "Line {{line}}",
+    "columnLabel": "col {{column}}",
+    "legend": "Rows highlighted in the editor match the errors listed above."
+  },
   "toast": {
     "success": "Conversion successful!",
     "failure": "Conversion failed."

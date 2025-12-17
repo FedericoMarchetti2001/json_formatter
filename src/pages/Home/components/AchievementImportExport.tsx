@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 
@@ -8,6 +9,7 @@ interface AchievementImportExportProps {
 }
 
 function AchievementImportExport({ onExport, onImport }: AchievementImportExportProps) {
+  const { t } = useTranslation();
 
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -21,7 +23,12 @@ function AchievementImportExport({ onExport, onImport }: AchievementImportExport
           onImport(content);
         } catch (error) {
           console.error("Failed to parse imported achievements:", error);
-          alert("Invalid achievements file. Please select a valid JSON file.");
+          alert(
+            t(
+              "AchievementImportExport.invalidFile",
+              "Invalid achievements file. Please select a valid JSON file."
+            )
+          );
         }
       };
       reader.readAsText(file);
@@ -31,11 +38,13 @@ function AchievementImportExport({ onExport, onImport }: AchievementImportExport
   return (
     <Box sx={{ marginTop: "20px", textAlign: "right" }}>
       <Box sx={{ display: "inline-flex", gap: "10px" }}>
-        <Button onClick={onExport} className="secondary-button"
-            variant="contained"
-            color="primary"
-            >
-          Export Achievements
+        <Button
+          onClick={onExport}
+          className="secondary-button"
+          variant="contained"
+          color="primary"
+        >
+          {t("AchievementImportExport.export", "Export Achievements")}
         </Button>
         <input
           accept=".json"
@@ -50,7 +59,7 @@ function AchievementImportExport({ onExport, onImport }: AchievementImportExport
             variant="contained"
             color="primary"
           >
-            Import Achievements
+            {t("AchievementImportExport.import", "Import Achievements")}
           </Button>
         </label>
       </Box>

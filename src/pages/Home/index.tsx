@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import localStorageHandler from "../../utils/localStorageHandler";
 // @mui material components
 import Container from "@mui/material/Container";
@@ -8,6 +8,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import FormatterAction from "./components/FormatterActions/FormatterActions";
 import ViewerActions from "./components/ViewerActions/ViewerActions";
 import InputOutputSection from "./components/InputOutputSection";
+import JsonErrorPanel from "./components/JsonErrorPanel";
 import GothControlPanel from "./components/GothControlPanel";
 import CenteredImageViewer from "./components/CenteredImageViewer";
 import GothShortcutsOverlay from "./components/GothShortcutsOverlay";
@@ -42,6 +43,7 @@ function Presentation(): React.ReactElement {
   // Refs for the editor and JsonView components to enable scrolling
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const jsonViewRef = useRef<HTMLDivElement | null>(null);
+  const errorOverlayRef = useRef<HTMLDivElement | null>(null);
 
   // Pagination logic: state for managing multiple pages of text input
   const [textArray, setTextArray] = useState<string[]>(() => {
@@ -407,6 +409,40 @@ function Presentation(): React.ReactElement {
     [activeValidation.totalRowsWithErrors, rowsWithErrors.length]
   );
   const validationError = useMemo(() => activeValidation.error?.message, [activeValidation.error]);
+  const hasErrorsToShow = issues.length > 0 || Boolean(validationError);
+
+  useLayoutEffect(() => {
+    if (!hasErrorsToShow) return;
+
+    let rafId = 0;
+
+    const updateOverlayPosition = (): void => {
+      const editorElement = textareaRef.current?.closest(".json-editor") as HTMLElement | null;
+      const overlayElement = errorOverlayRef.current;
+      if (!editorElement || !overlayElement) return;
+
+      const editorRect = editorElement.getBoundingClientRect();
+      const overlayWidth = overlayElement.offsetWidth;
+      const gap = 16;
+      const left = Math.max(16, editorRect.left - overlayWidth - gap);
+
+      overlayElement.style.setProperty("--json-error-overlay-left", `${left}px`);
+      overlayElement.style.setProperty("--json-error-overlay-top", `${editorRect.top}px`);
+      overlayElement.style.setProperty("--json-error-overlay-height", `${editorRect.height}px`);
+    };
+
+    const scheduleUpdate = (): void => {
+      rafId = window.requestAnimationFrame(updateOverlayPosition);
+    };
+
+    scheduleUpdate();
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.removeEventListener("resize", scheduleUpdate);
+      window.cancelAnimationFrame(rafId);
+    };
+  }, [hasErrorsToShow]);
 
   return (
     <div className="home-container">
@@ -416,6 +452,17 @@ function Presentation(): React.ReactElement {
       />
       <PageHeader />
       <Box className="body-content">
+        {hasErrorsToShow && (
+          <Box ref={errorOverlayRef} className="json-error-overlay" aria-live="polite">
+            <JsonErrorPanel
+              pageId={activePageId ?? ""}
+              issues={issues}
+              rowsWithErrors={rowsWithErrors}
+              totalRowsWithErrors={totalRowsWithErrors}
+              fallbackMessage={validationError}
+            />
+          </Box>
+        )}
         <Container style={containerStyle}>
           <Grid2
             container
@@ -452,7 +499,6 @@ function Presentation(): React.ReactElement {
               </Box>
 
               <InputOutputSection
-                activePageId={activePageId ?? ""}
                 text={textArray[activePageIndex - 1] ?? ""}
                 handleTextChange={handleTextChange}
                 formattedText={formattedTextArray[activePageIndex - 1] ?? ""}
@@ -461,11 +507,8 @@ function Presentation(): React.ReactElement {
                 onImageClick={handleAchievementImageClick}
                 editorRef={textareaRef}
                 jsonViewRef={jsonViewRef}
-                onDeletePage={() => handleDeletePage(currentPage)}
-                validationError={validationError}
-                validationIssues={issues}
                 rowsWithErrors={rowsWithErrors}
-                totalRowsWithErrors={totalRowsWithErrors}
+                onDeletePage={() => handleDeletePage(currentPage)}
                 selectedTheme={selectedTheme}
               />
             </Grid2>

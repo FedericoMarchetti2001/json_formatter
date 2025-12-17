@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface SoundAndVoiceControlsProps {
   enablePlaySound: boolean;
@@ -13,6 +14,7 @@ function SoundAndVoiceControls({
   enableAIVoice,
   setEnableAIVoice,
 }: SoundAndVoiceControlsProps) {
+  const { t } = useTranslation();
   return (
     <div style={{ textAlign: "left", marginTop: "20px", gap: "10px", display: "flex" }}>
       <label>
@@ -21,7 +23,7 @@ function SoundAndVoiceControls({
           checked={enablePlaySound}
           onChange={(e) => setEnablePlaySound(e.target.checked)}
         />
-        Play Sound
+        {t("SoundAndVoiceControls.playSound", "Play Sound")}
       </label>
       <label>
         <input
@@ -29,7 +31,7 @@ function SoundAndVoiceControls({
           checked={enableAIVoice}
           onChange={(e) => setEnableAIVoice(e.target.checked)}
         />
-        AI Voice (Goth & Sweet)
+        {t("SoundAndVoiceControls.aiVoice", "AI Voice (Goth & Sweet)")}
       </label>
     </div>
   );

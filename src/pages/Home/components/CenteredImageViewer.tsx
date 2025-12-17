@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Box from "@mui/material/Box";
 
 export interface CenteredImageViewerProps {
@@ -11,6 +12,7 @@ function CenteredImageViewer({ imageUrl, onClose, isOpen }: CenteredImageViewerP
   if (!isOpen || !imageUrl) {
     return null;
   }
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -36,7 +38,7 @@ function CenteredImageViewer({ imageUrl, onClose, isOpen }: CenteredImageViewerP
     >
       <img
         src={imageUrl}
-        alt="Centered Image"
+        alt={t("CenteredImageViewer.alt", "Centered Image")}
         style={{
           display: "block",
           maxWidth: "100%", // Image takes max width of container

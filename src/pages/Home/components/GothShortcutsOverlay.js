@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const overlayStyle = {
   position: "fixed",
@@ -89,6 +90,7 @@ export default function GothShortcutsOverlay({ visible, onClose }) {
 
   // Dismiss on click outside the box
   const overlayRef = React.useRef();
+  const { t } = useTranslation();
 
   const handleClick = (e) => {
     if (e.target === overlayRef.current) {
@@ -99,15 +101,15 @@ export default function GothShortcutsOverlay({ visible, onClose }) {
   return (
     <div style={overlayStyle} ref={overlayRef} onClick={handleClick}>
       <div style={boxStyle}>
-        <div style={titleStyle}>Goth Shortcuts</div>
+        <div style={titleStyle}>{t("GothShortcutsOverlay.title", "Goth Shortcuts")}</div>
         <ul style={listStyle}>
           <li style={itemStyle}>
             <span style={keyStyle}>Alt + Enter</span>
-            <span>Format JSON</span>
+            <span>{t("GothShortcutsOverlay.format", "Format JSON")}</span>
           </li>
           <li style={itemStyle}>
             <span style={keyStyle}>Tab</span>
-            <span>Indent in editor</span>
+            <span>{t("GothShortcutsOverlay.indent", "Indent in editor")}</span>
           </li>
           {/* <li style={itemStyle}>
             <span style={keyStyle}>Ctrl + C</span>
@@ -119,8 +121,10 @@ export default function GothShortcutsOverlay({ visible, onClose }) {
           </li> */}
         </ul>
         <div style={closeHintStyle}>
-          Press <span style={keyStyle}>Esc</span> or click outside to close.<br /> <br />
-          <span style={{ color: "#7f1d1d" }}>Stay goth, keep coding.</span>
+          {t("GothShortcutsOverlay.closeHintPrefix", "Press")} <span style={keyStyle}>Esc</span>{" "}
+          {t("GothShortcutsOverlay.closeHintSuffix", "or click outside to close.")}
+          <br /> <br />
+          <span style={{ color: "#7f1d1d" }}>{t("GothShortcutsOverlay.stayGoth", "Stay goth, keep coding.")}</span>
         </div>
       </div>
     </div>
