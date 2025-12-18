@@ -692,8 +692,7 @@ textarea, .react-json-view {
 
 .json-error-overlay {
   position: fixed !important;
-  top: var(--json-error-overlay-top, 12rem) !important;
-  left: var(--json-error-overlay-left, 1rem) !important;
+  background-color: var(--background-color);
   width: var(--json-error-overlay-width) !important;
   height: var(--json-error-overlay-height, var(--json-editor-height)) !important;
   z-index: 1400 !important;
