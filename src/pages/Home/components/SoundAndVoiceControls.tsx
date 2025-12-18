@@ -16,7 +16,7 @@ function SoundAndVoiceControls({
 }: SoundAndVoiceControlsProps) {
   const { t } = useTranslation();
   return (
-    <div style={{ textAlign: "left", marginTop: "20px", gap: "10px", display: "flex" }}>
+    <div className="sound-voice-controls">
       <label>
         <input
           type="checkbox"

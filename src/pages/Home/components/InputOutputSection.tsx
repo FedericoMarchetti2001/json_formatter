@@ -20,12 +20,6 @@ interface InputOutputSectionProps {
   selectedTheme: string;
 }
 
-const scrollAreaStyle: React.CSSProperties = {
-  flexGrow: 5,
-  overflow: "auto",
-  border: "1px solid transparent",
-};
-
 function InputOutputSection({
   text,
   handleTextChange,
@@ -90,17 +84,18 @@ function InputOutputSection({
         <SentenceDisplay sentence={gothSentence || ""} />
       </Box>
 
-      <Box ref={jsonViewRef} style={{ ...scrollAreaStyle }}>
-        <JsonView
-          src={parsedJson ?? {}}
-          name={false}
-          collapsed={false}
-          enableClipboard={true}
-          displayObjectSize={false}
-          displayDataTypes={false}
-          style={{ width: "100%", overflow: "auto" }}
-          theme={resolvedTheme}
-        />
+      <Box ref={jsonViewRef} className="json-view-wrapper">
+        <div className="json-view-content">
+          <JsonView
+            src={parsedJson ?? {}}
+            name={false}
+            collapsed={false}
+            enableClipboard={true}
+            displayObjectSize={false}
+            displayDataTypes={false}
+            theme={resolvedTheme}
+          />
+        </div>
       </Box>
     </Box>
   );

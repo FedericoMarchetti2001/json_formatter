@@ -29,16 +29,6 @@ import {
   ValidationByPageId,
 } from "./pageState";
 
-const containerStyle: React.CSSProperties = {
-  maxHeight: "140rem",
-  minHeight: "30rem",
-  minWidth: "60rem",
-  maxWidth: "80rem",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-};
-
 function Presentation(): React.ReactElement {
   // Refs for the editor and JsonView components to enable scrolling
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -463,14 +453,14 @@ function Presentation(): React.ReactElement {
             />
           </Box>
         )}
-        <Container style={containerStyle}>
+        <Container className="home-content-container">
           <Grid2
             container
             xs={12}
             lg={12}
             justifyContent="center"
             mx="auto"
-            style={{ flex: 1, height: "100%" }}
+            className="home-main-grid"
           >
             <Grid2 xs={10} container direction="row" alignItems="stretch">
               <Box className="control-panel-with-pagination">

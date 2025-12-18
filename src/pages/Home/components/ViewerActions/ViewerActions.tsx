@@ -16,28 +16,21 @@ export default function ViewerActions(props: IViewerActionsProps): React.ReactEl
   return (
     <Box className="viewer-actions-grid">
       <Grid2
-        className="viewer-actions-container"
+        className="viewer-actions-container viewer-actions-container--inner"
         container
         direction="column"
-        sx={{
-          justifyContent: "center",
-          alignItems: "stretch",
-          padding: { xs: "0.5rem", md: "10px" },
-          gap: { xs: 1.5, md: 2 },
-        }}
       >
-        <Grid2 sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <Grid2 className="viewer-actions-layout__row">
           <InputLabel id="json-theme-label" className="goth-input-label">
             {t("FormatterActions.viewer_theme")}
           </InputLabel>
           <Select
-            className={"menu-select"}
+            className="menu-select viewer-actions-select"
             labelId="json-theme-label"
             id="json-theme-select"
             value={selectedTheme}
             onChange={(e) => setSelectedTheme(e.target.value as string)}
             label="Viewer Theme"
-            sx={{ width: { xs: "100%", md: "auto" } }}
           >
             <MenuItem className={"menu-item"} value={"monokai"}>
               {t("FormatterActions.monokai")}

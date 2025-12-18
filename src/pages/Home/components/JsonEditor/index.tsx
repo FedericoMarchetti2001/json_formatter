@@ -1,4 +1,4 @@
-import React, { RefObject, useMemo, useRef, useState } from "react";
+import React, { RefObject, useLayoutEffect, useMemo, useRef, useState } from "react";
 import JsonEditorGutter from "./JsonEditorGutter";
 import JsonEditorSurface from "./JsonEditorSurface";
 
@@ -9,8 +9,6 @@ interface JsonEditorProps {
   rowsWithErrors?: number[];
   editorRef?: RefObject<HTMLTextAreaElement | null>;
 }
-
-const LINE_HEIGHT_PX = 22;
 
 /**
  * Minimal JSON editor with line numbers, striping, and error row highlighting.
@@ -26,6 +24,7 @@ export function JsonEditor({
   const internalRef = useRef<HTMLTextAreaElement | null>(null);
   const resolvedRef = editorRef ?? internalRef;
   const [scrollTop, setScrollTop] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const lineCount = Math.max(1, value.split(/\r?\n/).length);
   const errorRowSet = useMemo(() => new Set(rowsWithErrors), [rowsWithErrors]);
@@ -54,24 +53,16 @@ export function JsonEditor({
     onChange(e.target.value);
   };
 
-  const overlayStyle: React.CSSProperties = {
-    height: lineCount * LINE_HEIGHT_PX,
-    transform: `translateY(-${scrollTop}px)`,
-    lineHeight: `${LINE_HEIGHT_PX}px`,
-  };
-
-  const gutterStyle: React.CSSProperties = {
-    transform: `translateY(-${scrollTop}px)`,
-    lineHeight: `${LINE_HEIGHT_PX}px`,
-  };
+  useLayoutEffect(() => {
+    if (!containerRef.current) return;
+    containerRef.current.style.setProperty("--json-editor-scroll", `-${scrollTop}px`);
+  }, [scrollTop]);
 
   return (
-    <div className="json-editor">
+    <div className="json-editor" ref={containerRef}>
       <JsonEditorGutter
         lineCount={lineCount}
         errorRowSet={errorRowSet}
-        gutterStyle={gutterStyle}
-        lineHeightPx={LINE_HEIGHT_PX}
       />
       <JsonEditorSurface
         textareaRef={resolvedRef}
@@ -82,8 +73,6 @@ export function JsonEditor({
         onScroll={handleScroll}
         lineCount={lineCount}
         errorRowSet={errorRowSet}
-        overlayStyle={overlayStyle}
-        lineHeightPx={LINE_HEIGHT_PX}
       />
     </div>
   );

@@ -11,8 +11,6 @@ interface JsonEditorSurfaceProps {
   onScroll: (e: React.UIEvent<HTMLTextAreaElement>) => void;
   lineCount: number;
   errorRowSet: Set<number>;
-  overlayStyle: React.CSSProperties;
-  lineHeightPx: number;
 }
 
 export function JsonEditorSurface({
@@ -24,16 +22,12 @@ export function JsonEditorSurface({
   onScroll,
   lineCount,
   errorRowSet,
-  overlayStyle,
-  lineHeightPx,
 }: JsonEditorSurfaceProps): React.ReactElement {
   return (
     <div className="json-editor__surface">
       <JsonEditorRowsOverlay
         lineCount={lineCount}
         errorRowSet={errorRowSet}
-        overlayStyle={overlayStyle}
-        lineHeightPx={lineHeightPx}
       />
       <JsonEditorTextarea
         ref={textareaRef}
@@ -42,7 +36,6 @@ export function JsonEditorSurface({
         onChange={onChange}
         onKeyDown={onKeyDown}
         onScroll={onScroll}
-        lineHeightPx={lineHeightPx}
       />
     </div>
   );
