@@ -447,11 +447,12 @@ h6 {
 }
 
 .formatter-action-upload-container {
+  border-top: 0.125rem solid var(--border-color) !important;
+
   justify-content: center !important;
-  align-items: stretch !important;
+  align-items: flex-start !important;
   padding: 1rem !important;
   gap: 1rem !important;
-  flex-grow: 2 !important;
 }
 
 .formatter-action-upload-label {
@@ -708,11 +709,12 @@ h6 {
 
 /* Inputs */
 input,
-textarea, .react-json-view {
+.json-editor, .react-json-view {
   background: rgba(34, 22, 38, 0.85) !important;
   color: var(--text-color) !important;
   border: 0.09375rem solid var(--accent-color) !important; /* 1.5px */
-  border-radius: 0.375rem !important; /* 6px */
+  border-radius: 0.375rem; /* 6px */
+  border-top-right-radius: 0 !important;
   padding: 0.625rem !important; /* 10px */
   font-family: var(--font-family) !important;
   font-size: var(--font-size-body) !important;
@@ -1194,7 +1196,7 @@ input[type="file"]:focus-within {
   flex-grow: 1 !important;
   background: rgba(34, 22, 38, 0.9) !important;
   border: 0.09375rem solid var(--accent-color) !important;
-  border-radius: 0.5rem !important;
+  border-top-right-radius: 0 !important;
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
   height: var(--json-editor-height) !important; /* 800px */

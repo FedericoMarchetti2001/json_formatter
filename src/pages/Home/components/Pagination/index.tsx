@@ -78,6 +78,7 @@ export default function FormatterPagination(
       <Tab
         value={-1}
         label="+"
+        className="pagination-tab"
         onClick={() => {
           const newlyUnlocked = checkAchievements(
             AchievementEvent.ADD_PAGE,
