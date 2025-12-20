@@ -462,7 +462,7 @@ function Presentation(): React.ReactElement {
             mx="auto"
             className="home-main-grid"
           >
-            <Grid2 xs={10} container direction="row" alignItems="stretch">
+            <Grid2 xs={10} container direction="column" alignItems="stretch">
               <Box className="control-panel-with-pagination">
                 <GothControlPanel
                   enablePlaySound={enablePlaySound}

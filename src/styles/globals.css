@@ -393,7 +393,6 @@ h1 {
   text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
   font-size: var(--font-size-h1) !important;
   line-height: 1.2 !important;
-  margin: 1rem 0 !important;
 }
 
 h2 {
@@ -402,8 +401,6 @@ h2 {
   letter-spacing: 0.125rem !important; /* 2px */
   text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
   font-size: var(--font-size-h2) !important;
-  margin-top: 1.5rem !important;
-  margin-bottom: 0.75rem !important;
 }
 
 h3 {
@@ -412,8 +409,6 @@ h3 {
   letter-spacing: 0.125rem !important; /* 2px */
   text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
   font-size: var(--font-size-h3) !important;
-  margin-top: 1.25rem !important;
-  margin-bottom: 0.625rem !important;
 }
 
 h4,
@@ -426,24 +421,19 @@ h6 {
 }
 
 .formatter-action-grid {
-  flex: 5 1 0 !important;
+  height: var(--json-editor-height) !important;
+  flex-grow: 1 !important;
   display: flex !important;
   flex-direction: column !important;
   -ms-flex-align: start !important;
 }
 
 .spacer {
-  flex-grow: 1 !important;
-  flex-shrink: 1 !important;
-  flex-basis: 0 !important; 
-  min-height: 1rem !important;
+  height: 12rem !important;
 }
 
 .double-spacer {
-  flex-grow: 2 !important;
-  flex-shrink: 1 !important;
-  flex-basis: 0 !important; 
-  min-height: 2rem !important;
+  height: 20rem !important;
 }
 
 .formatter-action-buttons-container {
@@ -502,8 +492,8 @@ h6 {
 }
 
 .viewer-actions-grid {
-  flex: 5 1 0 !important;
-  margin-top: 1rem !important;
+  height: var(--json-editor-height) !important;
+  flex-grow: 1 !important;
 }
 
 .home-actions-column {
@@ -591,21 +581,24 @@ h6 {
 }
 
 .sentence-display {
-  margin-bottom: 1rem !important;
   text-align: center !important;
-  flex-grow: 3 !important;
+  flex-grow: 1 !important;
+  display: flex !important;
 }
 
 /* Goth Achievements Gallery - Carousel */
 .goth-achievements-gallery {
-  flex-grow: 3 !important;
-  margin-top: 1.25rem !important; /* 20px */
   text-align: center !important;
 }
 
 .goth-achievements-gallery__title {
+  display: flex !important;
+  flex-grow: 1 !important;
+  justify-content: center !important;
+  align-items: center !important;
   font-family: var(--gothic-heading) !important;
   color: var(--text-color) !important;
+  height: 4rem !important; /* 64px */
 }
 
 .goth-achievements-gallery__empty {
@@ -723,15 +716,14 @@ textarea, .react-json-view {
   padding: 0.625rem !important; /* 10px */
   font-family: var(--font-family) !important;
   font-size: var(--font-size-body) !important;
-  margin-bottom: 0.75rem !important; /* 12px */
   transition: border 0.2s !important;
   outline: none !important;
-  max-height: 50rem !important;
   overflow-y: auto !important; /* Add scrollbar if content exceeds max-height */
 }
 
 .react-json-view {
-  height: 50rem !important; /* 800px */
+  height: 100% !important;
+  flex-grow: 1 !important;
 }
 
 /* Menu Items */
@@ -759,12 +751,16 @@ textarea, .react-json-view {
   color: var(--accent-color) !important;
   font-size: var(--font-size-sentence) !important;
   text-align: center !important;
-  margin: 1.5rem 0 0.5rem 0 !important; /* 24px 8px */
   min-height: 2.5em !important;
   letter-spacing: 0.09375rem !important; /* 1.5px */
   z-index: 3 !important;
   text-shadow: 0 0.125rem 0.5rem #a8326e99 !important; /* 2px 8px */
   transition: opacity 0.4s !important;
+  display: flex !important;
+  flex-grow: 1 !important;
+  flex-wrap: wrap !important;
+  align-content: center !important;
+  justify-content: center !important;
 }
 
 /* Goth girl slide animation */
@@ -849,17 +845,19 @@ textarea, .react-json-view {
   display: flex !important;
   flex-direction: column !important;
   flex: content !important;
-  flex-grow: 11 !important;
+  flex-grow: 1 !important;
 }
 
 .json-view-wrapper {
-  flex-grow: 5 !important;
+  height: var(--json-editor-height) !important;
+  flex-grow: 1 !important;
   overflow: auto !important;
   border: 0.0625rem solid transparent !important;
 }
 
 .json-view-content {
   width: 100% !important;
+  height: 100% !important;
   overflow: auto !important;
 }
 
@@ -873,9 +871,9 @@ textarea, .react-json-view {
 }
 
 .indirect-output-section{
-  flex-grow: 2 !important;
   display: flex !important;
   flex-direction: column !important;
+  height: 20rem !important;
 }
 
 .json-error-overlay {
@@ -918,10 +916,10 @@ textarea, .react-json-view {
     var(--background-color) 0.5rem, 
     var(--background-color) 1rem 
   );
+  height: 6rem !important; /* 96px */
   border-radius: 0.35rem !important; /* 12px */
   box-shadow: 0 0.25rem 1.5rem #000a !important; /* 4px 24px */
   border: 0.125rem solid #3a003a !important; /* 2px */
-  flex-grow: 6 !important;
   padding: 0rem 1rem !important; /* 0px 16px */
 }
 .MuiTab-root.pagination-tab {
@@ -1193,7 +1191,7 @@ input[type="file"]:focus-within {
 
 .json-editor {
   display: flex !important;
-  flex-grow: 5 !important;
+  flex-grow: 1 !important;
   background: rgba(34, 22, 38, 0.9) !important;
   border: 0.09375rem solid var(--accent-color) !important;
   border-radius: 0.5rem !important;
@@ -1202,7 +1200,6 @@ input[type="file"]:focus-within {
   height: var(--json-editor-height) !important; /* 800px */
   position: relative !important;
   overflow: hidden !important;
-  margin-bottom: 1rem !important;
   --json-editor-scroll: 0px !important;
   --json-editor-line-height: 22px !important;
 }
@@ -1456,7 +1453,7 @@ input[type="file"]:focus-within {
 .control-panel-with-pagination {
   display: flex !important;
   flex-direction: column !important;
-  flex-grow: 1 !important;
+  height: 12rem !important; /* 192px */
   width: 100% !important;
 }
 
@@ -1464,7 +1461,7 @@ input[type="file"]:focus-within {
 .goth-header {
   width: 100% !important;
   padding: 0rem 1rem !important;
-  flex-grow: 6 !important;
+  height: 6rem !important; /* 96px */
 }
 
 .goth-header__inner {
