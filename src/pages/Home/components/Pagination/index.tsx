@@ -7,6 +7,7 @@ import {
   ACHIEVEMENT_IMAGES,
 } from "../../../../config/achievements";
 import { toast } from "react-toastify";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 export interface IFormatterPaginationProps {
   currentPage: number;
@@ -68,7 +69,7 @@ export default function FormatterPagination(
                     images: [...new Set([...prev.images, ...newImages])],
                   };
                 });
-                newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+                newlyUnlocked.forEach((a) => toast.warn(`Achievement unlocked: ${a.name}`, { icon: () =>  <EmojiEventsIcon /> }));
               }
               props.onDeletePage(i + 1);
             }
@@ -95,7 +96,7 @@ export default function FormatterPagination(
                 images: [...new Set([...prev.images, ...newImages])],
               };
             });
-            newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+            newlyUnlocked.forEach((a) => toast.warn(`Achievement unlocked: ${a.name}`, { icon: () =>  <EmojiEventsIcon /> }) );
           }
           props.onAddPage();
         }}

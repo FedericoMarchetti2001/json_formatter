@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { gothSuccessSentences, gothFailureSentences } from "../sentences";
 import Box from "@mui/material/Box";
 import ReactFlagsSelect from "react-flags-select";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import { ToastContainer, toast } from "react-toastify"; // Import react-toastify components
 import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
 import {
@@ -152,7 +153,7 @@ function GothControlPanel({
                   images: [...new Set([...prev.images, ...newImages])],
                 };
               });
-              newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+              newlyUnlocked.forEach((a) => toast.warn(`Achievement unlocked: ${a.name}`, { icon: () =>  <EmojiEventsIcon /> }));
             }
             onExportAchievements();
           }}
@@ -172,7 +173,7 @@ function GothControlPanel({
                   images: [...new Set([...prev.images, ...newImages])],
                 };
               });
-              newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+              newlyUnlocked.forEach((a) => toast.warn(`Achievement unlocked: ${a.name}`, { icon: () =>  <EmojiEventsIcon /> }));
             }
             onImportAchievements(data);
           }}

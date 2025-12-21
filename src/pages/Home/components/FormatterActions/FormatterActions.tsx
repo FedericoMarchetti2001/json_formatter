@@ -5,6 +5,7 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 // Import Material-UI icons
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -176,7 +177,7 @@ export default function FormatterAction(
                     images: [...new Set([...prev.images, ...newImages])],
                   };
                 });
-                newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+                newlyUnlocked.forEach((a) => toast.warn(`Achievement unlocked: ${a.name}`));
               }
               i18n.changeLanguage(code.toLowerCase());
             }}
@@ -209,7 +210,7 @@ export default function FormatterAction(
                     images: [...new Set([...prev.images, ...newImages])],
                   };
                 });
-                newlyUnlocked.forEach((a) => toast.success(`Achievement unlocked: ${a.name}`));
+                newlyUnlocked.forEach((a) => toast.warn(`Achievement unlocked: ${a.name}`, { icon: () =>  <EmojiEventsIcon /> }) );
               }
               
               setSuccessfulFormats(prev => prev + 1);

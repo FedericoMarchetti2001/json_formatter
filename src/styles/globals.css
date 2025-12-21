@@ -207,6 +207,7 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
 
   /* FOOTER HEIGHT */
   --footer-height: 4.375rem; 
+  --page-banner-height: 9rem;
 }
 
 html{
@@ -285,7 +286,7 @@ body::after {
 }
 
 .page-banner {
-  height: 9rem !important;
+  height: var(--page-banner-height) !important;
   background:  var(--vertical-linear-gradient) !important;
   color: var(--primary-text-color) !important;
   display: flex !important;
@@ -882,7 +883,9 @@ input,
   position: fixed !important;
   background-color: var(--background-color);
   width: var(--json-error-overlay-width) !important;
-  height: var(--json-error-overlay-height, var(--json-editor-height)) !important;
+  height: 60vh !important;
+  min-height: var(--json-editor-height) !important;
+  top: calc(15rem + var(--page-banner-height)) !important;
   z-index: 1400 !important;
   display: flex !important;
   align-items: stretch !important;
@@ -891,15 +894,8 @@ input,
 
 .json-error-overlay .json-error-panel {
   margin: 0 !important;
-  height: 100% !important;
+  height: 80%;
   width: 100% !important;
-}
-
-.json-error-panel {
-  flex: 1 1 auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  overflow: hidden !important;
 }
 
 .json-error-panel__list {
@@ -1283,7 +1279,6 @@ input[type="file"]:focus-within {
 }
 
 .json-error-panel {
-  flex-grow: 6 !important;
   background: rgba(58, 0, 58, 0.35) !important;
   border: 0.09375rem solid var(--border-color) !important;
   border-radius: 0.5rem !important;
@@ -1395,11 +1390,17 @@ input[type="file"]:focus-within {
   border: 0.09375rem solid var(--border-color) !important; /* 1.5px */
   border-radius: 0.5rem !important; /* 8px */
   box-shadow: 0 0.25rem 1rem #000a !important; /* 4px 16px */
-  font-size: var(--font-size-body) !important;
+  font-size: var(--font-size-caption) !important;
 }
 
 .Toastify__toast--success {
   background: linear-gradient(90deg, #a8326e 0%, #ff69b4 100%) !important;
+  color: #18141a !important;
+  border-color: var(--accent-color) !important;
+}
+
+Toastify__toast--warning {
+  background: linear-gradient(90deg, #ff8c00 0%, #ffa500 100%) !important;
   color: #18141a !important;
   border-color: var(--accent-color) !important;
 }
@@ -1420,6 +1421,12 @@ input[type="file"]:focus-within {
 
 .Toastify__progress-bar--error {
   background: #f0e6f6 !important;
+}
+
+/* Toast icon styling - override global MuiSvgIcon-root */
+.Toastify__toast .MuiSvgIcon-root {
+  color: currentColor !important;
+  opacity: 1 !important;
 }
 
 /* Formatter Action Button Styles */
