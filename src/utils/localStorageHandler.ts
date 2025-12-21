@@ -1,4 +1,5 @@
 // Centralized localStorage handler for achievements, preferences, and page content
+import type { EditorFontPreset, EditorLineSpacing } from "../types/editorPreferences";
 
 type Achievements = {
   unlocked: string[];
@@ -9,7 +10,11 @@ type Preferences = {
   tabSpaces?: number;
   enablePlaySound?: boolean;
   enableAIVoice?: boolean;
-  [key: string]: any;
+  editorFontPreset?: EditorFontPreset;
+  editorLineSpacing?: EditorLineSpacing;
+  errorSidebarOpen?: boolean;
+  jsonTheme?: string;
+  [key: string]: unknown;
 };
 
 const STORAGE_KEYS = {
@@ -57,7 +62,7 @@ const localStorageHandler = {
       console.error('Error saving preferences to localStorage:', e);
     }
   },
-  updatePreference(key: string, value: any) {
+  updatePreference(key: string, value: unknown) {
     const prefs = this.getPreferences();
     prefs[key] = value;
     this.setPreferences(prefs);

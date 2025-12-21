@@ -45,6 +45,21 @@
     "apathy": "Apathie",
     "bright": "Hell"
   },
+  "EditorTypography": {
+    "textSize": "Textgrosse",
+    "lineSpacing": "Zeilenabstand",
+    "reset": "Typografie zurucksetzen",
+    "decrease": "Textgrosse verkleinern",
+    "increase": "Textgrosse vergroessern",
+    "xs": "XS",
+    "s": "S",
+    "m": "M",
+    "l": "L",
+    "xl": "XL",
+    "compact": "Kompakt",
+    "normal": "Normal",
+    "spacious": "Grosszugig"
+  },
   "InputOutputSection": {
     "placeholder": "Fügen Sie Ihr JSON hier ein",
     "error": "Fehler"
@@ -81,7 +96,14 @@
   "JsonErrorPanel": {
     "lineLabel": "Zeile {{line}}",
     "columnLabel": "Spalte {{column}}",
-    "legend": "Im Editor hervorgehobene Zeilen entsprechen den oben genannten Fehlern."
+    "legend": "Im Editor hervorgehobene Zeilen entsprechen den oben genannten Fehlern.",
+    "expand": "Fehler einblenden",
+    "close": "Fehler schliessen",
+    "filterPlaceholder": "Fehler filtern",
+    "nextError": "Naechster Fehler",
+    "previousError": "Vorheriger Fehler",
+    "emptyState": "Keine Fehler auf dieser Seite.",
+    "noMatches": "Keine Treffer fuer den Filter."
   },
   "toast": {
     "success": "Konvertierung erfolgreich!",

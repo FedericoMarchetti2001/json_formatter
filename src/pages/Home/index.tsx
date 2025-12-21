@@ -18,7 +18,7 @@ import FeaturesSection from "./components/FeaturesSection";
 
 // Other components
 import FormatterPagination from "./components/Pagination";
-import { Box } from "@mui/material";
+import { Box, Drawer, useMediaQuery } from "@mui/material";
 import { JsonValidationResult } from "../../core/json-validator";
 import {
   createPageId,
@@ -28,12 +28,22 @@ import {
   syncPageIds,
   ValidationByPageId,
 } from "./pageState";
+import {
+  DEFAULT_EDITOR_FONT_PRESET,
+  DEFAULT_EDITOR_LINE_SPACING,
+  EditorFontPreset,
+  EditorLineSpacing,
+  isEditorFontPreset,
+  isEditorLineSpacing,
+} from "../../types/editorPreferences";
 
 function Presentation(): React.ReactElement {
   // Refs for the editor and JsonView components to enable scrolling
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const jsonViewRef = useRef<HTMLDivElement | null>(null);
   const errorOverlayRef = useRef<HTMLDivElement | null>(null);
+  const preferencesRef = useRef(localStorageHandler.getPreferences());
+  const initialPreferences = preferencesRef.current;
 
   // Pagination logic: state for managing multiple pages of text input
   const [textArray, setTextArray] = useState<string[]>(() => {
@@ -140,8 +150,7 @@ function Presentation(): React.ReactElement {
 
   // Theme state
   const [selectedTheme, setSelectedTheme] = useState<string>(() => {
-    const prefs = localStorageHandler.getPreferences();
-    return prefs.jsonTheme || "monokai";
+    return initialPreferences.jsonTheme || "monokai";
   });
 
   // Save theme to preferences when changed
@@ -151,6 +160,41 @@ function Presentation(): React.ReactElement {
 
   // Shortcuts overlay state: controls the visibility of the shortcuts overlay
   const [showShortcutsOverlay, setShowShortcutsOverlay] = useState<boolean>(false);
+  const isNarrowScreen = useMediaQuery("(max-width: 900px)");
+
+  // Editor typography preferences
+  const [editorFontPreset, setEditorFontPreset] = useState<EditorFontPreset>(() => {
+    return isEditorFontPreset(initialPreferences.editorFontPreset)
+      ? initialPreferences.editorFontPreset
+      : DEFAULT_EDITOR_FONT_PRESET;
+  });
+
+  const [editorLineSpacing, setEditorLineSpacing] = useState<EditorLineSpacing>(() => {
+    return isEditorLineSpacing(initialPreferences.editorLineSpacing)
+      ? initialPreferences.editorLineSpacing
+      : DEFAULT_EDITOR_LINE_SPACING;
+  });
+
+  const [isErrorSidebarOpen, setIsErrorSidebarOpen] = useState<boolean>(() => {
+    if (typeof initialPreferences.errorSidebarOpen === "boolean") {
+      return initialPreferences.errorSidebarOpen;
+    }
+    const isSmallScreen =
+      typeof window !== "undefined" && window.matchMedia("(max-width: 900px)").matches;
+    return !isSmallScreen;
+  });
+
+  useEffect(() => {
+    localStorageHandler.updatePreference("editorFontPreset", editorFontPreset);
+  }, [editorFontPreset]);
+
+  useEffect(() => {
+    localStorageHandler.updatePreference("editorLineSpacing", editorLineSpacing);
+  }, [editorLineSpacing]);
+
+  useEffect(() => {
+    localStorageHandler.updatePreference("errorSidebarOpen", isErrorSidebarOpen);
+  }, [isErrorSidebarOpen]);
 
   // ESC key handler for overlay: toggles the shortcuts overlay visibility
   useEffect(() => {
@@ -239,12 +283,14 @@ function Presentation(): React.ReactElement {
   // GOTH THEME: State for toggling sound and AI voice
   const [gothSentence, setGothSentence] = useState<string>("");
   const [enablePlaySound, setEnablePlaySound] = useState<boolean>(() => {
-    const prefs = localStorageHandler.getPreferences();
-    return typeof prefs.enablePlaySound === "boolean" ? prefs.enablePlaySound : true;
+    return typeof initialPreferences.enablePlaySound === "boolean"
+      ? initialPreferences.enablePlaySound
+      : true;
   });
   const [enableAIVoice, setEnableAIVoice] = useState<boolean>(() => {
-    const prefs = localStorageHandler.getPreferences();
-    return typeof prefs.enableAIVoice === "boolean" ? prefs.enableAIVoice : true;
+    return typeof initialPreferences.enableAIVoice === "boolean"
+      ? initialPreferences.enableAIVoice
+      : true;
   });
   const [gothConvertResult, setGothConvertResult] = useState<{ success: boolean } | null>(null);
 
@@ -399,11 +445,18 @@ function Presentation(): React.ReactElement {
     [activeValidation.totalRowsWithErrors, rowsWithErrors.length]
   );
   const validationError = useMemo(() => activeValidation.error?.message, [activeValidation.error]);
-  const hasErrorsToShow = issues.length > 0 || Boolean(validationError);
+
+  const handleJumpToLine = (line: number): void => {
+    const target = textareaRef.current;
+    if (!target) return;
+    const lineHeightValue = window.getComputedStyle(target).lineHeight;
+    const parsedLineHeight = Number.parseFloat(lineHeightValue);
+    const lineHeight = Number.isFinite(parsedLineHeight) ? parsedLineHeight : 20;
+    target.scrollTop = Math.max(0, (line - 1) * lineHeight);
+    target.focus();
+  };
 
   useLayoutEffect(() => {
-    if (!hasErrorsToShow) return;
-
     let rafId = 0;
 
     const updateOverlayPosition = (): void => {
@@ -432,7 +485,7 @@ function Presentation(): React.ReactElement {
       window.removeEventListener("resize", scheduleUpdate);
       window.cancelAnimationFrame(rafId);
     };
-  }, [hasErrorsToShow]);
+  }, [isErrorSidebarOpen]);
 
   return (
     <div className="home-container">
@@ -442,14 +495,63 @@ function Presentation(): React.ReactElement {
       />
       <PageHeader />
       <Box className="body-content">
-        {hasErrorsToShow && (
-          <Box ref={errorOverlayRef} className="json-error-overlay" aria-live="polite">
+        {isNarrowScreen ? (
+          <>
+            {!isErrorSidebarOpen && (
+              <Box
+                ref={errorOverlayRef}
+                className="json-error-overlay gothSidebar gothSidebar--collapsed gothSidebar--rail"
+                aria-live="polite"
+              >
+                <JsonErrorPanel
+                  pageId={activePageId ?? ""}
+                  issues={issues}
+                  rowsWithErrors={rowsWithErrors}
+                  totalRowsWithErrors={totalRowsWithErrors}
+                  fallbackMessage={validationError}
+                  isOpen={false}
+                  onToggleOpen={setIsErrorSidebarOpen}
+                  onJumpToLine={handleJumpToLine}
+                />
+              </Box>
+            )}
+            <Drawer
+              anchor="left"
+              open={isErrorSidebarOpen}
+              onClose={() => setIsErrorSidebarOpen(false)}
+              className="gothSidebarDrawer"
+            >
+              <Box className="gothSidebarDrawer__content">
+                <JsonErrorPanel
+                  pageId={activePageId ?? ""}
+                  issues={issues}
+                  rowsWithErrors={rowsWithErrors}
+                  totalRowsWithErrors={totalRowsWithErrors}
+                  fallbackMessage={validationError}
+                  isOpen={true}
+                  onToggleOpen={setIsErrorSidebarOpen}
+                  onJumpToLine={handleJumpToLine}
+                />
+              </Box>
+            </Drawer>
+          </>
+        ) : (
+          <Box
+            ref={errorOverlayRef}
+            className={`json-error-overlay gothSidebar ${
+              isErrorSidebarOpen ? "gothSidebar--open" : "gothSidebar--collapsed"
+            }`}
+            aria-live="polite"
+          >
             <JsonErrorPanel
               pageId={activePageId ?? ""}
               issues={issues}
               rowsWithErrors={rowsWithErrors}
               totalRowsWithErrors={totalRowsWithErrors}
               fallbackMessage={validationError}
+              isOpen={isErrorSidebarOpen}
+              onToggleOpen={setIsErrorSidebarOpen}
+              onJumpToLine={handleJumpToLine}
             />
           </Box>
         )}
@@ -500,6 +602,8 @@ function Presentation(): React.ReactElement {
                 rowsWithErrors={rowsWithErrors}
                 onDeletePage={() => handleDeletePage(currentPage)}
                 selectedTheme={selectedTheme}
+                editorFontPreset={editorFontPreset}
+                editorLineSpacing={editorLineSpacing}
               />
             </Grid2>
 
@@ -518,6 +622,10 @@ function Presentation(): React.ReactElement {
                   onConvert={handleConvert}
                   achievements={achievements}
                   setAchievements={setAchievements}
+                  editorFontPreset={editorFontPreset}
+                  editorLineSpacing={editorLineSpacing}
+                  setEditorFontPreset={setEditorFontPreset}
+                  setEditorLineSpacing={setEditorLineSpacing}
                 />
                 <Box className="double-spacer" aria-hidden="true" />
                 <ViewerActions selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} />

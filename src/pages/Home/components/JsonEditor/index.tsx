@@ -1,6 +1,12 @@
 import React, { RefObject, useLayoutEffect, useMemo, useRef, useState } from "react";
 import JsonEditorGutter from "./JsonEditorGutter";
 import JsonEditorSurface from "./JsonEditorSurface";
+import {
+  DEFAULT_EDITOR_FONT_PRESET,
+  DEFAULT_EDITOR_LINE_SPACING,
+  EditorFontPreset,
+  EditorLineSpacing,
+} from "../../../../types/editorPreferences";
 
 interface JsonEditorProps {
   value: string;
@@ -8,6 +14,8 @@ interface JsonEditorProps {
   placeholder?: string;
   rowsWithErrors?: number[];
   editorRef?: RefObject<HTMLTextAreaElement | null>;
+  fontPreset?: EditorFontPreset;
+  lineSpacing?: EditorLineSpacing;
 }
 
 /**
@@ -20,6 +28,8 @@ export function JsonEditor({
   placeholder,
   rowsWithErrors = [],
   editorRef,
+  fontPreset = DEFAULT_EDITOR_FONT_PRESET,
+  lineSpacing = DEFAULT_EDITOR_LINE_SPACING,
 }: JsonEditorProps): React.ReactElement {
   const internalRef = useRef<HTMLTextAreaElement | null>(null);
   const resolvedRef = editorRef ?? internalRef;
@@ -59,22 +69,20 @@ export function JsonEditor({
   }, [scrollTop]);
 
   return (
-    <div className="json-editor" ref={containerRef}>
-      <JsonEditorGutter
-        lineCount={lineCount}
-        errorRowSet={errorRowSet}
-        scrollTop={scrollTop}
-      />
-      <JsonEditorSurface
-        textareaRef={resolvedRef}
-        value={value}
-        placeholder={placeholder}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        onScroll={handleScroll}
-        lineCount={lineCount}
-        errorRowSet={errorRowSet}
-      />
+    <div className="jsonEditorRoot" data-font={fontPreset} data-spacing={lineSpacing}>
+      <div className="json-editor" ref={containerRef}>
+        <JsonEditorGutter lineCount={lineCount} errorRowSet={errorRowSet} />
+        <JsonEditorSurface
+          textareaRef={resolvedRef}
+          value={value}
+          placeholder={placeholder}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          onScroll={handleScroll}
+          lineCount={lineCount}
+          errorRowSet={errorRowSet}
+        />
+      </div>
     </div>
   );
 }

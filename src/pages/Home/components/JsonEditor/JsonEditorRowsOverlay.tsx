@@ -17,6 +17,7 @@ export function JsonEditorRowsOverlay({
         const striped = i % 2 === 1;
         const className = [
           "json-editor__row",
+          "jsonEditorLine",
           striped ? "json-editor__row--striped" : "",
           isError ? "json-editor__row--error" : "",
         ]

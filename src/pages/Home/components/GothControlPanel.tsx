@@ -120,7 +120,6 @@ function GothControlPanel({
     }
   }, [onConvert, enablePlaySound, enableAIVoice, setGothSentence]); // Depend on onConvert, enablePlaySound, enableAIVoice, and setGothSentence
 
-
   return (
     <Box className="goth-header">
       <Box className="goth-header__inner">

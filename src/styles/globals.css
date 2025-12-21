@@ -193,7 +193,8 @@ Theoretically this shouldn't be done, but it's a fast way to ensure that the sty
   --font-size-caption: 0.85rem;
   --font-size-small: 0.875rem;
   --font-size-caption-lg: 0.9rem;
-  --font-size-body-sm: 0.95rem;
+  --font-size-body-xs: 0.7rem;
+  --font-size-body-sm: 0.85rem;
   --font-size-body: 1rem;
   --font-size-body-lg: 1.05rem;
   --font-size-button: 1.1rem;
@@ -455,6 +456,22 @@ h6 {
   padding: 1rem !important;
   gap: 1rem !important;
 }
+
+.formatter-typography-panel {
+  border-top: 0.125rem solid var(--border-color) !important;
+  padding: 1rem !important;
+  gap: 1rem !important;
+  align-items: stretch !important;
+  min-width: 100% !important;
+}
+
+.formatter-typography-panel-controls{
+  display: flex !important;
+  gap: 1rem !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-direction: row !important;
+} 
 
 .formatter-action-upload-label {
   color: var(--primary-text-color) !important;
@@ -884,18 +901,102 @@ input,
   background-color: var(--background-color);
   width: var(--json-error-overlay-width) !important;
   height: 60vh !important;
-  min-height: var(--json-editor-height) !important;
+  min-height: 300px !important;
   top: calc(15rem + var(--page-banner-height)) !important;
   z-index: 1400 !important;
   display: flex !important;
   align-items: stretch !important;
+  flex-direction: column !important;
   pointer-events: auto !important;
 }
 
 .json-error-overlay .json-error-panel {
   margin: 0 !important;
-  height: 80%;
+  height: 100% !important;
   width: 100% !important;
+}
+
+.gothSidebar {
+  border: 0.09375rem solid var(--border-color) !important;
+  border-radius: 0.5rem !important;
+  background: rgba(58, 0, 58, 0.35) !important;
+  overflow: hidden !important;
+}
+
+.gothSidebar--open {
+  width: var(--json-error-overlay-width) !important;
+  min-width: 16rem !important;
+}
+
+.gothSidebar--collapsed {
+  width: 3.25rem !important;
+  min-width: 3.25rem !important;
+}
+
+.gothSidebar--rail {
+  top: calc(12rem + var(--page-banner-height)) !important;
+  height: auto !important;
+  min-height: auto !important;
+  width: 3.25rem !important;
+}
+
+.gothSidebar--collapsed .json-error-panel {
+  padding: 0.25rem !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.gothSidebarHeader {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.5rem 0.5rem !important;
+  border-bottom: 0.0625rem solid var(--border-color) !important;
+  background: rgba(24, 17, 27, 0.8) !important;
+}
+
+.gothSidebarActions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+}
+
+.gothSidebarActions--nav {
+  margin-left: auto !important;
+  width: auto !important;
+}
+
+.gothSidebarBadge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 1.75rem !important;
+  height: 1.75rem !important;
+  padding: 0 0.375rem !important;
+  border-radius: 999px !important;
+  background: var(--error-row-bg) !important;
+  color: var(--error-color) !important;
+  font-weight: 700 !important;
+  font-size: 0.75rem !important;
+  border: 0.0625rem solid var(--error-color) !important;
+}
+
+.gothSidebar .MuiSvgIcon-root {
+  color: var(--text-color) !important;
+}
+
+.gothSidebarDrawer .MuiDrawer-paper {
+  width: 18rem !important;
+  background: rgba(24, 17, 27, 0.98) !important;
+  border-right: 0.09375rem solid var(--border-color) !important;
+}
+
+.gothSidebarDrawer__content {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0.75rem !important;
+  box-sizing: border-box !important;
 }
 
 .json-error-panel__list {
@@ -1187,6 +1288,49 @@ input[type="file"]:focus-within {
   transform: translateY(-0.0625rem) !important; /* -1px */
 }
 
+.jsonEditorRoot {
+  --json-editor-font-size: 0.875rem !important;
+  --json-editor-line-height-base: 1.3125rem !important;
+  --json-editor-line-height: var(--json-editor-line-height-base) !important;
+}
+
+.jsonEditorRoot[data-font="xs"] {
+  --json-editor-font-size: 0.75rem !important;
+  --json-editor-line-height-base: 1.125rem !important;
+}
+
+.jsonEditorRoot[data-font="s"] {
+  --json-editor-font-size: 0.8125rem !important;
+  --json-editor-line-height-base: 1.1875rem !important;
+}
+
+.jsonEditorRoot[data-font="m"] {
+  --json-editor-font-size: 0.875rem !important;
+  --json-editor-line-height-base: 1.3125rem !important;
+}
+
+.jsonEditorRoot[data-font="l"] {
+  --json-editor-font-size: 1rem !important;
+  --json-editor-line-height-base: 1.5rem !important;
+}
+
+.jsonEditorRoot[data-font="xl"] {
+  --json-editor-font-size: 1.125rem !important;
+  --json-editor-line-height-base: 1.75rem !important;
+}
+
+.jsonEditorRoot[data-spacing="compact"] {
+  --json-editor-line-height: calc(var(--json-editor-line-height-base) * 0.9) !important;
+}
+
+.jsonEditorRoot[data-spacing="normal"] {
+  --json-editor-line-height: var(--json-editor-line-height-base) !important;
+}
+
+.jsonEditorRoot[data-spacing="spacious"] {
+  --json-editor-line-height: calc(var(--json-editor-line-height-base) * 1.2) !important;
+}
+
 .json-editor {
   display: flex !important;
   flex-grow: 1 !important;
@@ -1199,7 +1343,6 @@ input[type="file"]:focus-within {
   position: relative !important;
   overflow: hidden !important;
   --json-editor-scroll: 0px !important;
-  --json-editor-line-height: 22px !important;
 }
 
 .json-editor__gutter {
@@ -1216,8 +1359,13 @@ input[type="file"]:focus-within {
   overflow: hidden !important;
 }
 
-.json-editor__line-number {
-  font-size: var(--font-size-caption) !important;
+.jsonEditorGutter {
+  font-size: var(--json-editor-font-size) !important;
+}
+
+.json-editor__line-number,
+.jsonEditorLineNumber {
+  font-size: var(--json-editor-font-size) !important;
   height: var(--json-editor-line-height) !important;
   line-height: var(--json-editor-line-height) !important;
   border-bottom: 0.03125rem solid rgba(255, 255, 255, 0.05) !important;
@@ -1246,7 +1394,8 @@ input[type="file"]:focus-within {
   pointer-events: none !important;
 }
 
-.json-editor__row {
+.json-editor__row,
+.jsonEditorLine {
   width: 100% !important;
   border-bottom: 0.03125rem solid rgba(255, 255, 255, 0.05) !important;
   height: var(--json-editor-line-height) !important;
@@ -1270,7 +1419,7 @@ input[type="file"]:focus-within {
   background: transparent !important;
   color: var(--text-color) !important;
   font-family: 'JetBrains Mono', var(--font-family), monospace !important;
-  font-size: var(--font-size-body-sm) !important;
+  font-size: var(--json-editor-font-size) !important;
   padding: 0.5rem 0.75rem !important;
   box-sizing: border-box !important;
   resize: vertical !important;
@@ -1287,6 +1436,9 @@ input[type="file"]:focus-within {
   margin: 0 0 1rem 0 !important;
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
 }
 
 .json-error-panel__summary {
@@ -1305,6 +1457,21 @@ input[type="file"]:focus-within {
   margin-bottom: 0.25rem !important;
 }
 
+.json-error-panel__line-button {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-color) !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+}
+
+.json-error-panel__line-button:hover,
+.json-error-panel__line-button:focus {
+  color: var(--accent-color) !important;
+}
+
 .json-error-panel__items {
   list-style: none !important;
   padding-left: 0 !important;
@@ -1319,6 +1486,24 @@ input[type="file"]:focus-within {
   flex-wrap: wrap !important;
   gap: 0.4rem !important;
   align-items: center !important;
+}
+
+.json-error-panel__item-button {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  background: transparent !important;
+  border: none !important;
+  color: inherit !important;
+  text-align: left !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+}
+
+.json-error-panel__item-button:hover,
+.json-error-panel__item-button:focus {
+  color: var(--accent-color) !important;
 }
 
 .json-error-panel__badge {
@@ -1343,6 +1528,33 @@ input[type="file"]:focus-within {
   margin-top: 0.5rem !important;
   font-size: var(--font-size-caption-lg) !important;
   color: var(--secondary-text-color) !important;
+}
+
+.json-error-panel__empty {
+  color: var(--secondary-text-color) !important;
+  font-size: var(--font-size-caption) !important;
+  font-style: italic !important;
+}
+
+.gothSidebarFilter {
+  margin: 0.25rem 0 0.5rem 0 !important;
+  width: 100% !important;
+}
+
+.gothSidebarFilter .MuiInputBase-root {
+  background: rgba(34, 22, 38, 0.9) !important;
+  color: var(--text-color) !important;
+  border-radius: 0.5rem !important;
+  border: 0.09375rem solid var(--accent-color) !important;
+}
+
+.gothSidebarFilter .MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+
+.gothSidebarFilter input {
+  padding: 0.4rem 0.6rem !important;
+  font-size: var(--font-size-caption) !important;
 }
 
 .page-footer {
@@ -1463,7 +1675,8 @@ Toastify__toast--warning {
 .control-panel-with-pagination {
   display: flex !important;
   flex-direction: column !important;
-  height: 12rem !important; /* 192px */
+  min-height: 12rem !important; /* 192px */
+  height: auto !important;
   width: 100% !important;
 }
 
@@ -1471,7 +1684,8 @@ Toastify__toast--warning {
 .goth-header {
   width: 100% !important;
   padding: 0rem 1rem !important;
-  height: 6rem !important; /* 96px */
+  min-height: 6rem !important; /* 96px */
+  height: auto !important;
 }
 
 .goth-header__inner {
@@ -1506,6 +1720,34 @@ Toastify__toast--warning {
   flex-wrap: wrap !important;
 }
 
+.goth-header__row--typography {
+  align-items: center !important;
+  gap: 1.5rem !important;
+  flex-wrap: wrap !important;
+}
+
+.goth-typography-controls {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  flex-wrap: wrap !important;
+}
+
+.goth-typography-control {
+  min-width: 10rem !important;
+}
+
+.goth-typography-quick {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.goth-typography-quick .MuiSvgIcon-root,
+.formatter-typography-panel .MuiSvgIcon-root {
+  color: var(--text-color) !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .goth-header__inner {
@@ -1515,5 +1757,10 @@ Toastify__toast--warning {
   .goth-header__row--controls {
     flex-direction: column !important;
     gap: 1rem !important; /* 16px on mobile */
+  }
+
+  .goth-header__row--typography {
+    flex-direction: column !important;
+    align-items: flex-start !important;
   }
 }

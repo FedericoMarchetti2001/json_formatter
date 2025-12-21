@@ -1,5 +1,5 @@
 // @mui material components
-import { Box, InputLabel } from "@mui/material";
+import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
@@ -10,6 +10,9 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ClearIcon from '@mui/icons-material/Clear';
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import {
   ACHIEVEMENT_IMAGES,
   AchievementEvent,
@@ -17,6 +20,14 @@ import {
 } from "../../../../config/achievements";
 import { validateJson, JsonValidationResult } from "../../../../core/json-validator";
 import localStorageHandler from "../../../../utils/localStorageHandler";
+import {
+  DEFAULT_EDITOR_FONT_PRESET,
+  DEFAULT_EDITOR_LINE_SPACING,
+  EDITOR_FONT_PRESETS,
+  EDITOR_LINE_SPACINGS,
+  EditorFontPreset,
+  EditorLineSpacing,
+} from "../../../../types/editorPreferences";
 
 export interface IFormatterActionsProps {
   pageId: string;
@@ -34,6 +45,10 @@ export interface IFormatterActionsProps {
   // Achievements
   achievements: { unlocked: string[]; images: string[] };
   setAchievements: React.Dispatch<React.SetStateAction<{ unlocked: string[]; images: string[] }>>;
+  editorFontPreset: EditorFontPreset;
+  editorLineSpacing: EditorLineSpacing;
+  setEditorFontPreset: (preset: EditorFontPreset) => void;
+  setEditorLineSpacing: (spacing: EditorLineSpacing) => void;
 }
 
 //This is a row/column component, possibly a small flexbox, which will contain actions like "Format", "Copy", "Clear", etc.
@@ -136,8 +151,119 @@ export default function FormatterAction(
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  const handleDecreaseFont = (): void => {
+    const currentIndex = EDITOR_FONT_PRESETS.indexOf(props.editorFontPreset);
+    if (currentIndex > 0) {
+      props.setEditorFontPreset(EDITOR_FONT_PRESETS[currentIndex - 1]);
+    }
+  };
+
+  const handleIncreaseFont = (): void => {
+    const currentIndex = EDITOR_FONT_PRESETS.indexOf(props.editorFontPreset);
+    if (currentIndex >= 0 && currentIndex < EDITOR_FONT_PRESETS.length - 1) {
+      props.setEditorFontPreset(EDITOR_FONT_PRESETS[currentIndex + 1]);
+    }
+  };
+
+  const handleResetTypography = (): void => {
+    props.setEditorFontPreset(DEFAULT_EDITOR_FONT_PRESET);
+    props.setEditorLineSpacing(DEFAULT_EDITOR_LINE_SPACING);
+  };
+
   return (
     <Box className="formatter-action-grid">
+      <Grid2 className="formatter-typography-panel" container>
+        <Box className="formatter-typography-panel-controls">
+          <FormControl className="goth-typography-control">
+            <InputLabel id="editor-font-label" className="goth-input-label">
+              {t("EditorTypography.textSize")}
+            </InputLabel>
+            <Select
+              className="menu-select"
+              labelId="editor-font-label"
+              id="editor-font-select"
+              value={props.editorFontPreset}
+              onChange={(event) => props.setEditorFontPreset(event.target.value as EditorFontPreset)}
+            >
+              <MenuItem className="menu-item" value="xs">
+                {t("EditorTypography.xs")}
+              </MenuItem>
+              <MenuItem className="menu-item" value="s">
+                {t("EditorTypography.s")}
+              </MenuItem>
+              <MenuItem className="menu-item" value="m">
+                {t("EditorTypography.m")}
+              </MenuItem>
+              <MenuItem className="menu-item" value="l">
+                {t("EditorTypography.l")}
+              </MenuItem>
+              <MenuItem className="menu-item" value="xl">
+                {t("EditorTypography.xl")}
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <div className="goth-typography-quick">
+            <Tooltip title={t("EditorTypography.decrease")}>
+              <span>
+                <IconButton
+                  aria-label={t("EditorTypography.decrease")}
+                  size="small"
+                  onClick={handleDecreaseFont}
+                  disabled={EDITOR_FONT_PRESETS.indexOf(props.editorFontPreset) === 0}
+                >
+                  <RemoveIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
+            <Tooltip title={t("EditorTypography.increase")}>
+              <span>
+                <IconButton
+                  aria-label={t("EditorTypography.increase")}
+                  size="small"
+                  onClick={handleIncreaseFont}
+                  disabled={
+                    EDITOR_FONT_PRESETS.indexOf(props.editorFontPreset) ===
+                    EDITOR_FONT_PRESETS.length - 1
+                  }
+                >
+                  <AddIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
+          </div>
+        </Box>
+        <Box className="formatter-typography-panel-controls">
+          <FormControl className="goth-typography-control">
+            <InputLabel id="editor-spacing-label" className="goth-input-label">
+              {t("EditorTypography.lineSpacing")}
+            </InputLabel>
+            <Select
+              className="menu-select"
+              labelId="editor-spacing-label"
+              id="editor-spacing-select"
+              value={props.editorLineSpacing}
+              onChange={(event) =>
+                props.setEditorLineSpacing(event.target.value as EditorLineSpacing)
+              }
+            >
+              {EDITOR_LINE_SPACINGS.map((spacing) => (
+                <MenuItem key={spacing} className="menu-item" value={spacing}>
+                  {t(`EditorTypography.${spacing}`)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Tooltip title={t("EditorTypography.reset")}>
+            <IconButton
+              aria-label={t("EditorTypography.reset")}
+              size="small"
+              onClick={handleResetTypography}
+            >
+              <RestartAltIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Grid2>
       <Grid2
         className="formatter-action-upload-container"
         container

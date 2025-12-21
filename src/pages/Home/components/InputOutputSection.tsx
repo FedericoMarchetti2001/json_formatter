@@ -5,6 +5,7 @@ import GothAchievementsGallery from "./GothAchievementsGallery";
 import SentenceDisplay from "./SentenceDisplay";
 import JsonView from "react-json-view";
 import JsonEditor from "./JsonEditor";
+import type { EditorFontPreset, EditorLineSpacing } from "../../../types/editorPreferences";
 
 interface InputOutputSectionProps {
   text: string;
@@ -18,6 +19,8 @@ interface InputOutputSectionProps {
   rowsWithErrors?: number[];
   onDeletePage: () => void;
   selectedTheme: string;
+  editorFontPreset: EditorFontPreset;
+  editorLineSpacing: EditorLineSpacing;
 }
 
 function InputOutputSection({
@@ -32,6 +35,8 @@ function InputOutputSection({
   rowsWithErrors,
   onDeletePage,
   selectedTheme,
+  editorFontPreset,
+  editorLineSpacing,
 }: InputOutputSectionProps): JSX.Element {
   const { t } = useTranslation();
   const [parsedJson, setParsedJson] = React.useState<object | null>(null);
@@ -77,6 +82,8 @@ function InputOutputSection({
         placeholder={t("InputOutputSection.placeholder")}
         rowsWithErrors={errorLines}
         editorRef={resolvedEditorRef}
+        fontPreset={editorFontPreset}
+        lineSpacing={editorLineSpacing}
       />
 
       <Box className="indirect-output-section">

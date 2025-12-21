@@ -41,6 +41,8 @@ describe('InputOutputSection', () => {
     onDeletePage: mockOnDeletePage,
     rowsWithErrors: [],
     selectedTheme: 'monokai',
+    editorFontPreset: 'm',
+    editorLineSpacing: 'normal',
   };
 
   beforeEach(() => {

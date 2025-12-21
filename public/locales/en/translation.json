@@ -45,6 +45,21 @@
     "apathy": "Apathy",
     "bright": "Bright"
   },
+  "EditorTypography": {
+    "textSize": "Text Size",
+    "lineSpacing": "Line Spacing",
+    "reset": "Reset typography",
+    "decrease": "Decrease text size",
+    "increase": "Increase text size",
+    "xs": "XS",
+    "s": "S",
+    "m": "M",
+    "l": "L",
+    "xl": "XL",
+    "compact": "Compact",
+    "normal": "Normal",
+    "spacious": "Spacious"
+  },
   "InputOutputSection": {
     "placeholder": "Paste your JSON here",
     "error": "Error"
@@ -81,7 +96,14 @@
   "JsonErrorPanel": {
     "lineLabel": "Line {{line}}",
     "columnLabel": "col {{column}}",
-    "legend": "Rows highlighted in the editor match the errors listed above."
+    "legend": "Rows highlighted in the editor match the errors listed above.",
+    "expand": "Expand errors",
+    "close": "Close errors",
+    "filterPlaceholder": "Filter errors",
+    "nextError": "Next error",
+    "previousError": "Previous error",
+    "emptyState": "No errors on this page.",
+    "noMatches": "No matches for the current filter."
   },
   "toast": {
     "success": "Conversion successful!",
