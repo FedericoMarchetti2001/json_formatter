@@ -1203,6 +1203,7 @@ input[type="file"]:focus-within {
 }
 
 .json-editor__gutter {
+  height: fit-content !important;
   width: 3.25rem !important;
   background: var(--editor-gutter-bg) !important;
   color: var(--secondary-text-color) !important;

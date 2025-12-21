@@ -63,6 +63,7 @@ export function JsonEditor({
       <JsonEditorGutter
         lineCount={lineCount}
         errorRowSet={errorRowSet}
+        scrollTop={scrollTop}
       />
       <JsonEditorSurface
         textareaRef={resolvedRef}
