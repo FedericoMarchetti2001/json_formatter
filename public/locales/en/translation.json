@@ -98,6 +98,7 @@
     "columnLabel": "col {{column}}",
     "legend": "Rows highlighted in the editor match the errors listed above.",
     "expand": "Expand errors",
+    "noErrors": "No errors",
     "close": "Close errors",
     "filterPlaceholder": "Filter errors",
     "nextError": "Next error",

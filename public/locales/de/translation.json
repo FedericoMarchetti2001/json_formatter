@@ -98,6 +98,7 @@
     "columnLabel": "Spalte {{column}}",
     "legend": "Im Editor hervorgehobene Zeilen entsprechen den oben genannten Fehlern.",
     "expand": "Fehler einblenden",
+    "noErrors": "Keine Fehler",
     "close": "Fehler schliessen",
     "filterPlaceholder": "Fehler filtern",
     "nextError": "Naechster Fehler",

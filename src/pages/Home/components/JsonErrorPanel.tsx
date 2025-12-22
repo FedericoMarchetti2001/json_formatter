@@ -79,6 +79,11 @@ export function JsonErrorPanel({
       ? `${totalRowsWithErrors} ${pluralize(totalRowsWithErrors, "row", "rows")} contain errors`
       : "";
   const emptyStateMessage = fallbackMessage ?? t("JsonErrorPanel.emptyState");
+  const hasIssues =
+    issues.length > 0 ||
+    rowsWithErrors.length > 0 ||
+    totalRowsWithErrors > 0 ||
+    Boolean(fallbackMessage);
 
   const lineKeys = useMemo(
     () =>
@@ -146,9 +151,23 @@ export function JsonErrorPanel({
     <div className="json-error-panel" aria-live="polite" data-page-id={pageId ?? ""}>
       <div className="gothSidebarHeader">
         <div className="gothSidebarActions">
-          <Tooltip title={t(isOpen ? "JsonErrorPanel.close" : "JsonErrorPanel.expand")}>
+          <Tooltip
+            title={t(
+              isOpen
+                ? "JsonErrorPanel.close"
+                : hasIssues
+                  ? "JsonErrorPanel.expand"
+                  : "JsonErrorPanel.noErrors"
+            )}
+          >
             <IconButton
-              aria-label={t(isOpen ? "JsonErrorPanel.close" : "JsonErrorPanel.expand")}
+              aria-label={t(
+                isOpen
+                  ? "JsonErrorPanel.close"
+                  : hasIssues
+                    ? "JsonErrorPanel.expand"
+                    : "JsonErrorPanel.noErrors"
+              )}
               onClick={() => onToggleOpen(!isOpen)}
               size="small"
             >

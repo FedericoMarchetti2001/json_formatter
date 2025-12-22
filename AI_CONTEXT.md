@@ -1,6 +1,7 @@
 # Application Description and Context for AI
 
 This document provides a detailed description of the Goth/Emo JSON Formatter application. It is intended to provide context for AI models.
+ALWAYS Update this file if significant changes were performed.
 
 ## Application Overview
 

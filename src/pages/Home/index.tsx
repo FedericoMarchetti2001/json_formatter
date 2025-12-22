@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import localStorageHandler from "../../utils/localStorageHandler";
 // @mui material components
 import Container from "@mui/material/Container";
@@ -445,6 +445,11 @@ function Presentation(): React.ReactElement {
     [activeValidation.totalRowsWithErrors, rowsWithErrors.length]
   );
   const validationError = useMemo(() => activeValidation.error?.message, [activeValidation.error]);
+  const hasErrors =
+    issues.length > 0 ||
+    rowsWithErrors.length > 0 ||
+    totalRowsWithErrors > 0 ||
+    Boolean(validationError);
 
   const handleJumpToLine = (line: number): void => {
     const target = textareaRef.current;
@@ -487,6 +492,20 @@ function Presentation(): React.ReactElement {
     };
   }, [isErrorSidebarOpen]);
 
+  useEffect(() => {
+    if (!hasErrors && isErrorSidebarOpen) {
+      setIsErrorSidebarOpen(false);
+    }
+  }, [hasErrors, isErrorSidebarOpen]);
+
+  const handleToggleErrorSidebar = useCallback(
+    (nextOpen: boolean): void => {
+      if (!hasErrors && nextOpen) return;
+      setIsErrorSidebarOpen(nextOpen);
+    },
+    [hasErrors]
+  );
+
   return (
     <div className="home-container">
       <GothShortcutsOverlay
@@ -510,7 +529,7 @@ function Presentation(): React.ReactElement {
                   totalRowsWithErrors={totalRowsWithErrors}
                   fallbackMessage={validationError}
                   isOpen={false}
-                  onToggleOpen={setIsErrorSidebarOpen}
+                  onToggleOpen={handleToggleErrorSidebar}
                   onJumpToLine={handleJumpToLine}
                 />
               </Box>
@@ -518,7 +537,7 @@ function Presentation(): React.ReactElement {
             <Drawer
               anchor="left"
               open={isErrorSidebarOpen}
-              onClose={() => setIsErrorSidebarOpen(false)}
+              onClose={() => handleToggleErrorSidebar(false)}
               className="gothSidebarDrawer"
             >
               <Box className="gothSidebarDrawer__content">
@@ -529,7 +548,7 @@ function Presentation(): React.ReactElement {
                   totalRowsWithErrors={totalRowsWithErrors}
                   fallbackMessage={validationError}
                   isOpen={true}
-                  onToggleOpen={setIsErrorSidebarOpen}
+                  onToggleOpen={handleToggleErrorSidebar}
                   onJumpToLine={handleJumpToLine}
                 />
               </Box>
@@ -550,7 +569,7 @@ function Presentation(): React.ReactElement {
               totalRowsWithErrors={totalRowsWithErrors}
               fallbackMessage={validationError}
               isOpen={isErrorSidebarOpen}
-              onToggleOpen={setIsErrorSidebarOpen}
+              onToggleOpen={handleToggleErrorSidebar}
               onJumpToLine={handleJumpToLine}
             />
           </Box>

@@ -1,4 +1,4 @@
-import React, { RefObject, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { RefObject, useEffect, useMemo, useRef } from "react";
 import JsonEditorGutter from "./JsonEditorGutter";
 import JsonEditorSurface from "./JsonEditorSurface";
 import {
@@ -33,14 +33,26 @@ export function JsonEditor({
 }: JsonEditorProps): React.ReactElement {
   const internalRef = useRef<HTMLTextAreaElement | null>(null);
   const resolvedRef = editorRef ?? internalRef;
-  const [scrollTop, setScrollTop] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const scrollTopRef = useRef(0);
+  const scrollRafRef = useRef<number | null>(null);
 
   const lineCount = Math.max(1, value.split(/\r?\n/).length);
   const errorRowSet = useMemo(() => new Set(rowsWithErrors), [rowsWithErrors]);
 
   const handleScroll = (e: React.UIEvent<HTMLTextAreaElement>): void => {
-    setScrollTop(e.currentTarget.scrollTop);
+    scrollTopRef.current = e.currentTarget.scrollTop;
+    if (scrollRafRef.current !== null) return;
+
+    scrollRafRef.current = window.requestAnimationFrame(() => {
+      if (containerRef.current) {
+        containerRef.current.style.setProperty(
+          "--json-editor-scroll",
+          `-${scrollTopRef.current}px`
+        );
+      }
+      scrollRafRef.current = null;
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
@@ -63,10 +75,13 @@ export function JsonEditor({
     onChange(e.target.value);
   };
 
-  useLayoutEffect(() => {
-    if (!containerRef.current) return;
-    containerRef.current.style.setProperty("--json-editor-scroll", `-${scrollTop}px`);
-  }, [scrollTop]);
+  useEffect(() => {
+    return () => {
+      if (scrollRafRef.current !== null) {
+        window.cancelAnimationFrame(scrollRafRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="jsonEditorRoot" data-font={fontPreset} data-spacing={lineSpacing}>

@@ -172,7 +172,7 @@ export default function FormatterAction(
 
   return (
     <Box className="formatter-action-grid">
-      <Grid2 className="formatter-typography-panel" container>
+      {/* <Grid2 className="formatter-typography-panel" container>
         <Box className="formatter-typography-panel-controls">
           <FormControl className="goth-typography-control">
             <InputLabel id="editor-font-label" className="goth-input-label">
@@ -263,7 +263,7 @@ export default function FormatterAction(
             </IconButton>
           </Tooltip>
         </Box>
-      </Grid2>
+      </Grid2> */}
       <Grid2
         className="formatter-action-upload-container"
         container
