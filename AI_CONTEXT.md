@@ -11,7 +11,7 @@ This application is a React-based web application that serves as a JSON formatte
 
 ## Current Features
 
-- **JSON Formatting & Validation**: Core feature that formats JSON strings into readable format with real-time validation and detailed error reporting
+- **JSON Formatting & Validation**: Core feature that formats JSON strings into readable format with real-time validation, detailed error reporting, and guidance for multiple top-level values
 - **Multi-Page Interface**: Users can work with multiple JSON documents using a tabbed pagination system
 - **Achievements System**: Gamification element that tracks user actions and unlocks achievements with import/export functionality
 - **Goth/Emo Theme**: Dark, edgy aesthetic with custom CSS variables, gradients, and shadow effects
@@ -21,6 +21,7 @@ This application is a React-based web application that serves as a JSON formatte
 - **Local Persistence**: All state (pages, preferences, achievements, theme selection) persisted in browser localStorage
 - **Image Viewer**: Centered modal for displaying unlocked achievement images
 - **Keyboard Shortcuts**: Alt+Enter for formatting, ESC for shortcuts overlay, Tab for indentation
+- **Error Navigation**: Clicking validation issues jumps to the exact line and column in the editor
 - **Analytics**: Integrated with Vercel Analytics and Nepcha Analytics for privacy-compliant tracking
 
 ---
@@ -334,6 +335,6 @@ localStorage persists:
 
 ---
 
-**Last Updated**: 13-12-2025
+**Last Updated**: 29-12-2025
 **Version**: 0.1.0
 **Maintainer**: Federico Marchetti

@@ -328,6 +328,9 @@ function Presentation(): React.ReactElement {
   // Validation writer (page-scoped)
   const setValidationResultForPage = (pageId: PageId, result: JsonValidationResult): void => {
     setValidationByPageId((prev) => ({ ...prev, [pageId]: result }));
+    if (!result.valid && pageId === activePageId) {
+      setIsErrorSidebarOpen(true);
+    }
   };
 
   // Handler for after conversion to trigger GothSection effects
@@ -451,7 +454,36 @@ function Presentation(): React.ReactElement {
     totalRowsWithErrors > 0 ||
     Boolean(validationError);
 
-  const handleJumpToLine = (line: number): void => {
+  const getCaretIndexFromLineColumn = (text: string, line: number, column: number): number => {
+    const safeLine = Math.max(1, line);
+    const safeColumn = Math.max(1, column);
+    let currentLine = 1;
+    let index = 0;
+
+    while (currentLine < safeLine && index < text.length) {
+      const nextBreak = text.indexOf("\n", index);
+      if (nextBreak === -1) {
+        index = text.length;
+        break;
+      }
+      index = nextBreak + 1;
+      currentLine += 1;
+    }
+
+    const lineStart = index;
+    let lineEnd = text.indexOf("\n", lineStart);
+    if (lineEnd === -1) {
+      lineEnd = text.length;
+    }
+    if (lineEnd > lineStart && text[lineEnd - 1] === "\r") {
+      lineEnd -= 1;
+    }
+    const lineLength = Math.max(0, lineEnd - lineStart);
+    const clampedColumn = Math.min(safeColumn, lineLength + 1);
+    return lineStart + clampedColumn - 1;
+  };
+
+  const handleJumpToPosition = (line: number, column: number): void => {
     const target = textareaRef.current;
     if (!target) return;
     const lineHeightValue = window.getComputedStyle(target).lineHeight;
@@ -459,6 +491,9 @@ function Presentation(): React.ReactElement {
     const lineHeight = Number.isFinite(parsedLineHeight) ? parsedLineHeight : 20;
     target.scrollTop = Math.max(0, (line - 1) * lineHeight);
     target.focus();
+    const text = textArray[activePageIndex - 1] ?? "";
+    const caretIndex = getCaretIndexFromLineColumn(text, line, column);
+    target.setSelectionRange(caretIndex, caretIndex);
   };
 
   useLayoutEffect(() => {
@@ -530,7 +565,7 @@ function Presentation(): React.ReactElement {
                   fallbackMessage={validationError}
                   isOpen={false}
                   onToggleOpen={handleToggleErrorSidebar}
-                  onJumpToLine={handleJumpToLine}
+                  onJumpToPosition={handleJumpToPosition}
                 />
               </Box>
             )}
@@ -549,7 +584,7 @@ function Presentation(): React.ReactElement {
                   fallbackMessage={validationError}
                   isOpen={true}
                   onToggleOpen={handleToggleErrorSidebar}
-                  onJumpToLine={handleJumpToLine}
+                  onJumpToPosition={handleJumpToPosition}
                 />
               </Box>
             </Drawer>
@@ -570,7 +605,7 @@ function Presentation(): React.ReactElement {
               fallbackMessage={validationError}
               isOpen={isErrorSidebarOpen}
               onToggleOpen={handleToggleErrorSidebar}
-              onJumpToLine={handleJumpToLine}
+              onJumpToPosition={handleJumpToPosition}
             />
           </Box>
         )}

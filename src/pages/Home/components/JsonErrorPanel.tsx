@@ -15,7 +15,7 @@ export interface JsonErrorPanelProps {
   fallbackMessage?: string;
   isOpen: boolean;
   onToggleOpen: (nextOpen: boolean) => void;
-  onJumpToLine?: (line: number) => void;
+  onJumpToPosition?: (line: number, column: number) => void;
 }
 
 function groupByLine(issues: JsonValidationIssue[]): Record<number, JsonValidationIssue[]> {
@@ -38,7 +38,7 @@ export function JsonErrorPanel({
   fallbackMessage,
   isOpen,
   onToggleOpen,
-  onJumpToLine,
+  onJumpToPosition,
 }: JsonErrorPanelProps): React.ReactElement {
   const { t } = useTranslation();
   const [filterInput, setFilterInput] = useState("");
@@ -97,12 +97,20 @@ export function JsonErrorPanel({
     setActiveLineIndex(0);
   }, [lineKeys.length, normalizedFilter]);
 
-  const jumpToLine = useCallback(
-    (line: number): void => {
-      if (!onJumpToLine) return;
-      onJumpToLine(line);
+  const getPrimaryColumnForLine = useCallback(
+    (line: number): number => {
+      const lineIssues = grouped[line] ?? [];
+      return lineIssues[0]?.column ?? 1;
     },
-    [onJumpToLine]
+    [grouped]
+  );
+
+  const jumpToPosition = useCallback(
+    (line: number, column?: number): void => {
+      if (!onJumpToPosition) return;
+      onJumpToPosition(line, column ?? 1);
+    },
+    [onJumpToPosition]
   );
 
   const jumpToIndex = useCallback(
@@ -112,9 +120,9 @@ export function JsonErrorPanel({
       const line = lineKeys[next];
       if (typeof line !== "number") return;
       setActiveLineIndex(next);
-      jumpToLine(line);
+      jumpToPosition(line, getPrimaryColumnForLine(line));
     },
-    [jumpToLine, lineKeys]
+    [getPrimaryColumnForLine, jumpToPosition, lineKeys]
   );
 
   const handleNextError = useCallback((): void => {
@@ -228,7 +236,7 @@ export function JsonErrorPanel({
                   <button
                     type="button"
                     className="json-error-panel__line-button"
-                    onClick={() => jumpToLine(line)}
+                    onClick={() => jumpToPosition(line, getPrimaryColumnForLine(line))}
                   >
                     {t("JsonErrorPanel.lineLabel", { line })}
                   </button>
@@ -238,7 +246,7 @@ export function JsonErrorPanel({
                         <button
                           type="button"
                           className="json-error-panel__item-button"
-                          onClick={() => jumpToLine(line)}
+                          onClick={() => jumpToPosition(issue.line, issue.column)}
                         >
                           <span className="json-error-panel__badge">
                             {t("JsonErrorPanel.columnLabel", { column: issue.column })}

@@ -536,12 +536,25 @@ class JsonParser {
     const value = this.parseValue();
     const trailing = this.readToken();
     if (trailing.type !== "eof") {
+      let effectiveToken = trailing;
+      let isAnotherValue = isValueStartToken(trailing);
+
+      if (trailing.type === "comma") {
+        const nextToken = this.peekToken();
+        if (isValueStartToken(nextToken)) {
+          isAnotherValue = true;
+          effectiveToken = nextToken;
+        }
+      }
+
       this.collector.addIssue({
-        message: "Unexpected content after the first JSON value",
-        index: trailing.start,
-        length: Math.max(1, trailing.end - trailing.start),
-        code: "TrailingContent",
-        offending: trailing.value,
+        message: isAnotherValue
+          ? "Multiple top-level JSON values detected. Wrap them in an array (e.g. [{\"a\":1},{\"b\":2}]) or a single object."
+          : "Unexpected content after the first JSON value",
+        index: effectiveToken.start,
+        length: Math.max(1, effectiveToken.end - effectiveToken.start),
+        code: isAnotherValue ? "MultipleTopLevelValues" : "TrailingContent",
+        offending: effectiveToken.value,
       });
     }
     return value;
@@ -882,6 +895,18 @@ class JsonParser {
     }
     this.lookahead = token;
   }
+}
+
+function isValueStartToken(token: Token): boolean {
+  return (
+    token.type === "braceL" ||
+    token.type === "bracketL" ||
+    token.type === "string" ||
+    token.type === "number" ||
+    token.type === "true" ||
+    token.type === "false" ||
+    token.type === "null"
+  );
 }
 
 function isDigit(ch: string | undefined): ch is string {
