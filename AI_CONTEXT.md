@@ -35,7 +35,7 @@ json_formatter/
 │   ├── manifest.json                 # PWA manifest
 │   ├── robots.txt                    # Search engine crawling rules
 │   ├── mock_data.json                # Sample JSON data for initial load
-│   ├── jg-favicon.svg                # Application favicon
+│   ├── goth-icon-resized.jpg               # Application favicon
 │   ├── goth-girls/                   # Achievement unlock images
 │   ├── images/                       # Other images
 │   ├── sounds/                       # Success/failure audio effects
