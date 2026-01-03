@@ -1,5 +1,5 @@
 // GothControlPanel.tsx
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { gothSuccessSentences, gothFailureSentences } from "../sentences";
 import Box from "@mui/material/Box";
@@ -45,6 +45,7 @@ function GothControlPanel({
   const { t, i18n } = useTranslation();
   const successSound = "/sounds/success.mp3";
   const failSound = "/sounds/fail.mp3";
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
 
   // Play sound utility
   const playSound = (src: string) => {
@@ -53,17 +54,88 @@ function GothControlPanel({
     audio.play();
   };
 
+  const femaleVoiceHints = useMemo(
+    () => [
+      "female",
+      "woman",
+      "girl",
+      "zira",
+      "samantha",
+      "victoria",
+      "susan",
+      "karen",
+      "moira",
+      "tessa",
+      "serena",
+      "fiona",
+      "joanna",
+      "ivy",
+      "kendra",
+      "kimberly",
+      "salli",
+      "olivia",
+      "ava",
+      "emma",
+      "aria",
+      "jenny",
+      "michelle",
+      "luna",
+      "lea",
+      "chloe",
+      "isabelle",
+      "allison",
+      "amanda",
+      "catherine",
+      "clara",
+      "amy",
+    ],
+    []
+  );
+
+  const isEnglishVoice = (voice: SpeechSynthesisVoice) => /^en([_-]|$)/i.test(voice.lang);
+
+  const hasFemaleHint = (voice: SpeechSynthesisVoice) => {
+    const name = `${voice.name} ${voice.voiceURI}`.toLowerCase();
+    return femaleVoiceHints.some((hint) => name.includes(hint));
+  };
+
+  const pickSweetFemaleVoice = (voices: SpeechSynthesisVoice[]) => {
+    if (!voices.length) return null;
+
+    const scored = voices.map((voice) => {
+      let score = 0;
+      if (hasFemaleHint(voice)) score += 4;
+      if (isEnglishVoice(voice)) score += 3;
+      if (voice.default) score += 1;
+      if (voice.localService) score += 1;
+      return { voice, score };
+    });
+
+    scored.sort((a, b) => b.score - a.score);
+    return scored[0]?.voice || voices[0];
+  };
+
+  useEffect(() => {
+    if (!window.speechSynthesis) return;
+    const synth = window.speechSynthesis;
+    const updateVoices = () => setAvailableVoices(synth.getVoices());
+    updateVoices();
+    synth.onvoiceschanged = updateVoices;
+    return () => {
+      if (synth.onvoiceschanged === updateVoices) {
+        synth.onvoiceschanged = null;
+      }
+    };
+  }, []);
+
   // AI Voice utility using Web Speech API
   const speakSentence = (sentence: string) => {
     if (!window.speechSynthesis) return;
     const synth = window.speechSynthesis;
-    const voices = synth.getVoices();
+    const voices = availableVoices.length ? availableVoices : synth.getVoices();
 
-    // Try to pick a "goth and sweet" voice: prefer female, English, lower pitch
-    const gothVoice: SpeechSynthesisVoice | undefined =
-      voices.find((v) => /female/i.test(v.name) && /en/i.test(v.lang)) ||
-      voices.find((v) => /en/i.test(v.lang)) ||
-      voices[0];
+    // Prefer a recognizable female, English voice for a softer tone.
+    const gothVoice = pickSweetFemaleVoice(voices);
 
     // If voices are not loaded yet (Chrome bug), try again after a short delay
     if (!gothVoice && typeof window !== "undefined") {
@@ -71,18 +143,21 @@ function GothControlPanel({
       return;
     }
 
-    // Estimate rate so the sentence is read in 3 seconds
+    // Estimate rate so the sentence is read in 3 seconds, then gently clamp.
     const avgCharsPerSecondAtRate1 = 13; // empirical value, can be tuned
     const estimatedDurationAtRate1 = sentence.length / avgCharsPerSecondAtRate1;
     let rate = estimatedDurationAtRate1 / 3;
-    rate = Math.max(0.5, Math.min(3, rate)); // Clamp to Web Speech API limits
+    rate = Math.max(0.85, Math.min(1.2, rate)); // Clamp to a softer cadence
     
     const utter = new window.SpeechSynthesisUtterance(sentence);
     utter.voice = gothVoice;
-    utter.pitch = 0.2; // lower pitch for goth
+    utter.pitch = 1.15; // slightly higher pitch for a sweet tone
     utter.rate = rate;
     utter.volume = 1.0;
     utter.lang = gothVoice ? gothVoice.lang : "en-US";
+    if (synth.speaking) {
+      synth.cancel();
+    }
     window.speechSynthesis.speak(utter);
   };
 
