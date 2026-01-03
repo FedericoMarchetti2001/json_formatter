@@ -1034,6 +1034,9 @@
   }
 
   .gothRoot .jsonEditorRoot {
+    display: flex !important;
+    flex-grow: 1 !important;
+        height: var(--json-editor-height) !important;
     --json-editor-font-size: 0.875rem !important;
     --json-editor-line-height-base: 1.3125rem !important;
     --json-editor-line-height: var(--json-editor-line-height-base) !important;
@@ -1085,7 +1088,7 @@
     border-top-right-radius: 0 !important;
     color: var(--text-color) !important;
     font-family: var(--font-family) !important;
-    height: var(--json-editor-height) !important;
+    height: 100% !important;
     position: relative !important;
     overflow: hidden !important;
     --json-editor-scroll: 0px;
