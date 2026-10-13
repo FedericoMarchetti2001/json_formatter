@@ -11,16 +11,14 @@ describe('AchievementImportExport', () => {
     mockOnImport.mockClear();
   });
 
-  // Add explicit types to mocked FileReader implementation
-  const fileReaderMock: {
-    result: string;
-    onload: ((event: ProgressEvent<FileReader>) => void) | null;
-    readAsText: jest.Mock<any, any>;
-  } = {
-    result: '',
-    onload: jest.fn(),
-    readAsText: jest.fn(),
-  };
+  // Replace FileReader.readAsText so it synchronously "reads" the given content and fires onload.
+  const mockFileReaderContent = (content: string) =>
+    jest.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (this: FileReader) {
+      this.onload?.({ target: { result: content } } as unknown as ProgressEvent<FileReader>);
+    });
+
+  const getFileInput = (container: HTMLElement) =>
+    container.querySelector('#import-achievements-button') as HTMLInputElement;
 
   test('renders export and import buttons', () => {
     render(<AchievementImportExport onExport={mockOnExport} onImport={mockOnImport} />);
@@ -36,21 +34,11 @@ describe('AchievementImportExport', () => {
   });
 
   test('calls onImport with parsed content when a valid JSON file is selected', async () => {
-    render(<AchievementImportExport onExport={mockOnExport} onImport={mockOnImport} />);
-    const fileInput = screen.getByLabelText('Import Achievements');
+    const { container } = render(<AchievementImportExport onExport={mockOnExport} onImport={mockOnImport} />);
+    const fileInput = getFileInput(container);
 
     const validJsonFile = new File(['{"key": "value"}'], 'achievements.json', { type: 'application/json' });
-
-    // Mock FileReader
-    const fileReaderSpy = jest.spyOn(FileReader.prototype, 'readAsText');
-    const fileReaderMock = {
-      result: '{"key": "value"}',
-      onload: jest.fn(),
-      readAsText: jest.fn(),
-    };
-    fileReaderSpy.mockImplementation((file) => {
-      fileReaderMock.onload({ target: fileReaderMock });
-    });
+    const fileReaderSpy = mockFileReaderContent('{"key": "value"}');
 
     fireEvent.change(fileInput, { target: { files: [validJsonFile] } });
 
@@ -61,24 +49,14 @@ describe('AchievementImportExport', () => {
   });
 
   test('shows an alert and logs error when an invalid file is selected', async () => {
-    const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => undefined);
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
 
-    render(<AchievementImportExport onExport={mockOnExport} onImport={mockOnImport} />);
-    const fileInput = screen.getByLabelText('Import Achievements');
+    const { container } = render(<AchievementImportExport onExport={mockOnExport} onImport={mockOnImport} />);
+    const fileInput = getFileInput(container);
 
     const invalidFile = new File(['invalid json'], 'achievements.txt', { type: 'text/plain' });
-
-    // Mock FileReader
-    const fileReaderSpy = jest.spyOn(FileReader.prototype, 'readAsText');
-    const fileReaderMock = {
-      result: 'invalid json',
-      onload: jest.fn(),
-      readAsText: jest.fn(),
-    };
-     fileReaderSpy.mockImplementation((file) => {
-      fileReaderMock.onload({ target: fileReaderMock });
-    });
+    const fileReaderSpy = mockFileReaderContent('invalid json');
 
     fireEvent.change(fileInput, { target: { files: [invalidFile] } });
 

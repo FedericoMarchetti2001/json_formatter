@@ -72,7 +72,7 @@ const localStorageHandler = {
   },
 
   // Page content (by page key)
-  getPageContent<T = any>(pageKey: string): T | null {
+  getPageContent<T = unknown>(pageKey: string): T | null {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.PAGE_CONTENT_PREFIX + pageKey);
       return data ? JSON.parse(data) : null;
@@ -81,7 +81,7 @@ const localStorageHandler = {
       return null;
     }
   },
-  setPageContent<T = any>(pageKey: string, content: T) {
+  setPageContent<T = unknown>(pageKey: string, content: T) {
     try {
       localStorage.setItem(STORAGE_KEYS.PAGE_CONTENT_PREFIX + pageKey, JSON.stringify(content));
     } catch (e) {

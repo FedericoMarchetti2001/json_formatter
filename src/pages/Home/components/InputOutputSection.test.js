@@ -1,28 +1,28 @@
 import React from 'react';
-import { describe, test, expect, beforeEach, jest } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react';
 import InputOutputSection from './InputOutputSection';
 
+// CRA enables resetMocks, which would wipe jest.fn() implementations, so the mocks below are plain functions.
 jest.mock('react-json-view', () => ({
   __esModule: true,
-  default: jest.fn(() => <div data-testid="json-view" />),
+  default: () => <div data-testid="json-view" />,
 }));
 
 // Mock child components
 jest.mock('./GothAchievementsGallery', () => ({
   __esModule: true,
-  default: jest.fn(({ unlockedImages, onImageClick }) => (
+  default: ({ unlockedImages, onImageClick }) => (
     <div data-testid="goth-achievements-gallery">
       Goth Achievements Gallery
       <span>{`${unlockedImages.length} images`}</span>
       <button onClick={() => onImageClick('mock-image.jpg')}>Click Image</button>
     </div>
-  )),
+  ),
 }));
 
 jest.mock('./SentenceDisplay', () => ({
   __esModule: true,
-  default: jest.fn(({ sentence }) => <div data-testid="sentence-display">{sentence}</div>),
+  default: ({ sentence }) => <div data-testid="sentence-display">{sentence}</div>,
 }));
 
 describe('InputOutputSection', () => {
