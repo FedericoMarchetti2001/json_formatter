@@ -10,7 +10,7 @@ describe('SentenceDisplay', () => {
   });
 
   test('renders an empty string if no sentence is provided', () => {
-    render(<SentenceDisplay sentence="" />);
-    expect(screen.getByText('')).toBeInTheDocument();
+    const { container } = render(<SentenceDisplay sentence="" />);
+    expect(container.querySelector('.goth-sentence')).toBeEmptyDOMElement();
   });
 });

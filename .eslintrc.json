@@ -38,6 +38,12 @@
     // "@typescript-eslint/no-unused-vars": "warn", // Enable TypeScript-specific linting
     "@typescript-eslint/explicit-module-boundary-types": "off" // Optionally turn off explicit return types rule
   },
+  "overrides": [
+    {
+      "files": ["**/*.test.{js,jsx,ts,tsx}"],
+      "env": { "jest": true }
+    }
+  ],
   "settings": {
     "import/resolver": {
       "node": {

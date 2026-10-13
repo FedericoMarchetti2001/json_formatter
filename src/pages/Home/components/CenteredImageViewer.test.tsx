@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import CenteredImageViewer, { CenteredImageViewerProps } from './CenteredImageViewer';
+import CenteredImageViewer from './CenteredImageViewer';
 
 describe('CenteredImageViewer', () => {
   const mockOnClose = jest.fn();

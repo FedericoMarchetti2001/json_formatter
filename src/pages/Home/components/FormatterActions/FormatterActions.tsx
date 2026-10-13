@@ -1,5 +1,5 @@
 // @mui material components
-import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, Tooltip } from "@mui/material";
+import { Box, InputLabel } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import React from "react";
@@ -10,9 +10,6 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ClearIcon from '@mui/icons-material/Clear';
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import {
   ACHIEVEMENT_IMAGES,
   AchievementEvent,
@@ -21,10 +18,6 @@ import {
 import { validateJson, JsonValidationResult } from "../../../../core/json-validator";
 import localStorageHandler from "../../../../utils/localStorageHandler";
 import {
-  DEFAULT_EDITOR_FONT_PRESET,
-  DEFAULT_EDITOR_LINE_SPACING,
-  EDITOR_FONT_PRESETS,
-  EDITOR_LINE_SPACINGS,
   EditorFontPreset,
   EditorLineSpacing,
 } from "../../../../types/editorPreferences";
@@ -150,25 +143,6 @@ export default function FormatterAction(
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
-
-  const handleDecreaseFont = (): void => {
-    const currentIndex = EDITOR_FONT_PRESETS.indexOf(props.editorFontPreset);
-    if (currentIndex > 0) {
-      props.setEditorFontPreset(EDITOR_FONT_PRESETS[currentIndex - 1]);
-    }
-  };
-
-  const handleIncreaseFont = (): void => {
-    const currentIndex = EDITOR_FONT_PRESETS.indexOf(props.editorFontPreset);
-    if (currentIndex >= 0 && currentIndex < EDITOR_FONT_PRESETS.length - 1) {
-      props.setEditorFontPreset(EDITOR_FONT_PRESETS[currentIndex + 1]);
-    }
-  };
-
-  const handleResetTypography = (): void => {
-    props.setEditorFontPreset(DEFAULT_EDITOR_FONT_PRESET);
-    props.setEditorLineSpacing(DEFAULT_EDITOR_LINE_SPACING);
-  };
 
   return (
     <Box className="formatter-action-grid">

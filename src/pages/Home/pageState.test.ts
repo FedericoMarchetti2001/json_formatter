@@ -19,7 +19,7 @@ describe("pageState", () => {
       a: { valid: false, issues: [{ message: "x", line: 1, column: 1, index: 0 }], rowsWithErrors: [1] },
     };
 
-    const next = ensureValidationByPageId(["a", "b"], existing as any);
+    const next = ensureValidationByPageId(["a", "b"], existing as Parameters<typeof ensureValidationByPageId>[1]);
     expect(next.a.valid).toBe(false);
     expect(next.b).toEqual(EMPTY_VALIDATION_RESULT);
   });

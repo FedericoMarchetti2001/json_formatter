@@ -4,6 +4,7 @@
     "jsx": "react",
     "moduleResolution": "node",
     "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "allowJs": true, // Allows JS files in the project
     "checkJs": false, // Disable type checking for JS files (optional)

@@ -24,38 +24,39 @@ describe('SoundAndVoiceControls', () => {
   });
 
   test('checkboxes are checked based on props', () => {
-    render(<SoundAndVoiceControls {...defaultProps} />);
+    const { rerender } = render(<SoundAndVoiceControls {...defaultProps} />);
     expect(screen.getByLabelText('Play Sound')).toBeChecked();
     expect(screen.getByLabelText('AI Voice (Goth & Sweet)')).not.toBeChecked();
 
-    render(<SoundAndVoiceControls enablePlaySound={false} enableAIVoice={true} setEnablePlaySound={mockSetEnablePlaySound} setEnableAIVoice={mockSetEnableAIVoice} />);
+    rerender(<SoundAndVoiceControls enablePlaySound={false} enableAIVoice={true} setEnablePlaySound={mockSetEnablePlaySound} setEnableAIVoice={mockSetEnableAIVoice} />);
     expect(screen.getByLabelText('Play Sound')).not.toBeChecked();
     expect(screen.getByLabelText('AI Voice (Goth & Sweet)')).toBeChecked();
   });
 
   test('calls setEnablePlaySound when "Play Sound" checkbox is clicked', () => {
-    render(<SoundAndVoiceControls {...defaultProps} />);
-    const playSoundCheckbox = screen.getByLabelText('Play Sound');
+    const { rerender } = render(<SoundAndVoiceControls {...defaultProps} />);
 
-    fireEvent.click(playSoundCheckbox);
+    fireEvent.click(screen.getByLabelText('Play Sound'));
     expect(mockSetEnablePlaySound).toHaveBeenCalledTimes(1);
-    expect(mockSetEnablePlaySound).toHaveBeenCalledWith(false); // Toggling from true
+    expect(mockSetEnablePlaySound).toHaveBeenLastCalledWith(false); // Toggling from true
 
-    fireEvent.click(playSoundCheckbox);
+    // The component is controlled, so re-render with the new prop before toggling back.
+    rerender(<SoundAndVoiceControls {...defaultProps} enablePlaySound={false} />);
+    fireEvent.click(screen.getByLabelText('Play Sound'));
     expect(mockSetEnablePlaySound).toHaveBeenCalledTimes(2);
-    expect(mockSetEnablePlaySound).toHaveBeenCalledWith(true); // Toggling from false
+    expect(mockSetEnablePlaySound).toHaveBeenLastCalledWith(true); // Toggling from false
   });
 
   test('calls setEnableAIVoice when "AI Voice" checkbox is clicked', () => {
-    render(<SoundAndVoiceControls {...defaultProps} />);
-    const aiVoiceCheckbox = screen.getByLabelText('AI Voice (Goth & Sweet)');
+    const { rerender } = render(<SoundAndVoiceControls {...defaultProps} />);
 
-    fireEvent.click(aiVoiceCheckbox);
+    fireEvent.click(screen.getByLabelText('AI Voice (Goth & Sweet)'));
     expect(mockSetEnableAIVoice).toHaveBeenCalledTimes(1);
-    expect(mockSetEnableAIVoice).toHaveBeenCalledWith(true); // Toggling from false
+    expect(mockSetEnableAIVoice).toHaveBeenLastCalledWith(true); // Toggling from false
 
-    fireEvent.click(aiVoiceCheckbox);
+    rerender(<SoundAndVoiceControls {...defaultProps} enableAIVoice={true} />);
+    fireEvent.click(screen.getByLabelText('AI Voice (Goth & Sweet)'));
     expect(mockSetEnableAIVoice).toHaveBeenCalledTimes(2);
-    expect(mockSetEnableAIVoice).toHaveBeenCalledWith(false); // Toggling from true
+    expect(mockSetEnableAIVoice).toHaveBeenLastCalledWith(false); // Toggling from true
   });
 });

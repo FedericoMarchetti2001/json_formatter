@@ -3,7 +3,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { gothSuccessSentences, gothFailureSentences } from "../sentences";
 import Box from "@mui/material/Box";
-import ReactFlagsSelect from "react-flags-select";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import { ToastContainer, toast } from "react-toastify"; // Import react-toastify components
 import "react-toastify/dist/ReactToastify.css"; // Import react-toastify CSS
@@ -42,7 +41,7 @@ function GothControlPanel({
   achievements,
   setAchievements,
 }: GothControlPanelProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const successSound = "/sounds/success.mp3";
   const failSound = "/sounds/fail.mp3";
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);

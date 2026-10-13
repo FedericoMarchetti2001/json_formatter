@@ -232,6 +232,7 @@ json_formatter/
 ### Development & Testing
 - **Jest**: Unit testing framework
 - **React Testing Library**: Component testing utilities (render, fireEvent, screen)
+- **Test setup notes**: `src/setupTests.js` initialises a minimal i18next instance (defaults + interpolation resolve in tests); CRA enables `resetMocks`, so `jest.mock` factories must use plain functions, not `jest.fn(impl)`; `GothControlPanel.test.tsx` is fully commented out (stale) and makes `npm test` report an empty suite.
 - **ESLint**: Code quality linting (`.eslintrc.json`)
 - **Prettier**: Code formatting (`.prettierrc.json`)
 
