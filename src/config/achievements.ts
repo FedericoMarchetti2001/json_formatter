@@ -74,7 +74,7 @@ export const ACHIEVEMENTS: AchievementDefinition[] = [
     id: "data_exporter",
     name: "Data Exporter",
     description: "Exported an achievement file.",
-    imageKey: "gpth5", // Typo in original file list: gpth5.jpg vs goth5.jpg
+    imageKey: "goth5",
   },
   {
     id: "page_turner",
@@ -101,7 +101,7 @@ export const ACHIEVEMENT_IMAGES: Record<string, string> = {
   goth10: "/goth-girls/goth10.jpg",
   goth11: "/goth-girls/goth11.jpg",
   goth12: "/goth-girls/goth12.jpg",
-  gpth5: "/goth-girls/gpth5.jpg", // Corrected image key
+  goth5: "/goth-girls/goth5.jpg",
   goth_page: "/goth-girls/goth1.jpg", // Placeholder
   goth_destroyer: "/goth-girls/goth2.jpeg", // Placeholder
 };

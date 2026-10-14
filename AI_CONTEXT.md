@@ -61,7 +61,8 @@ json_formatter/
 │   │
 │   ├── pages/
 │   │   └── Home/
-│   │       ├── index.js              # Main application component with state management
+│   │       ├── index.tsx             # Main application component with state management (index.js is a re-export shim)
+│   │       ├── pageState.ts          # Pure helpers for page ids / per-page validation state
 │   │       ├── sentences.js          # Goth success/failure sentence collections
 │   │       ├── components/
 │   │       │   ├── PageHeader.tsx    # Top banner with title and subtitle
@@ -89,6 +90,9 @@ json_formatter/
 │   └── utils/
 │       └── localStorageHandler.ts    # Centralized localStorage operations
 │
+├── CLAUDE.md                         # Agent entry point: commands, definition of done, skill index
+├── .claude/skills/                   # Project skills for AI agents (add-achievement, i18n-sync, json-validator-change, add-component, verify-and-document, tech-debt-triage, deploy-check)
+├── docs/TECH_DEBT.md                 # Tech-debt inventory and log
 ├── .eslintrc.json                    # ESLint configuration
 ├── .prettierrc.json                  # Prettier code formatting rules
 ├── tsconfig.json                     # TypeScript compiler configuration
@@ -103,7 +107,7 @@ json_formatter/
 ### Key Files by Functionality
 
 **State Management & Logic:**
-- [`src/pages/Home/index.js`](src/pages/Home/index.js): Main state container managing pages, achievements, preferences, validation
+- [`src/pages/Home/index.tsx`](src/pages/Home/index.tsx): Main state container managing pages, achievements, preferences, validation
 - [`src/utils/localStorageHandler.ts`](src/utils/localStorageHandler.ts): Centralized localStorage API
 - [`src/config/achievements.ts`](src/config/achievements.ts): Achievement definitions and unlock logic
 
@@ -237,8 +241,8 @@ json_formatter/
 - **Prettier**: Code formatting (`.prettierrc.json`)
 
 ### Deployment & Configuration
-- **Vercel**: Deployment platform with built-in analytics
-- **Genezio**: Serverless framework config (optional, for backend if needed)
+- **Vercel**: Production hosting via Vercel Git integration — every push to `main` auto-deploys to https://jgothvalidator.com (builds run with CI set, so ESLint warnings fail the build)
+- **Genezio**: `genezio.yaml` is a template leftover, not used for deploys (see docs/TECH_DEBT.md)
 - **Environment**: Node.js 16+ (as per README), npm/yarn
 
 ### Build Tools (Implicit via React Scripts)
@@ -283,7 +287,7 @@ localStorage persists:
 
 ## Key Design Patterns
 
-1. **Centralized State**: Parent component (`Home/index.js`) manages global state; children receive via props
+1. **Centralized State**: Parent component (`Home/index.tsx`) manages global state; children receive via props
 2. **Custom Hook**: `localStorageHandler` provides reusable localStorage interface
 3. **Error Handling**: `JsonValidationResult` object with `valid`, `issues`, `error`, `rowsWithErrors` properties
 4. **Achievement Event System**: Enum-based events trigger conditional achievement unlocks
@@ -336,6 +340,6 @@ localStorage persists:
 
 ---
 
-**Last Updated**: 29-12-2025
+**Last Updated**: 13-10-2026
 **Version**: 0.1.0
 **Maintainer**: Federico Marchetti
