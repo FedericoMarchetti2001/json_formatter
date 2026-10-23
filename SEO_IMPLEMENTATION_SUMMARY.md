@@ -189,7 +189,7 @@ This document summarizes the comprehensive SEO improvements implemented for JGot
 | `src/App.js` | Added JSON-LD schema injection | Rich snippets |
 | `src/pages/Home/components/PageHeader.tsx` | h5 → h1, i18n translations | Semantic HTML |
 | `src/pages/Home/components/FeaturesSection.tsx` | Created | Visible SEO content |
-| `src/pages/Home/index.js` | Integrated FeaturesSection | Content on page |
+| `src/pages/Home/index.tsx` | Integrated FeaturesSection | Content on page |
 | `src/styles/globals.css` | Improved heading hierarchy | Proper h1-h6 styling |
 | `src/pages/Home/components/GothAchievementsGallery.tsx` | Lazy loading, grid layout | Performance |
 | `public/locales/en/translation.json` | Added SEO content | English translations |

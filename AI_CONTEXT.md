@@ -35,7 +35,11 @@ json_formatter/
 │   ├── manifest.json                 # PWA manifest
 │   ├── robots.txt                    # Search engine crawling rules
 │   ├── mock_data.json                # Sample JSON data for initial load
-│   ├── goth-icon-resized.jpg               # Application favicon
+│   ├── goth-icon-resized.jpg         # Favicon / apple-touch-icon referenced by index.html
+│   ├── goth-icon.jpg                 # README banner image
+│   ├── jg-favicon.svg                # SVG favicon asset
+│   ├── dotsandlines.jpg              # Background image asset
+│   ├── sitemap.xml                   # Sitemap (referenced from robots.txt)
 │   ├── goth-girls/                   # Achievement unlock images
 │   ├── images/                       # Other images
 │   ├── sounds/                       # Success/failure audio effects
@@ -53,6 +57,9 @@ json_formatter/
 │   ├── i18n.js                       # i18next configuration
 │   ├── setupTests.js                 # Jest testing configuration
 │   │
+│   ├── types/
+│   │   └── editorPreferences.ts      # Editor font preset / line spacing types, defaults, guards
+│   │
 │   ├── config/
 │   │   └── achievements.ts           # Achievement definitions, triggers, and logic
 │   │
@@ -67,10 +74,14 @@ json_formatter/
 │   │       ├── components/
 │   │       │   ├── PageHeader.tsx    # Top banner with title and subtitle
 │   │       │   ├── PageFooter.tsx    # Footer with branding
-│   │       │   ├── GothControlPanel.tsx      # Control panel with language, sound, voice, achievements
+│   │       │   ├── GothControlPanel.tsx      # Control panel with sound, voice, achievements (import/export, gallery)
 │   │       │   ├── GothShortcutsOverlay.js   # Keyboard shortcuts modal
 │   │       │   ├── InputOutputSection.tsx    # JSON input/output editor section
-│   │       │   ├── JsonEditor.tsx           # Custom JSON editor with line numbers
+│   │       │   ├── JsonEditor.tsx           # Re-export of JsonEditor/index.tsx
+│   │       │   ├── JsonEditor/              # Editor parts: index, JsonEditorGutter/RowsOverlay/Surface/Textarea (.tsx)
+│   │       │   ├── FeaturesSection.tsx      # SEO feature cards (i18n keys `features.*`)
+│   │       │   ├── ViewerActions/
+│   │       │   │   └── ViewerActions.tsx    # JSON viewer theme selector
 │   │       │   ├── JsonErrorPanel.tsx       # Validation error display
 │   │       │   ├── GothAchievementsGallery.tsx  # Achievement image gallery
 │   │       │   ├── SentenceDisplay.tsx      # Goth sentence display
@@ -115,9 +126,9 @@ json_formatter/
 - [`src/core/json-validator.ts`](src/core/json-validator.ts): JSON validation engine with error collection and line reporting
 
 **UI Components:**
-- [`src/pages/Home/components/FormatterActions/FormatterActions.tsx`](src/pages/Home/components/FormatterActions/FormatterActions.tsx): Format/copy/clear/upload controls
+- [`src/pages/Home/components/FormatterActions/FormatterActions.tsx`](src/pages/Home/components/FormatterActions/FormatterActions.tsx): Format/copy/clear/upload controls, indentation and language selector
 - [`src/pages/Home/components/InputOutputSection.tsx`](src/pages/Home/components/InputOutputSection.tsx): Editor and output viewer
-- [`src/pages/Home/components/GothControlPanel.tsx`](src/pages/Home/components/GothControlPanel.tsx): Language, sound, voice, achievements UI
+- [`src/pages/Home/components/GothControlPanel.tsx`](src/pages/Home/components/GothControlPanel.tsx): Sound, voice, achievements UI
 
 **Styling:**
 - [`src/styles/globals.css`](src/styles/globals.css): CSS variables, goth theme, component styles with !important overrides
@@ -142,7 +153,7 @@ json_formatter/
 - **Pagination Control**: `currentPage` tracks active page; UI shows tab for each page
 - **Add Page**: Creates new empty pages (triggers `ADD_PAGE` achievement)
 - **Delete Page**: Removes pages (triggers `DELETE_PAGE` achievement); prevents deletion of last page
-- **Persistence**: All arrays saved to localStorage under `jsonFormatterPageContent_textArray` and `jsonFormatterPageContent_formattedTextArray`
+- **Persistence**: All arrays (and `pageIds`) saved to localStorage under `jsonFormatterPageContent_textArray` and `jsonFormatterPageContent_formattedTextArray`
 
 ### Achievement System
 
@@ -152,7 +163,7 @@ json_formatter/
 
 **Unlock Logic** (`src/config/achievements.ts`):
 - `checkAchievements(event, unlockedIds, context)` evaluates if conditions met
-- Events: `FORMAT_SUCCESS`, `FORMAT_FAILURE`, `FIXED_SYNTAX`, `CHANGE_INDENTATION`, `CHANGE_THEME`, `CHANGE_LANGUAGE`, `CLEAR_TEXT`, `IMPORT_ACHIEVEMENTS`, `EXPORT_ACHIEVEMENTS`, `ADD_PAGE`, `DELETE_PAGE`
+- Events: `FORMAT_SUCCESS`, `FORMAT_FAILURE`, `FIXED_SYNTAX`, `CHANGE_INDENTATION`, `CHANGE_THEME`, `CHANGE_LANGUAGE`, `CLEAR_TEXT`, `IMPORT_ACHIEVEMENTS`, `EXPORT_ACHIEVEMENTS`, `ADD_PAGE`, `DELETE_PAGE`, `INITIAL_LOAD`
 - Newly unlocked achievements trigger toast notifications and unlock associated goth girl images
 
 **Persistence**: Stored as `{ unlocked: string[], images: string[] }` in localStorage under `jsonFormatterAchievements`
@@ -185,6 +196,9 @@ json_formatter/
 - `enablePlaySound`: Toggle sound effects
 - `enableAIVoice`: Toggle AI voice feedback
 - `jsonTheme`: Selected JSON viewer theme
+- `editorFontPreset`: Editor font size (`xs`, `s`, `m`, `l`, `xl`; default `m`)
+- `editorLineSpacing`: Editor line spacing (`compact`, `normal`, `spacious`; default `normal`)
+- `errorSidebarOpen`: Whether the error sidebar is open
 
 **Language Selection**:
 - Dropdown with flag emojis (English 🇬🇧, German 🇩🇪)
@@ -219,6 +233,7 @@ json_formatter/
   - `jsonFormatterPreferences`
   - `jsonFormatterPageContent_textArray`
   - `jsonFormatterPageContent_formattedTextArray`
+  - `jsonFormatterPageContent_pageIds`
 
 ### Audio & Voice
 - **Web Audio API**: Native audio playback for sound effects
