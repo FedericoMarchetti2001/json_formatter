@@ -179,11 +179,11 @@ json_formatter/
 │   │   └── json-validator.ts # JSON validation logic
 │   ├── pages/
 │   │   └── Home/          # Main application page
-│   │       ├── index.js
+│   │       ├── index.tsx      # (index.js is a re-export shim)
 │   │       └── components/
 │   │           ├── FormatterActions/
 │   │           ├── InputOutputSection.tsx
-│   │           ├── GothSection.tsx
+│   │           ├── GothControlPanel.tsx
 │   │           └── Pagination/
 │   └── utils/
 │       └── localStorageHandler.ts
@@ -195,7 +195,7 @@ json_formatter/
 ### Key Files
 
 - **[`src/core/json-validator.ts`](src/core/json-validator.ts)**: JSON validation logic
-- **[`src/pages/Home/index.js`](src/pages/Home/index.js)**: Main application component with state management
+- **[`src/pages/Home/index.tsx`](src/pages/Home/index.tsx)**: Main application component with state management
 - **[`src/pages/Home/components/FormatterActions/FormatterActions.tsx`](src/pages/Home/components/FormatterActions/FormatterActions.tsx)**: User action buttons
 - **[`src/config/achievements.ts`](src/config/achievements.ts)**: Achievement system configuration
 
@@ -217,7 +217,7 @@ To add a new language:
 
 1. Create a new folder in `public/locales/` (e.g., `fr/`)
 2. Add a `translation.json` file with translated strings
-3. Update the language selector in [`src/pages/Home/components/GothSection.tsx`](src/pages/Home/components/GothSection.tsx)
+3. Update the language selector in [`src/pages/Home/components/FormatterActions/FormatterActions.tsx`](src/pages/Home/components/FormatterActions/FormatterActions.tsx)
 
 ---
 
