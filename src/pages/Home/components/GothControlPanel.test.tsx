@@ -1,165 +1,115 @@
-// import React from 'react';
-// import { render, screen, fireEvent } from '@testing-library/react';
-// import GothControlPanel from './GothControlPanel';
-// import { toast } from 'react-toastify';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import GothControlPanel from "./GothControlPanel";
+import { toast } from "react-toastify";
 
-// // Mock child components
-// jest.mock('./SoundAndVoiceControls', () => ({
-//   __esModule: true,
-//   default: jest.fn(({ enablePlaySound, setEnablePlaySound, enableAIVoice, setEnableAIVoice }: { enablePlaySound: boolean; setEnablePlaySound: (value: boolean) => void; enableAIVoice: boolean; setEnableAIVoice: (value: boolean) => void }) => (
-//     <div data-testid="sound-voice-controls">
-//       Sound and Voice Controls
-//       <button onClick={() => setEnablePlaySound(!enablePlaySound)}>Toggle Sound</button>
-//       <button onClick={() => setEnableAIVoice(!enableAIVoice)}>Toggle Voice</button>
-//     </div>
-//   )),
-// }));
+// CRA enables resetMocks, so factories use plain functions rather than jest.fn(impl).
+jest.mock("./SoundAndVoiceControls", () => ({
+  __esModule: true,
+  default: () => <div data-testid="sound-voice-controls" />,
+}));
 
-// jest.mock('./AchievementImportExport', () => ({
-//   __esModule: true,
-//   default: jest.fn(({ onExport, onImport }: { onExport: () => void; onImport: (data: string) => void }) => (
-//     <div data-testid="achievement-import-export">
-//       Achievement Import Export
-//       <button onClick={onExport}>Export</button>
-//       <button onClick={() => onImport('mock data')}>Import</button>
-//     </div>
-//   )),
-// }));
+jest.mock("./AchievementImportExport", () => ({
+  __esModule: true,
+  default: ({ onExport, onImport }: { onExport: () => void; onImport: (data: string) => void }) => (
+    <div data-testid="achievement-import-export">
+      <button onClick={onExport}>Export</button>
+      <button onClick={() => onImport("mock data")}>Import</button>
+    </div>
+  ),
+}));
 
-// // Mock react-toastify
-// jest.mock('react-toastify', () => ({
-//   ...jest.requireActual('react-toastify'),
-//   toast: {
-//     success: jest.fn(),
-//     error: jest.fn(),
-//   },
-// }));
+jest.mock("react-toastify", () => ({
+  ToastContainer: () => null,
+  toast: { success: jest.fn(), error: jest.fn(), warn: jest.fn() },
+}));
 
-// // Mock browser APIs for sound and speech
-// const mockPlay = jest.fn();
-// const mockAudio = jest.fn().mockImplementation(() => ({
-//   play: mockPlay,
-//   volume: 0.5, // Default volume
-//   // Add other audio properties/methods if needed by the component
-//   pause: jest.fn(),
-//   addEventListener: jest.fn(),
-//   removeEventListener: jest.fn(),
-//   dispatchEvent: jest.fn(),
-// }));
-// Object.defineProperty(window, 'Audio', { value: mockAudio });
+describe("GothControlPanel", () => {
+  const setEnablePlaySound = jest.fn();
+  const setEnableAIVoice = jest.fn();
+  const setGothSentence = jest.fn();
+  const setAchievements = jest.fn();
+  const onExportAchievements = jest.fn();
+  const onImportAchievements = jest.fn();
+  const play = jest.fn();
+  const audioCtor = jest.fn();
+  const speak = jest.fn();
+  const utteranceCtor = jest.fn();
 
-// const mockSpeak = jest.fn();
-// const mockGetVoices = jest.fn().mockReturnValue([
-//   { name: 'Google US English', lang: 'en-US', default: true, localService: false, voiceURI: 'Google US English' },
-//   { name: 'Microsoft Zira - English (United States)', lang: 'en-US', default: false, localService: true, voiceURI: 'Microsoft Zira - English (United States)' },
-// ]);
-// const mockSpeechSynthesisUtterance = jest.fn().mockImplementation((text) => ({ text, onend: null, onerror: null }));
-// Object.defineProperty(window, 'speechSynthesis', {
-//   value: {
-//     speak: mockSpeak,
-//     getVoices: mockGetVoices,
-//     speaking: false,
-//     pending: false,
-//     paused: false,
-//     onvoiceschanged: null,
-//     cancel: jest.fn(),
-//     pause: jest.fn(),
-//     resume: jest.fn(),
-//     addEventListener: jest.fn(),
-//     removeEventListener: jest.fn(),
-//     dispatchEvent: jest.fn(),
-//   },
-// });
-// Object.defineProperty(window, 'SpeechSynthesisUtterance', { value: mockSpeechSynthesisUtterance });
+  const defaultProps = {
+    enablePlaySound: true,
+    setEnablePlaySound,
+    enableAIVoice: true,
+    setEnableAIVoice,
+    onConvert: null,
+    gothSentence: "",
+    setGothSentence,
+    onExportAchievements,
+    onImportAchievements,
+    achievements: { unlocked: [], images: [] },
+    setAchievements,
+  };
 
+  beforeEach(() => {
+    window.Audio = function (src: string) {
+      audioCtor(src);
+      return { play, volume: 0 };
+    } as unknown as typeof Audio;
+    (window as any).SpeechSynthesisUtterance = function (text: string) {
+      utteranceCtor(text);
+      return { text };
+    };
+    (window as any).speechSynthesis = {
+      speak,
+      getVoices: () => [{ name: "Zira", voiceURI: "Zira", lang: "en-US", default: true, localService: true }],
+      speaking: false,
+      cancel: jest.fn(),
+      onvoiceschanged: null,
+    };
+  });
 
-// describe('GothControlPanel', () => {
-//   const mockSetEnablePlaySound = jest.fn();
-//   const mockSetEnableAIVoice = jest.fn();
-//   const mockSetGothSentence = jest.fn();
-//   const mockOnExportAchievements = jest.fn();
-//   const mockOnImportAchievements = jest.fn();
+  test("renders the sound controls and achievement import/export", () => {
+    render(<GothControlPanel {...defaultProps} />);
+    expect(screen.getByTestId("sound-voice-controls")).toBeInTheDocument();
+    expect(screen.getByTestId("achievement-import-export")).toBeInTheDocument();
+  });
 
-//   const defaultProps = {
-//     enablePlaySound: true,
-//     setEnablePlaySound: mockSetEnablePlaySound,
-//     enableAIVoice: true,
-//     setEnableAIVoice: mockSetEnableAIVoice,
-//     onConvert: null,
-//     gothSentence: '',
-//     setGothSentence: mockSetGothSentence,
-//     onExportAchievements: mockOnExportAchievements,
-//     onImportAchievements: mockOnImportAchievements,
-//   };
+  test("a successful conversion sets a sentence, plays the success sound, speaks and toasts", () => {
+    const { rerender } = render(<GothControlPanel {...defaultProps} />);
+    rerender(<GothControlPanel {...defaultProps} onConvert={{ success: true }} />);
 
-//   beforeEach(() => {
-//     jest.clearAllMocks();
-//   });
+    expect(setGothSentence).toHaveBeenCalledWith(expect.any(String));
+    expect(audioCtor).toHaveBeenCalledWith("/sounds/success.mp3");
+    expect(play).toHaveBeenCalledTimes(1);
+    expect(speak).toHaveBeenCalledTimes(1);
+    expect(toast.success).toHaveBeenCalledTimes(1);
+    expect(toast.error).not.toHaveBeenCalled();
+  });
 
-//   test('renders SoundAndVoiceControls and AchievementImportExport components', () => {
-//     render(<GothControlPanel {...defaultProps} />);
-//     expect(screen.getByTestId('sound-voice-controls')).toBeInTheDocument();
-//     expect(screen.getByTestId('achievement-import-export')).toBeInTheDocument();
-//   });
+  test("a failed conversion plays the fail sound and shows an error toast", () => {
+    const { rerender } = render(<GothControlPanel {...defaultProps} />);
+    rerender(<GothControlPanel {...defaultProps} onConvert={{ success: false }} />);
 
-//   test('calls setGothSentence with a success sentence and plays success sound and speaks sentence on successful conversion', () => {
-//     const { rerender } = render(<GothControlPanel {...defaultProps} onConvert={null} />);
+    expect(audioCtor).toHaveBeenCalledWith("/sounds/fail.mp3");
+    expect(toast.error).toHaveBeenCalledTimes(1);
+    expect(toast.success).not.toHaveBeenCalled();
+  });
 
-//     // Simulate a successful conversion
-//     rerender(<GothControlPanel {...defaultProps} onConvert={{ success: true }} />);
+  test("does not play sound when enablePlaySound is false", () => {
+    render(<GothControlPanel {...defaultProps} enablePlaySound={false} onConvert={{ success: true }} />);
+    expect(play).not.toHaveBeenCalled();
+  });
 
-//     expect(mockSetGothSentence).toHaveBeenCalledWith(expect.any(String));
-//     expect(mockPlay).toHaveBeenCalledTimes(1);
-//     expect(mockAudio).toHaveBeenCalledWith('/sounds/success.mp3');
-//     expect(mockSpeak).toHaveBeenCalledTimes(1);
-//     expect(mockSpeechSynthesisUtterance).toHaveBeenCalledWith(expect.any(String));
-//     expect(toast.success).toHaveBeenCalledTimes(1);
-//     expect(toast.error).not.toHaveBeenCalled();
-//   });
+  test("does not speak when enableAIVoice is false", () => {
+    render(<GothControlPanel {...defaultProps} enableAIVoice={false} onConvert={{ success: true }} />);
+    expect(speak).not.toHaveBeenCalled();
+  });
 
-//   test('calls setGothSentence with a failure sentence and plays fail sound and speaks sentence on failed conversion', () => {
-//     const { rerender } = render(<GothControlPanel {...defaultProps} onConvert={null} />);
-
-//     // Simulate a failed conversion
-//     rerender(<GothControlPanel {...defaultProps} onConvert={{ success: false }} />);
-
-//     expect(mockSetGothSentence).toHaveBeenCalledWith(expect.any(String));
-//     expect(mockPlay).toHaveBeenCalledTimes(1);
-//     expect(mockAudio).toHaveBeenCalledWith('/sounds/fail.mp3');
-//     expect(mockSpeak).toHaveBeenCalledTimes(1);
-//     expect(mockSpeechSynthesisUtterance).toHaveBeenCalledWith(expect.any(String));
-//     expect(toast.error).toHaveBeenCalledTimes(1);
-//     expect(toast.success).not.toHaveBeenCalled();
-//   });
-
-//   test('does not play sound if enablePlaySound is false', () => {
-//     const { rerender } = render(<GothControlPanel {...defaultProps} enablePlaySound={false} onConvert={null} />);
-
-//     // Simulate a successful conversion
-//     rerender(<GothControlPanel {...defaultProps} enablePlaySound={false} onConvert={{ success: true }} />);
-
-//     expect(mockPlay).not.toHaveBeenCalled();
-//   });
-
-//   test('does not speak sentence if enableAIVoice is false', () => {
-//     const { rerender } = render(<GothControlPanel {...defaultProps} enableAIVoice={false} onConvert={null} />);
-
-//     // Simulate a successful conversion
-//     rerender(<GothControlPanel {...defaultProps} enableAIVoice={false} onConvert={{ success: true }} />);
-
-//     expect(mockSpeak).not.toHaveBeenCalled();
-//   });
-
-//   test('calls onExportAchievements when Export button in child component is clicked', () => {
-//     render(<GothControlPanel {...defaultProps} />);
-//     fireEvent.click(screen.getByText('Export'));
-//     expect(mockOnExportAchievements).toHaveBeenCalledTimes(1);
-//   });
-
-//   test('calls onImportAchievements when Import button in child component is clicked', () => {
-//     render(<GothControlPanel {...defaultProps} />);
-//     fireEvent.click(screen.getByText('Import'));
-//     expect(mockOnImportAchievements).toHaveBeenCalledTimes(1);
-//     expect(mockOnImportAchievements).toHaveBeenCalledWith('mock data');
-//   });
-// });
+  test("forwards export and import to the parent callbacks", () => {
+    render(<GothControlPanel {...defaultProps} />);
+    fireEvent.click(screen.getByText("Export"));
+    expect(onExportAchievements).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByText("Import"));
+    expect(onImportAchievements).toHaveBeenCalledWith("mock data");
+  });
+});
